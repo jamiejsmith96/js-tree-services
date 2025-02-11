@@ -1,0 +1,99 @@
+:root {
+  --mantine-color-green-filled: #43A047;
+  --mantine-color-green-filled-hover: #388E3C;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background-color: #fff;
+}
+
+/* Fix for mobile viewport height issue */
+.vh-fix {
+  height: 100vh;
+  height: -webkit-fill-available;
+}
+
+/* Fix for sticky header */
+.app-wrapper {
+  padding-top: 70px;
+}
+
+main {
+  min-height: calc(100vh - 70px);
+}
+
+/* Improved container padding on mobile */
+@media (max-width: 48em) {
+  .mantine-Container-root {
+    padding-left: 16px !important;
+    padding-right: 16px !important;
+  }
+}
+
+/* Fix for mobile drawer */
+.mantine-Drawer-content {
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Better focus styles */
+:focus {
+  outline: 2px solid var(--mantine-color-green-6);
+  outline-offset: 2px;
+}
+
+/* Improved text rendering */
+h1, h2, h3, h4, h5, h6 {
+  text-rendering: optimizeLegibility;
+}
+
+/* Better link transitions */
+a {
+  transition: color 0.2s ease;
+}
+
+/* Smooth scrolling */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Fixed header styles */
+header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  background-color: rgba(26, 27, 30, 0.95);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.15);
+  height: 70px;
+}
+
+/* Mobile nav button improvements */
+.mantine-Burger-root {
+  border-radius: 4px;
+  padding: 4px;
+}
+
+/* Better mobile drawer animations */
+.mantine-Drawer-root {
+  transition: transform 0.3s ease-in-out;
+}
+
+/* Improved button styles */
+.mantine-Button-root {
+  font-weight: 500;
+  transition: all 0.2s ease;
+}
+
+/* Consistent container sizing */
+.mantine-Container-root {
+  max-width: 1320px !important;
+}
