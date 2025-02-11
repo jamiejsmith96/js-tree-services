@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/js-tree-services/static/css/main.04a53ada.css",
-    "main.js": "/js-tree-services/static/js/main.b706e216.js",
+    "main.js": "/js-tree-services/static/js/main.2dfd73b6.js",
     "static/css/606.ceaf285d.chunk.css": "/js-tree-services/static/css/606.ceaf285d.chunk.css",
     "static/js/606.5e68cc2d.chunk.js": "/js-tree-services/static/js/606.5e68cc2d.chunk.js",
     "static/js/628.74f1e9eb.chunk.js": "/js-tree-services/static/js/628.74f1e9eb.chunk.js",
@@ -20,7 +20,7 @@
     "static/js/608.5217063e.chunk.js": "/js-tree-services/static/js/608.5217063e.chunk.js",
     "index.html": "/js-tree-services/index.html",
     "main.04a53ada.css.map": "/js-tree-services/static/css/main.04a53ada.css.map",
-    "main.b706e216.js.map": "/js-tree-services/static/js/main.b706e216.js.map",
+    "main.2dfd73b6.js.map": "/js-tree-services/static/js/main.2dfd73b6.js.map",
     "606.ceaf285d.chunk.css.map": "/js-tree-services/static/css/606.ceaf285d.chunk.css.map",
     "606.5e68cc2d.chunk.js.map": "/js-tree-services/static/js/606.5e68cc2d.chunk.js.map",
     "628.74f1e9eb.chunk.js.map": "/js-tree-services/static/js/628.74f1e9eb.chunk.js.map",
@@ -40,6 +40,6 @@
   },
   "entrypoints": [
     "static/css/main.04a53ada.css",
-    "static/js/main.b706e216.js"
+    "static/js/main.2dfd73b6.js"
   ]
 }
