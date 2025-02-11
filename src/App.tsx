@@ -19,11 +19,14 @@ const Map = React.lazy(() => import('./pages/Map'));
 const Contact = React.lazy(() => import('./pages/Contact'));
 const FAQ = React.lazy(() => import('./pages/FAQ'));
 
+// Get the base URL from the homepage in package.json or use '/' for development
+const baseUrl = process.env.NODE_ENV === 'development' ? '/' : '/js-tree-services';
+
 const App = () => {
   return (
     <>
       <Notifications />
-      <BrowserRouter>
+      <BrowserRouter basename={baseUrl}>
         <ScrollToTop />
         <div className="app-wrapper" style={{ 
           display: 'flex',

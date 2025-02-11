@@ -2,13 +2,16 @@
   "name": "js-tree-services",
   "version": "1.0.0",
   "private": true,
+  "homepage": "https://jamiejsmith96.github.io/js-tree-services",
   "scripts": {
-    "start": "react-scripts start",
+    "start": "cross-env PUBLIC_URL=/ react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "dev": "react-scripts start",
-    "serve": "node server.js"
+    "dev": "cross-env PUBLIC_URL=/ react-scripts start",
+    "serve": "node server.js",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build"
   },
   "dependencies": {
     "@emotion/react": "^11.11.1",
@@ -45,7 +48,8 @@
     "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
     "@types/node": "^20.9.0",
     "@types/react-helmet-async": "^1.0.3",
-    "autoprefixer": "^10.4.20",
+    "cross-env": "^7.0.3",
+    "gh-pages": "^6.1.1",
     "typescript": "^4.9.5"
   },
   "eslintConfig": {
