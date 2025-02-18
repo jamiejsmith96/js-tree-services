@@ -2,16 +2,13 @@
   "name": "js-tree-services",
   "version": "1.0.0",
   "private": true,
-  "homepage": "https://jamiejsmith96.github.io/js-tree-services",
   "scripts": {
-    "start": "npx cross-env PUBLIC_URL=/ react-scripts start",
+    "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "dev": "npx cross-env PUBLIC_URL=/ react-scripts start",
-    "serve": "node server.js",
-    "predeploy": "npm run build",
-    "deploy": "gh-pages -d build"
+    "dev": "react-scripts start",
+    "serve": "node server.js"
   },
   "dependencies": {
     "@emotion/react": "^11.11.1",

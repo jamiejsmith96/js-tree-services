@@ -134,7 +134,17 @@ const Blog: React.FC = () => {
         </div>
 
         {/* Search and Filter */}
-        <Card withBorder radius="md" padding="var(--space-lg)" className="hover-card fade-in-up">
+        <Card
+          withBorder
+          radius="md"
+          padding="var(--space-lg)"
+          className="hover-card"
+          style={{
+            animation: 'fadeInUp 0.6s ease-out forwards',
+            animationDelay: '0.3s',
+            opacity: 0
+          }}
+        >
           <Grid align="flex-end" gutter="var(--space-md)">
             <Grid.Col span={{ base: 12, sm: 6 }}>
               <TextInput
@@ -173,7 +183,12 @@ const Blog: React.FC = () => {
             withBorder 
             padding="var(--space-xl)" 
             radius="md"
-            className="hover-card fade-in-up"
+            className="hover-card"
+            style={{
+              animation: 'fadeInUp 0.6s ease-out forwards',
+              animationDelay: '0.3s',
+              opacity: 0
+            }}
           >
             <Stack align="center" gap="var(--space-md)">
               <Text size="lg">No articles found matching your search criteria.</Text>
