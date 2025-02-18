@@ -1,210 +1,128 @@
-import React, { useState } from 'react';
-import { Container, Grid, Stack, Title, Text, Card, Badge, List, Button, Tabs, Group, Box } from '@mantine/core';
-import { motion, AnimatePresence } from 'framer-motion';
-import { IconLeaf, IconTree, IconAxe, IconPhone, IconArrowRight } from '@tabler/icons-react';
+import React from 'react';
 import { Link } from 'react-router-dom';
-import { Service } from '../types';
+import { Container, Title, Text, Box, Card, Stack } from '@mantine/core';
+import { IconArrowUpRight } from '@tabler/icons-react';
+import { motion } from 'framer-motion';
+import type { ServiceSummary } from '../types/service';
+import { services } from '../data/content';
 
-// Create a motion component for the Card content
-const MotionWrapper = ({ children }: { children: React.ReactNode }) => (
-  <motion.div
-    style={{ height: '100%' }}
-    whileHover={{ translateY: -5 }}
-    transition={{ duration: 0.2 }}
-  >
-    {children}
-  </motion.div>
-);
-
-const Services: React.FC = () => {
-  const [activeTab, setActiveTab] = useState<string | null>('residential');
-
-  const services: Service[] = [
-    {
-      id: 1,
-      title: 'Tree Removal',
-      slug: 'tree-removal',
-      type: 'residential',
-      description: 'Professional and safe tree removal services for your property.',
-      features: [
-        'Complete tree removal',
-        'Stump removal options',
-        'Clean-up included',
-        'Free assessment'
-      ],
-      image: '/assets/services/tree-removal.jpg'
-    },
-    {
-      id: 2,
-      title: 'Commercial Tree Management',
-      slug: 'commercial-tree-management',
-      type: 'commercial',
-      description: 'Comprehensive tree management solutions for commercial properties.',
-      features: [
-        'Site assessment',
-        'Risk management',
-        'Regular maintenance',
-        'Emergency response available'
-      ],
-      image: '/assets/services/commercial.jpg'
-    }
-  ];
-
-  const residentialServices = services.filter(service => service.type === 'residential');
-  const commercialServices = services.filter(service => service.type === 'commercial');
+const ServiceCard: React.FC<{ service: ServiceSummary; index: number }> = ({ service, index }) => {
+  const Icon = service.icon;
 
   return (
-    <Container size="xl" py={80}>
-      <Stack gap={50}>
-        <div>
-          <Title order={1} size="3rem" ta="center" mb="xl">Our Services</Title>
-          <Text size="xl" c="dimmed" maw={800} mx="auto" ta="center">
-            Professional tree care services for residential and commercial properties. Our expert arborists ensure the health and safety of your trees.
-          </Text>
-        </div>
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.5, delay: index * 0.1 }}
+    >
+      <Card 
+        withBorder 
+        radius="md"
+        padding="var(--space-xl)"
+        component={Link}
+        to={`/services/${service.slug || service.title.toLowerCase().replace(/\s+/g, '-')}`}
+        className="hover-card"
+        style={{ height: '100%' }}
+      >
+        <Stack gap="var(--space-lg)">
+          <motion.div
+            whileHover={{ scale: 1.1, rotate: 5 }}
+            transition={{ type: 'spring', stiffness: 300 }}
+            style={{ display: 'inline-block' }}
+          >
+            <Icon 
+              size={48} 
+              color={`var(--mantine-color-${service.color})`}
+              style={{ strokeWidth: 1.5 }}
+            />
+          </motion.div>
 
-        <Tabs value={activeTab} onChange={setActiveTab} variant="pills">
-          <Tabs.List justify="center" mb="xl">
-            <Tabs.Tab value="residential">
-              Residential Services
-            </Tabs.Tab>
-            <Tabs.Tab value="commercial">
-              Commercial Services
-            </Tabs.Tab>
-          </Tabs.List>
-
-          <AnimatePresence mode="wait">
-            <Tabs.Panel value="residential">
-              <Grid>
-                {residentialServices.map((service) => (
-                  <Grid.Col key={service.id} span={{ base: 12, sm: 6, lg: 4 }}>
-                    <MotionWrapper>
-                      <Card
-                        withBorder
-                        radius="md"
-                        padding="lg"
-                        style={{ height: '100%', display: 'flex', flexDirection: 'column' }}
-                      >
-                        <Card.Section>
-                          <img
-                            src={service.image}
-                            height={160}
-                            alt={service.title}
-                            style={{ objectFit: 'cover', width: '100%' }}
-                          />
-                        </Card.Section>
-
-                        <Group justify="space-between" mt="md" mb="xs">
-                          <Text fw={500} size="lg">{service.title}</Text>
-                          <Badge color="green" variant="light">
-                            Professional
-                          </Badge>
-                        </Group>
-
-                        <Text size="sm" c="dimmed" mb="md">
-                          {service.description}
-                        </Text>
-
-                        <List size="sm" spacing="sm" mb="xl">
-                          {service.features.map((feature, i) => (
-                            <List.Item key={i}>{feature}</List.Item>
-                          ))}
-                        </List>
-
-                        <Button
-                          variant="light"
-                          color="green"
-                          fullWidth
-                          mt="auto"
-                          component={Link}
-                          to={`/services/${service.slug}`}
-                          rightSection={<IconArrowRight size={16} />}
-                        >
-                          Learn More
-                        </Button>
-                      </Card>
-                    </MotionWrapper>
-                  </Grid.Col>
-                ))}
-              </Grid>
-            </Tabs.Panel>
-
-            <Tabs.Panel value="commercial">
-              <Grid>
-                {commercialServices.map((service) => (
-                  <Grid.Col key={service.id} span={{ base: 12, sm: 6, lg: 4 }}>
-                    <MotionWrapper>
-                      <Card
-                        withBorder
-                        radius="md"
-                        padding="lg"
-                        style={{ height: '100%', display: 'flex', flexDirection: 'column' }}
-                      >
-                        <Card.Section>
-                          <img
-                            src={service.image}
-                            height={160}
-                            alt={service.title}
-                            style={{ objectFit: 'cover', width: '100%' }}
-                          />
-                        </Card.Section>
-
-                        <Group justify="space-between" mt="md" mb="xs">
-                          <Text fw={500} size="lg">{service.title}</Text>
-                          <Badge color="blue" variant="light">
-                            Commercial
-                          </Badge>
-                        </Group>
-
-                        <Text size="sm" c="dimmed" mb="md">
-                          {service.description}
-                        </Text>
-
-                        <List size="sm" spacing="sm" mb="xl">
-                          {service.features.map((feature, i) => (
-                            <List.Item key={i}>{feature}</List.Item>
-                          ))}
-                        </List>
-
-                        <Button
-                          variant="light"
-                          color="blue"
-                          fullWidth
-                          mt="auto"
-                          component={Link}
-                          to={`/services/${service.slug}`}
-                          rightSection={<IconArrowRight size={16} />}
-                        >
-                          Learn More
-                        </Button>
-                      </Card>
-                    </MotionWrapper>
-                  </Grid.Col>
-                ))}
-              </Grid>
-            </Tabs.Panel>
-          </AnimatePresence>
-        </Tabs>
-
-        <Card withBorder radius="md" padding="xl" mt={50}>
-          <Stack gap="md" align="center" ta="center">
-            <Title order={2}>Need Emergency Tree Service?</Title>
-            <Text size="lg" c="dimmed" maw={600}>
-              Available 24/7 for emergency tree removal and hazardous situation management.
+          <div>
+            <Title order={3} mb="var(--space-sm)">{service.title}</Title>
+            <Text c="dimmed" size="lg">
+              {service.description}
             </Text>
-            <Button
-              size="lg"
-              color="red"
-              leftSection={<IconPhone size={20} />}
-              component="a"
-              href="tel:+441234567890"
+          </div>
+
+          <Box 
+            style={{ 
+              marginTop: 'auto', 
+              display: 'flex',
+              alignItems: 'center',
+              gap: 'var(--space-xs)',
+              color: `var(--mantine-color-${service.color})`,
+              fontWeight: 500
+            }}
+          >
+            Learn more
+            <motion.div
+              initial={{ x: 0 }}
+              whileHover={{ x: 4 }}
+              transition={{ duration: 0.2 }}
             >
-              Call Now
-            </Button>
-          </Stack>
-        </Card>
-      </Stack>
-    </Container>
+              <IconArrowUpRight size={18} />
+            </motion.div>
+          </Box>
+        </Stack>
+      </Card>
+    </motion.div>
+  );
+};
+
+const Services: React.FC = () => {
+  return (
+    <Box py="var(--space-xl)">
+      <Container size="xl">
+        <Stack gap="var(--space-xl)">
+          <Box className="section-decorator" ta="center">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5 }}
+            >
+              <Title order={1}>Our Services</Title>
+              <Text 
+                c="dimmed" 
+                size="xl" 
+                maw={800} 
+                mx="auto" 
+                mt="var(--space-md)"
+              >
+                We provide comprehensive tree care services with a focus on safety, 
+                quality, and customer satisfaction. Browse our services below.
+              </Text>
+            </motion.div>
+          </Box>
+
+          <motion.div layout>
+            <Box
+              style={{
+                display: 'grid',
+                gridTemplateColumns: 'repeat(auto-fill, minmax(300px, 1fr))',
+                gap: 'var(--space-lg)',
+              }}
+            >
+              {services.map((service, index) => (
+                <ServiceCard key={service.title} service={service} index={index} />
+              ))}
+            </Box>
+          </motion.div>
+
+          <Box ta="center" mt="var(--space-xl)">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.6 }}
+            >
+              <Text c="dimmed" size="lg" maw={600} mx="auto">
+                Not sure which service you need? Contact us for a free consultation 
+                and we'll help you determine the best solution for your needs.
+              </Text>
+            </motion.div>
+          </Box>
+        </Stack>
+      </Container>
+    </Box>
   );
 };
 

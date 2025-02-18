@@ -1,5 +1,5 @@
 import React, { Suspense } from 'react';
-import { BrowserRouter, Switch, Route } from 'react-router-dom';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { Loader, Center } from '@mantine/core';
 import { Notifications } from '@mantine/notifications';
 
@@ -14,8 +14,8 @@ const About = React.lazy(() => import('./pages/About'));
 const Services = React.lazy(() => import('./pages/Services'));
 const ServiceDetail = React.lazy(() => import('./pages/ServiceDetail'));
 const Blog = React.lazy(() => import('./pages/Blog'));
+const BlogDetail = React.lazy(() => import('./pages/BlogDetail'));
 const Gallery = React.lazy(() => import('./pages/Gallery'));
-const Map = React.lazy(() => import('./pages/Map'));
 const Contact = React.lazy(() => import('./pages/Contact'));
 const FAQ = React.lazy(() => import('./pages/FAQ'));
 
@@ -42,17 +42,18 @@ const App = () => {
                   <Loader size="xl" />
                 </Center>
               }>
-                <Switch>
-                  <Route exact path="/" component={Home} />
-                  <Route path="/about" component={About} />
-                  <Route path="/services" exact component={Services} />
-                  <Route path="/services/:slug" component={ServiceDetail} />
-                  <Route path="/blog" component={Blog} />
-                  <Route path="/gallery" component={Gallery} />
-                  <Route path="/map" component={Map} />
-                  <Route path="/contact" component={Contact} />
-                  <Route path="/faq" component={FAQ} />
-                </Switch>
+                <Routes>
+                  <Route path="/" element={<Home />} />
+                  <Route path="/about" element={<About />} />
+                  <Route path="/services" element={<Services />} />
+                  <Route path="/services/:slug" element={<ServiceDetail />} />
+                  <Route path="/blog" element={<Blog />} />
+                  <Route path="/blog/:slug" element={<BlogDetail />} />
+                  <Route path="/gallery" element={<Gallery />} />
+                  <Route path="/contact" element={<Contact />} />
+                  <Route path="/faq" element={<FAQ />} />
+                  <Route path="*" element={<Home />} />
+                </Routes>
               </Suspense>
             </ErrorBoundary>
           </main>

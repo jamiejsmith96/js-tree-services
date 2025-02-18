@@ -1,49 +1,66 @@
-import React, { Component, ErrorInfo, ReactNode } from 'react';
+import * as React from 'react';
 import { Container, Title, Text, Button, Stack, Card } from '@mantine/core';
 import { IconRefresh } from '@tabler/icons-react';
 
-interface Props {
-  children: ReactNode;
+interface ErrorBoundaryProps {
+  children: React.ReactNode;
 }
 
-interface State {
+interface ErrorBoundaryState {
   hasError: boolean;
   error?: Error;
+  errorInfo?: React.ErrorInfo;
 }
 
-class ErrorBoundary extends Component<Props, State> {
-  public state: State = {
-    hasError: false
-  };
-
-  public static getDerivedStateFromError(error: Error): State {
-    return { hasError: true, error };
+class ErrorBoundary extends React.Component<ErrorBoundaryProps, ErrorBoundaryState> {
+  constructor(props: ErrorBoundaryProps) {
+    super(props);
+    this.state = {
+      hasError: false
+    };
   }
 
-  public componentDidCatch(error: Error, errorInfo: ErrorInfo) {
+  public static getDerivedStateFromError(error: Error): ErrorBoundaryState {
+    return {
+      hasError: true,
+      error
+    };
+  }
+
+  public componentDidCatch(error: Error, errorInfo: React.ErrorInfo): void {
     console.error('Uncaught error:', error, errorInfo);
+    this.setState({
+      error,
+      errorInfo
+    });
   }
 
-  private handleReload = () => {
+  private handleReload = (): void => {
     window.location.reload();
   };
 
-  public render() {
+  public render(): React.ReactNode {
     if (this.state.hasError) {
       return (
         <Container size="sm" py={80}>
-          <Card withBorder padding="xl" radius="md">
+          <Card withBorder p="xl" radius="md">
             <Stack gap="xl" align="center">
               <Title order={2} c="red">Something went wrong</Title>
               <Text ta="center" c="dimmed">
-                We apologize for the inconvenience. Please try refreshing the page or contact our support team if the problem persists.
+                We apologize for the inconvenience. Please try refreshing the page.
               </Text>
+              {this.state.error && (
+                <Text size="sm" c="dimmed" style={{ wordBreak: 'break-word' }}>
+                  {this.state.error.toString()}
+                </Text>
+              )}
               <Button
                 onClick={this.handleReload}
                 leftSection={<IconRefresh size={16} />}
-                color="green"
+                variant="light"
+                color="blue"
               >
-                Reload Page
+                Refresh Page
               </Button>
             </Stack>
           </Card>

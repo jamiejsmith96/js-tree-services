@@ -22,7 +22,6 @@ export interface ServiceItem {
   safetyMeasures?: string[];
   galleryImages?: string[];
   insurance?: {
-    type: string;
     coverage: string;
   };
 }
@@ -66,7 +65,6 @@ export interface Service {
   id: number;
   title: string;
   slug: string;
-  type: 'residential' | 'commercial';
   description: string;
   features: string[];
   image: string;

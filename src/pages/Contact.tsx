@@ -1,220 +1,223 @@
-import React, { useState } from 'react';
-import { Container, Title, Text, Grid, Card, TextInput, Textarea, Button, Group, Stack, ThemeIcon, SimpleGrid, LoadingOverlay } from '@mantine/core';
-import { useForm } from '@mantine/form';
-import { IconPhone, IconMail, IconMapPin, IconClock, IconBrandWhatsapp, IconSend, IconCheck } from '@tabler/icons-react';
+import React from 'react';
+import { Container, Title, Text, Grid, Card, Group, Stack, ThemeIcon, SimpleGrid, Box } from '@mantine/core';
+import { IconPhone, IconMail, IconMapPin, IconClock, IconBrandWhatsapp } from '@tabler/icons-react';
 import { motion } from 'framer-motion';
 import { notifications } from '@mantine/notifications';
 import InteractiveMap from '../components/Map/InteractiveMap';
+import { ContactForm } from '../components/Contact/ContactForm';
 import { submitContactForm } from '../services/api';
-const MotionDiv = motion.div;
 
-const Contact: React.FC = () => {
-  const [isSubmitting, setIsSubmitting] = useState(false);
+const contactInfo = [
+  {
+    icon: IconPhone,
+    title: 'Phone',
+    content: '+44 1234 567890',
+    link: 'tel:+441234567890',
+    color: 'blue'
+  },
+  {
+    icon: IconMail,
+    title: 'Email',
+    content: 'info@jstreeservices.com',
+    link: 'mailto:info@jstreeservices.com',
+    color: 'green'
+  },
+  {
+    icon: IconMapPin,
+    title: 'Address',
+    content: '123 Tree Street, Aldershot, Hampshire, GU11 1AA',
+    link: 'https://maps.google.com/?q=123+Tree+Street+Aldershot+Hampshire',
+    color: 'orange'
+  },
+  {
+    icon: IconClock,
+    title: 'Hours',
+    content: 'Mon-Fri: 8am-6pm\nSat: 9am-4pm\nEmergency: 24/7',
+    color: 'grape'
+  },
+];
 
-  const form = useForm({
-    initialValues: {
-      name: '',
-      email: '',
-      phone: '',
-      service: '',
-      message: '',
-    },
-    validate: {
-      name: (value) => value.trim().length < 2 ? 'Name must be at least 2 characters' : null,
-      email: (value) => !/^\S+@\S+$/.test(value) ? 'Invalid email address' : null,
-      phone: (value) => !/^[\d\s+()-]{10,}$/.test(value) ? 'Invalid phone number' : null,
-      message: (value) => value.trim().length < 10 ? 'Message must be at least 10 characters' : null,
-    },
-  });
-
-  const contactInfo = [
-    {
-      icon: IconPhone,
-      title: 'Phone',
-      content: '+44 1234 567890',
-      link: 'tel:+441234567890',
-    },
-    {
-      icon: IconMail,
-      title: 'Email',
-      content: 'info@jstreeservices.com',
-      link: 'mailto:info@jstreeservices.com',
-    },
-    {
-      icon: IconMapPin,
-      title: 'Address',
-      content: '123 Tree Street, Aldershot, Hampshire, GU11 1AA',
-      link: 'https://maps.google.com/?q=123+Tree+Street+Aldershot+Hampshire',
-    },
-    {
-      icon: IconClock,
-      title: 'Hours',
-      content: 'Mon-Fri: 8am-6pm\nSat: 9am-4pm\nEmergency: 24/7',
-    },
-  ];
-
-  const handleSubmit = async (values: typeof form.values) => {
-    setIsSubmitting(true);
+const Contact = () => {
+  const handleFormSubmit = async (values: any) => {
     try {
       await submitContactForm(values);
       notifications.show({
         title: 'Success!',
         message: 'Thank you for your enquiry. We will contact you shortly.',
         color: 'green',
-        icon: <IconCheck size={16} />,
       });
-      form.reset();
     } catch (error) {
       notifications.show({
         title: 'Error',
         message: 'Something went wrong. Please try again or call us directly.',
         color: 'red',
       });
-    } finally {
-      setIsSubmitting(false);
+      throw error;
     }
   };
 
   return (
-    <Container size="xl" py={80}>
-      <Stack gap={60}>
-        <div>
-          <Title order={1} size="3rem" ta="center">Contact Us</Title>
-          <Text c="dimmed" size="xl" ta="center" mt="md" maw={800} mx="auto">
-            Get in touch with our expert team for a free quote or emergency service. 
-            We're here to help with all your tree care needs.
-          </Text>
-        </div>
-
-        <SimpleGrid cols={{ base: 1, sm: 2, md: 4 }} spacing="xl">
-          {contactInfo.map((info, index) => (
-            <MotionDiv
-              key={index}
-              style={{
-                padding: '24px',
-                border: '1px solid #eee',
-                borderRadius: '8px',
-                backgroundColor: '#f8f9fa',
-                cursor: info.link ? 'pointer' : 'default',
-                textDecoration: 'none',
-                color: 'inherit'
-              }}
-              onClick={() => info.link && window.open(info.link, '_blank')}
+    <Box>
+      <Container size="xl" py="var(--space-xl)">
+        <Stack gap="var(--space-xl)">
+          <Box className="section-decorator">
+            <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.3, delay: index * 0.1 }}
-              whileHover={info.link ? { backgroundColor: '#f1f3f5' } : undefined}
+              transition={{ duration: 0.5 }}
             >
-              <ThemeIcon size={50} radius="md" color="green" variant="light">
-                <info.icon size={26} />
-              </ThemeIcon>
-              <Text size="lg" fw={500} mt="md">{info.title}</Text>
-              <Text size="sm" c="dimmed" mt="sm" style={{ whiteSpace: 'pre-line' }}>
-                {info.content}
+              <Title order={1} ta="center">Contact Us</Title>
+              <Text 
+                c="dimmed" 
+                size="xl" 
+                ta="center" 
+                mt="md" 
+                maw={800} 
+                mx="auto"
+              >
+                Get in touch with our expert team for a free quote or emergency service. 
+                We're here to help with all your tree care needs.
               </Text>
-            </MotionDiv>
-          ))}
-        </SimpleGrid>
+            </motion.div>
+          </Box>
 
-        <Grid>
-          <Grid.Col span={{ base: 12, md: 6 }}>
-            <Card withBorder p="xl" radius="md" pos="relative">
-              <LoadingOverlay visible={isSubmitting} />
-              <Title order={2} size="h2" mb="xl">Send Us a Message</Title>
-              <form onSubmit={form.onSubmit(handleSubmit)}>
-                <Stack gap="md">
-                  <TextInput
-                    required
-                    label="Name"
-                    placeholder="Your full name"
-                    {...form.getInputProps('name')}
-                    disabled={isSubmitting}
-                  />
-                  <TextInput
-                    required
-                    label="Email"
-                    placeholder="your@email.com"
-                    {...form.getInputProps('email')}
-                    disabled={isSubmitting}
-                  />
-                  <TextInput
-                    required
-                    label="Phone"
-                    placeholder="+44 1234 567890"
-                    {...form.getInputProps('phone')}
-                    disabled={isSubmitting}
-                  />
-                  <TextInput
-                    label="Service Required"
-                    placeholder="e.g., Tree Felling, Crown Reduction"
-                    {...form.getInputProps('service')}
-                    disabled={isSubmitting}
-                  />
-                  <Textarea
-                    required
-                    label="Message"
-                    placeholder="Please describe your requirements"
-                    minRows={4}
-                    {...form.getInputProps('message')}
-                    disabled={isSubmitting}
-                  />
-                  <Group justify="flex-end" mt="md">
-                    <Button
-                      type="submit"
-                      size="lg"
-                      color="green"
-                      leftSection={<IconSend size={20} />}
-                      loading={isSubmitting}
+          <SimpleGrid cols={{ base: 1, sm: 2, md: 4 }} spacing="var(--space-lg)">
+            {contactInfo.map((info, index) => (
+              <motion.div
+                key={info.title}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: index * 0.1 }}
+              >
+                <Card
+                  withBorder
+                  padding="var(--space-xl)"
+                  radius="md"
+                  className="hover-card"
+                  onClick={() => info.link && window.open(info.link, '_blank')}
+                  style={{
+                    cursor: info.link ? 'pointer' : 'default',
+                    height: '100%',
+                  }}
+                >
+                  <motion.div whileHover={{ scale: 1.1, rotate: 5 }}>
+                    <ThemeIcon 
+                      size={50} 
+                      radius="md" 
+                      color={info.color}
+                      variant="light" 
+                      className="interactive-element"
                     >
-                      {isSubmitting ? 'Sending...' : 'Send Message'}
-                    </Button>
-                  </Group>
-                </Stack>
-              </form>
-            </Card>
-          </Grid.Col>
+                      <info.icon size={26} />
+                    </ThemeIcon>
+                  </motion.div>
+                  
+                  <Stack mt="var(--space-md)" gap="xs">
+                    <Text size="xl" fw={600}>{info.title}</Text>
+                    <Text 
+                      size="sm" 
+                      c="dimmed" 
+                      style={{ 
+                        whiteSpace: 'pre-line',
+                        lineHeight: 1.6
+                      }}
+                    >
+                      {info.content}
+                    </Text>
+                  </Stack>
+                </Card>
+              </motion.div>
+            ))}
+          </SimpleGrid>
 
-          <Grid.Col span={{ base: 12, md: 6 }}>
-            <Stack gap="xl">
-              <Card withBorder padding="xl" radius="md">
-                <Title order={2} size="h2" mb="md">Emergency Service</Title>
-                <Text mb="xl">
-                  Need urgent tree care? Our emergency team is available 24/7 for immediate assistance.
-                </Text>
-                <Group>
-                  <Button
-                    component="a"
-                    href="tel:+441234567890"
-                    size="lg"
-                    color="red"
-                    leftSection={<IconPhone size={20} />}
-                  >
-                    Emergency Hotline
-                  </Button>
-                  <Button
-                    component="a"
-                    href="https://wa.me/441234567890"
-                    size="lg"
-                    variant="light"
-                    color="green"
-                    leftSection={<IconBrandWhatsapp size={20} />}
-                  >
-                    WhatsApp
-                  </Button>
-                </Group>
-              </Card>
+          <Grid gutter="var(--space-lg)">
+            <Grid.Col span={{ base: 12, md: 6 }}>
+              <ContactForm onSubmit={handleFormSubmit} />
+            </Grid.Col>
 
-              <Card withBorder padding="xl" radius="md">
-                <Title order={2} size="h2" mb="xl">Service Area</Title>
-                <div style={{ height: 300 }}>
-                  <InteractiveMap />
-                </div>
-              </Card>
-            </Stack>
-          </Grid.Col>
-        </Grid>
-      </Stack>
-    </Container>
+            <Grid.Col span={{ base: 12, md: 6 }}>
+              <Stack gap="var(--space-lg)">
+                <motion.div
+                  initial={{ opacity: 0, x: 20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ duration: 0.5 }}
+                >
+                  <Card 
+                    withBorder 
+                    padding="var(--space-xl)" 
+                    radius="md" 
+                    className="hover-card"
+                    bg="var(--mantine-color-red-0)"
+                  >
+                    <Title order={2} mb="var(--space-md)">Emergency Service</Title>
+                    <Text size="lg" mb="var(--space-xl)">
+                      Need urgent tree care? Our emergency team is available 24/7 for immediate assistance.
+                    </Text>
+                    <Group gap="var(--space-md)">
+                      <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+                        <Card
+                          component="a"
+                          href="tel:+441234567890"
+                          padding="var(--space-md)"
+                          radius="md"
+                          withBorder
+                          className="hover-card"
+                        >
+                          <Group gap="xs">
+                            <IconPhone size={20} />
+                            <Text size="lg" fw={500}>Emergency Hotline</Text>
+                          </Group>
+                        </Card>
+                      </motion.div>
+                      
+                      <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+                        <Card
+                          component="a"
+                          href="https://wa.me/441234567890"
+                          padding="var(--space-md)"
+                          radius="md"
+                          withBorder
+                          className="hover-card"
+                        >
+                          <Group gap="xs">
+                            <IconBrandWhatsapp size={20} color="green" />
+                            <Text size="lg" fw={500}>WhatsApp</Text>
+                          </Group>
+                        </Card>
+                      </motion.div>
+                    </Group>
+                  </Card>
+                </motion.div>
+
+                <motion.div
+                  initial={{ opacity: 0, x: 20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ duration: 0.5, delay: 0.2 }}
+                >
+                  <Card 
+                    withBorder 
+                    padding="var(--space-xl)" 
+                    radius="md" 
+                    className="hover-card"
+                  >
+                    <Title order={2} mb="var(--space-xl)">Service Area</Title>
+                    <Box 
+                      style={{ 
+                        height: '400px',
+                        borderRadius: 'var(--mantine-radius-md)',
+                        overflow: 'hidden'
+                      }}
+                    >
+                      <InteractiveMap />
+                    </Box>
+                  </Card>
+                </motion.div>
+              </Stack>
+            </Grid.Col>
+          </Grid>
+        </Stack>
+      </Container>
+    </Box>
   );
 };
 

@@ -1,9 +1,20 @@
 import React from 'react';
-import { AppShell, Container, Grid, Group, Stack, Text, ActionIcon, Button, Divider, Title } from '@mantine/core';
+import { Container, Grid, Group, Stack, Text, ActionIcon, Button, Divider, Title } from '@mantine/core';
 import { IconBrandFacebook, IconBrandTwitter, IconBrandInstagram, IconPhone, IconMail, IconMapPin } from '@tabler/icons-react';
 import { Link } from 'react-router-dom';
 
-const sections = {
+interface FooterLink {
+  label: string;
+  link: string;
+}
+
+interface FooterSections {
+  services: FooterLink[];
+  company: FooterLink[];
+  legal: FooterLink[];
+}
+
+const sections: FooterSections = {
   services: [
     { label: 'Tree Removal', link: '/services/tree-removal' },
     { label: 'Tree Pruning', link: '/services/tree-pruning' },
@@ -22,16 +33,16 @@ const sections = {
   ],
 };
 
-const year = new Date().getFullYear();
-
 const Footer: React.FC = () => {
+  const year = new Date().getFullYear();
+
   return (
-    <footer style={{ backgroundColor: '#f8f9fa', borderTop: '1px solid #e9ecef' }}>
+    <footer style={{ backgroundColor: 'var(--background-light)', borderTop: '1px solid #e9ecef' }}>
       <Container size="xl" py={40}>
         <Grid gutter="xl">
           <Grid.Col span={{ base: 12, md: 3 }}>
-            <Stack gap="md">
-              <Group>
+            <Stack gap="md" className="fade-in-up">
+              <Group className="interactive-element">
                 <img src="/assets/logo.png" alt="JS Tree Services" height={40} />
                 <Title order={3}>JS Tree Services</Title>
               </Group>
@@ -39,13 +50,40 @@ const Footer: React.FC = () => {
                 Fully qualified and insured arborists at your service.
               </Text>
               <Group gap="xs">
-                <ActionIcon size="lg" variant="light" color="green" component="a" href="https://facebook.com" target="_blank">
+                <ActionIcon 
+                  size="lg" 
+                  variant="light" 
+                  color="green" 
+                  component="a" 
+                  href="https://facebook.com" 
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="interactive-element"
+                >
                   <IconBrandFacebook size={18} />
                 </ActionIcon>
-                <ActionIcon size="lg" variant="light" color="green" component="a" href="https://twitter.com" target="_blank">
+                <ActionIcon 
+                  size="lg" 
+                  variant="light" 
+                  color="green" 
+                  component="a" 
+                  href="https://twitter.com" 
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="interactive-element"
+                >
                   <IconBrandTwitter size={18} />
                 </ActionIcon>
-                <ActionIcon size="lg" variant="light" color="green" component="a" href="https://instagram.com" target="_blank">
+                <ActionIcon 
+                  size="lg" 
+                  variant="light" 
+                  color="green" 
+                  component="a" 
+                  href="https://instagram.com" 
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="interactive-element"
+                >
                   <IconBrandInstagram size={18} />
                 </ActionIcon>
               </Group>
@@ -53,7 +91,7 @@ const Footer: React.FC = () => {
           </Grid.Col>
 
           <Grid.Col span={{ base: 12, sm: 6, md: 3 }}>
-            <Stack gap="xs">
+            <Stack gap="xs" className="fade-in-up delay-1">
               <Text fw={600} mb={6}>Services</Text>
               {sections.services.map((link) => (
                 <Text
@@ -62,12 +100,8 @@ const Footer: React.FC = () => {
                   to={link.link}
                   size="sm"
                   c="dimmed"
-                  style={(theme) => ({
-                    textDecoration: 'none',
-                    '&:hover': {
-                      color: theme.colors.green[6],
-                    },
-                  })}
+                  className="interactive-element"
+                  style={{ textDecoration: 'none' }}
                 >
                   {link.label}
                 </Text>
@@ -76,7 +110,7 @@ const Footer: React.FC = () => {
           </Grid.Col>
 
           <Grid.Col span={{ base: 12, sm: 6, md: 3 }}>
-            <Stack gap="xs">
+            <Stack gap="xs" className="fade-in-up delay-2">
               <Text fw={600} mb={6}>Company</Text>
               {sections.company.map((link) => (
                 <Text
@@ -85,12 +119,8 @@ const Footer: React.FC = () => {
                   to={link.link}
                   size="sm"
                   c="dimmed"
-                  style={(theme) => ({
-                    textDecoration: 'none',
-                    '&:hover': {
-                      color: theme.colors.green[6],
-                    },
-                  })}
+                  className="interactive-element"
+                  style={{ textDecoration: 'none' }}
                 >
                   {link.label}
                 </Text>
@@ -99,7 +129,7 @@ const Footer: React.FC = () => {
           </Grid.Col>
 
           <Grid.Col span={{ base: 12, sm: 12, md: 3 }}>
-            <Stack gap="xs">
+            <Stack gap="xs" className="fade-in-up delay-3">
               <Text fw={600} mb={6}>Contact</Text>
               <Group gap="xs" wrap="nowrap">
                 <IconPhone size={16} />
@@ -108,6 +138,7 @@ const Footer: React.FC = () => {
                   href="tel:+441234567890"
                   size="sm"
                   c="dimmed"
+                  className="interactive-element"
                   style={{ textDecoration: 'none' }}
                 >
                   +44 1234 567890
@@ -120,6 +151,7 @@ const Footer: React.FC = () => {
                   href="mailto:info@jstreeservices.com"
                   size="sm"
                   c="dimmed"
+                  className="interactive-element"
                   style={{ textDecoration: 'none' }}
                 >
                   info@jstreeservices.com
@@ -153,6 +185,7 @@ const Footer: React.FC = () => {
                 variant="subtle"
                 color="gray"
                 size="xs"
+                className="interactive-element"
               >
                 {link.label}
               </Button>

@@ -2,7 +2,6 @@ import React from 'react';
 import { Group, Button, Burger, Drawer, Stack, Text, Box, ActionIcon, Container } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
 import { Link, useLocation } from 'react-router-dom';
-import { motion, AnimatePresence } from 'framer-motion';
 import { IconPhone } from '@tabler/icons-react';
 
 const Header: React.FC = () => {
@@ -20,69 +19,57 @@ const Header: React.FC = () => {
   ];
 
   const DesktopNavigation = () => (
-    <motion.nav
-      initial={{ opacity: 0, y: -20 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.6, delay: 0.3, ease: "easeOut" }}
-    >
-      <Group gap="md">
-        {links.map((link) => (
-          <motion.div
-            key={link.to}
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-          >
-            <Button
-              component={Link}
-              to={link.to}
-              variant={location.pathname === link.to ? 'filled' : 'subtle'}
-              color={location.pathname === link.to ? 'green' : 'gray'}
-              size="sm"
-              styles={(theme) => ({
-                root: {
-                  color: 'white',
-                  fontWeight: 500,
-                  padding: '8px 16px',
-                  transition: 'all 0.2s ease',
-                  borderRadius: theme.radius.md,
-                  '&:hover': {
-                    backgroundColor: link.to === '/contact' 
-                      ? theme.colors.green[7] 
-                      : 'rgba(255, 255, 255, 0.1)',
-                    transform: 'translateY(-1px)'
-                  }
-                }
-              })}
-            >
-              {link.label}
-            </Button>
-          </motion.div>
-        ))}
-        <motion.div
-          whileHover={{ scale: 1.05 }}
-          whileTap={{ scale: 0.95 }}
-        >
-          <Button
-            component={Link}
-            to="/contact"
-            variant="gradient"
-            gradient={{ from: '#2F9E44', to: '#37B24D', deg: 45 }}
-            size="sm"
-            ml="md"
-            styles={{
-              root: {
-                boxShadow: '0 2px 4px rgba(0,0,0,0.1)',
-                fontWeight: 600,
-                padding: '8px 20px',
-                borderRadius: '6px'
+    <Group gap="md">
+      {links.map((link) => (
+        <Button
+          key={link.to}
+          component={Link}
+          to={link.to}
+          variant={location.pathname === link.to ? 'filled' : 'subtle'}
+          color="green"
+          size="sm"
+          className={`interactive-element ${location.pathname === link.to ? 'active' : ''}`}
+          styles={{
+            root: {
+              color: 'white',
+              fontWeight: 500,
+              padding: 'var(--space-sm) var(--space-md)',
+              backgroundColor: location.pathname === link.to 
+                ? 'var(--mantine-color-green-filled)'
+                : 'transparent',
+              '&:hover': {
+                backgroundColor: location.pathname === link.to 
+                  ? 'var(--mantine-color-green-filled-hover)'
+                  : 'rgba(255, 255, 255, 0.1)',
               }
-            }}
-          >
-            Get Quote
-          </Button>
-        </motion.div>
-      </Group>
-    </motion.nav>
+            }
+          }}
+        >
+          {link.label}
+        </Button>
+      ))}
+      <Button
+        component={Link}
+        to="/contact"
+        variant="gradient"
+        gradient={{ from: 'var(--gradient-start)', to: 'var(--gradient-end)' }}
+        size="sm"
+        className="interactive-element"
+        styles={{
+          root: {
+            boxShadow: 'var(--shadow-sm)',
+            fontWeight: 600,
+            padding: 'var(--space-sm) var(--space-lg)',
+            '&:hover': {
+              transform: 'translateY(-2px)',
+              boxShadow: 'var(--shadow-md)',
+            }
+          }
+        }}
+      >
+        Get Quote
+      </Button>
+    </Group>
   );
 
   return (
@@ -90,33 +77,27 @@ const Header: React.FC = () => {
       <header>
         <Container size="xl" h="100%">
           <Group justify="space-between" h="100%">
-            <motion.div
-              initial={{ opacity: 0, x: -20 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.6, ease: "easeOut" }}
-            >
-              <Link to="/" style={{ textDecoration: 'none' }}>
-                <Group>
-                  <img
-                    src="/assets/logo.png"
-                    alt="JS Tree Services"
-                    height={40}
-                    style={{ filter: 'brightness(1.1)' }}
-                  />
-                  <Text
-                    size="xl"
-                    fw={700}
-                    style={{
-                      color: 'white',
-                      textShadow: '0 1px 2px rgba(0, 0, 0, 0.2)',
-                      letterSpacing: '-0.02em'
-                    }}
-                  >
-                    JS Tree Services
-                  </Text>
-                </Group>
-              </Link>
-            </motion.div>
+            <Link to="/" className="interactive-element" style={{ textDecoration: 'none' }}>
+              <Group>
+                <img
+                  src="/assets/logo.png"
+                  alt="JS Tree Services"
+                  height={40}
+                  style={{ filter: 'brightness(1.1)' }}
+                />
+                <Text
+                  size="xl"
+                  fw={700}
+                  style={{
+                    color: 'white',
+                    textShadow: '0 1px 2px rgba(0, 0, 0, 0.2)',
+                    letterSpacing: '-0.02em'
+                  }}
+                >
+                  JS Tree Services
+                </Text>
+              </Group>
+            </Link>
 
             <Box hiddenFrom="md" style={{ display: 'flex', alignItems: 'center' }}>
               <Burger
@@ -124,10 +105,11 @@ const Header: React.FC = () => {
                 onClick={toggle}
                 color="white"
                 size="sm"
+                className="interactive-element"
               />
             </Box>
 
-            <Box visibleFrom="md" style={{ flex: 1, display: 'flex', justifyContent: 'center', gap: '1rem' }}>
+            <Box visibleFrom="md" style={{ flex: 1, display: 'flex', justifyContent: 'center', gap: 'var(--space-md)' }}>
               <DesktopNavigation />
             </Box>
           </Group>
@@ -142,119 +124,117 @@ const Header: React.FC = () => {
         hiddenFrom="md"
         withCloseButton
         styles={{
-          header: { padding: '16px' },
-          body: { padding: '16px' },
-          content: { backgroundColor: '#fff' }
+          header: { padding: 'var(--space-md)' },
+          body: { padding: 'var(--space-md)' },
+          content: { 
+            background: 'linear-gradient(135deg, var(--gradient-start), var(--gradient-end))',
+            color: 'white'
+          }
         }}
       >
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, ease: "easeOut" }}
-        >
-          <Stack gap="md">
-            {links.map((link) => (
-              <Button
-                key={link.to}
-                component={Link}
-                to={link.to}
-                variant={location.pathname === link.to ? 'filled' : 'subtle'}
-                color={location.pathname === link.to ? 'green' : 'gray'}
-                size="lg"
-                fullWidth
-                onClick={close}
-                styles={{
-                  root: {
-                    height: '50px',
-                    fontSize: '1.1rem',
-                    padding: '0 20px',
-                    borderRadius: '8px',
-                    '&:hover': {
-                      transform: 'translateY(-1px)',
-                      transition: 'transform 0.2s ease'
-                    }
+        <Stack gap="var(--space-md)">
+          {links.map((link) => (
+            <Button
+              key={link.to}
+              component={Link}
+              to={link.to}
+              variant={location.pathname === link.to ? 'filled' : 'light'}
+              color="green"
+              size="lg"
+              fullWidth
+              onClick={close}
+              className={`interactive-element ${location.pathname === link.to ? 'active' : ''}`}
+              styles={{
+                root: {
+                  height: '50px',
+                  fontSize: '1.1rem',
+                  backgroundColor: location.pathname === link.to
+                    ? 'var(--mantine-color-green-filled)'
+                    : 'rgba(255, 255, 255, 0.1)',
+                  color: 'white',
+                  '&:hover': {
+                    backgroundColor: location.pathname === link.to
+                      ? 'var(--mantine-color-green-filled-hover)'
+                      : 'rgba(255, 255, 255, 0.2)',
                   }
-                }}
-              >
-                {link.label}
-              </Button>
-            ))}
-            <Stack gap="md" mt="xl">
-              <Button
-                component={Link}
-                to="/contact"
-                variant="gradient"
-                gradient={{ from: '#2F9E44', to: '#37B24D', deg: 45 }}
-                size="lg"
-                onClick={close}
-                styles={{
-                  root: {
-                    height: '54px',
-                    fontSize: '1.1rem',
-                    fontWeight: 600,
-                    boxShadow: '0 2px 4px rgba(0,0,0,0.1)',
-                    '&:hover': {
-                      transform: 'translateY(-1px)',
-                      transition: 'transform 0.2s ease'
-                    }
+                }
+              }}
+            >
+              {link.label}
+            </Button>
+          ))}
+          <Stack gap="var(--space-md)" mt="var(--space-xl)">
+            <Button
+              component={Link}
+              to="/contact"
+              variant="gradient"
+              gradient={{ from: 'white', to: '#f8f9fa' }}
+              size="lg"
+              onClick={close}
+              className="interactive-element"
+              styles={{
+                root: {
+                  height: '54px',
+                  fontSize: '1.1rem',
+                  fontWeight: 600,
+                  boxShadow: 'var(--shadow-sm)',
+                  color: 'var(--gradient-start)',
+                  '&:hover': {
+                    transform: 'translateY(-2px)',
+                    boxShadow: 'var(--shadow-md)',
                   }
-                }}
-              >
-                Get Quote
-              </Button>
-              <Button
-                component="a"
-                href="tel:+441234567890"
-                variant="light"
-                color="green"
-                size="lg"
-                leftSection={<IconPhone size={24} />}
-                styles={{
-                  root: {
-                    height: '54px',
-                    fontSize: '1.1rem',
-                    fontWeight: 500,
-                    '&:hover': {
-                      transform: 'translateY(-1px)',
-                      transition: 'transform 0.2s ease'
-                    }
-                  }
-                }}
-              >
-                Call Now
-              </Button>
-            </Stack>
-          </Stack>
-        </motion.div>
-      </Drawer>
-
-      <AnimatePresence>
-        {!opened && (
-          <motion.div
-            initial={{ opacity: 0, scale: 0.8 }}
-            animate={{ opacity: 1, scale: 1 }}
-            exit={{ opacity: 0, scale: 0.8 }}
-            style={{
-              position: 'fixed',
-              bottom: '2rem',
-              right: '2rem',
-              zIndex: 1000,
-            }}
-          >
-            <ActionIcon
+                }
+              }}
+            >
+              Get Quote
+            </Button>
+            <Button
               component="a"
               href="tel:+441234567890"
+              variant="light"
               color="green"
-              variant="filled"
-              radius="xl"
-              size={64}
-              style={{ boxShadow: '0 4px 12px rgba(0,0,0,0.1)' }}
+              size="lg"
+              leftSection={<IconPhone size={24} />}
+              className="interactive-element"
+              styles={{
+                root: {
+                  height: '54px',
+                  fontSize: '1.1rem',
+                  fontWeight: 500,
+                  backgroundColor: 'rgba(255, 255, 255, 0.9)',
+                  '&:hover': {
+                    backgroundColor: 'white',
+                    transform: 'translateY(-2px)'
+                  }
+                }
+              }}
             >
-              <IconPhone size={32} />
-            </ActionIcon>
-          </motion.div>
-        )}
-      </AnimatePresence>
+              Call Now
+            </Button>
+          </Stack>
+        </Stack>
+      </Drawer>
+
+      {!opened && (
+        <ActionIcon
+          component="a"
+          href="tel:+441234567890"
+          color="green"
+          variant="filled"
+          radius="xl"
+          size={64}
+          className="hover-card"
+          style={{
+            position: 'fixed',
+            bottom: 'var(--space-xl)',
+            right: 'var(--space-xl)',
+            zIndex: 1000,
+            boxShadow: 'var(--shadow-md)'
+          }}
+        >
+          <IconPhone size={32} />
+        </ActionIcon>
+      )}
     </>
   );
 };

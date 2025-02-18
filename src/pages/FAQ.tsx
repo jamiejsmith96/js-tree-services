@@ -1,7 +1,10 @@
 import React from 'react';
-import { Container, Title, Accordion, Text, Paper, Grid } from '@mantine/core';
+import { Container, Title, Text, Paper, Grid, Button, Stack, Box, Group, Accordion } from '@mantine/core';
+import { IconPhone, IconMail } from '@tabler/icons-react';
+import { useLocation } from 'react-router-dom';
 
 const FAQ: React.FC = () => {
+  const location = useLocation();
   const faqs = [
     {
       question: "What areas do you cover?",
@@ -30,36 +33,145 @@ const FAQ: React.FC = () => {
   ];
 
   return (
-    <Container size="xl">
-      <Title order={1} mb="xl">Frequently Asked Questions</Title>
+    <Container size="xl" py="var(--space-xl)">
+      <Box className="section-decorator">
+        <Title
+          order={1}
+          ta="center"
+          style={{
+            animation: 'fadeInUp 0.6s ease-out forwards',
+            opacity: 0
+          }}
+        >
+          Frequently Asked Questions
+        </Title>
+        <Text
+          c="dimmed"
+          size="xl"
+          ta="center"
+          mt="var(--space-md)"
+          mb="var(--space-xl)"
+          maw={800}
+          mx="auto"
+          style={{
+            animation: 'fadeInUp 0.6s ease-out forwards',
+            animationDelay: '0.1s',
+            opacity: 0
+          }}
+        >
+          Find answers to common questions about our tree surgery services, pricing, and coverage areas.
+          If you can't find what you're looking for, we're here to help.
+        </Text>
+      </Box>
       
-      <Grid>
+      <Grid gutter="var(--space-lg)">
         <Grid.Col span={{ base: 12, md: 8 }}>
-          <Paper shadow="xs" p="xl" radius="md">
-            <Accordion>
-              {faqs.map((faq, index) => (
-                <Accordion.Item key={index} value={`faq-${index}`}>
-                  <Accordion.Control>{faq.question}</Accordion.Control>
-                  <Accordion.Panel>
-                    <Text>{faq.answer}</Text>
-                  </Accordion.Panel>
-                </Accordion.Item>
-              ))}
-            </Accordion>
+          <Paper 
+            shadow="xs" 
+            p="var(--space-lg)" 
+            radius="md"
+            className="hover-card"
+            style={{
+              animation: 'fadeInUp 0.6s ease-out forwards',
+              animationDelay: '0.2s',
+              opacity: 0
+            }}
+          >
+            <Stack gap="var(--space-md)">
+              <Accordion
+                key={location.key}
+                styles={{
+                  item: {
+                    borderRadius: 'var(--mantine-radius-md)',
+                    border: '1px solid var(--mantine-color-gray-3)',
+                    marginBottom: 'var(--space-xs)',
+                    backgroundColor: 'white',
+                    overflow: 'hidden',
+                    transition: 'all var(--transition-normal)',
+                    '&:hover': {
+                      borderColor: 'var(--mantine-color-green-filled)',
+                    }
+                  },
+                  control: {
+                    padding: 'var(--space-md)',
+                    transition: 'all var(--transition-normal)',
+                    '&:hover': {
+                      backgroundColor: 'var(--background-light)',
+                      color: 'var(--mantine-color-green-filled)'
+                    }
+                  },
+                  content: {
+                    padding: 'var(--space-md)',
+                    paddingTop: 0,
+                  }
+                }}
+              >
+                {faqs.map((faq, index) => (
+                  <Accordion.Item 
+                    key={index} 
+                    value={`faq-${index}`}
+                    style={{
+                      animation: `fadeInUp 0.6s ease-out forwards`,
+                      animationDelay: `${(index + 1) * 0.1}s`,
+                      opacity: 0
+                    }}
+                  >
+                    <Accordion.Control>{faq.question}</Accordion.Control>
+                    <Accordion.Panel>
+                      <Text>{faq.answer}</Text>
+                    </Accordion.Panel>
+                  </Accordion.Item>
+                ))}
+              </Accordion>
+            </Stack>
           </Paper>
         </Grid.Col>
         
         <Grid.Col span={{ base: 12, md: 4 }}>
-          <Paper shadow="xs" p="xl" radius="md" style={{ backgroundColor: '#f8f9fa' }}>
-            <Title order={3} mb="md">Still Have Questions?</Title>
-            <Text mb="xl">
-              Can't find the answer you're looking for? Feel free to contact us directly. 
-              Our team is always happy to help with any queries about our tree surgery services.
-            </Text>
-            <Text>
-              Call us: <strong>01234 567890</strong><br />
-              Email: <strong>info@jstreeservices.com</strong>
-            </Text>
+          <Paper 
+            p="var(--space-lg)" 
+            radius="md" 
+            className="hover-card"
+            style={{
+              backgroundColor: 'var(--background-light)',
+              animation: 'fadeInUp 0.6s ease-out forwards',
+              animationDelay: '0.3s',
+              opacity: 0
+            }}
+          >
+            <Stack gap="var(--space-md)">
+              <Title order={3}>Still Have Questions?</Title>
+              <Text>
+                Can't find the answer you're looking for? Feel free to contact us directly. 
+                Our team is always happy to help with any queries about our tree surgery services.
+              </Text>
+              
+              <Stack gap="var(--space-xs)">
+                <Button
+                  component="a"
+                  href="tel:+441234567890"
+                  variant="light"
+                  color="green"
+                  leftSection={<IconPhone size={20} />}
+                  fullWidth
+                  className="interactive-element"
+                >
+                  01234 567890
+                </Button>
+                
+                <Button
+                  component="a"
+                  href="mailto:info@jstreeservices.com"
+                  variant="subtle"
+                  color="green"
+                  leftSection={<IconMail size={20} />}
+                  fullWidth
+                  className="interactive-element"
+                >
+                  info@jstreeservices.com
+                </Button>
+              </Stack>
+            </Stack>
           </Paper>
         </Grid.Col>
       </Grid>

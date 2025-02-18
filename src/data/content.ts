@@ -1,157 +1,94 @@
-import { IconTree, IconLeaf, IconAxe, IconPhone, IconCertificate, IconShieldCheck, IconClock, IconTruck } from '@tabler/icons-react';
-import { BlogPost, ServiceItem, GalleryItem, TestimonialItem, ServiceArea } from '../types';
+import { MainBenefit, Service, Testimonial, ServicePoint } from '../types/home';
+import {
+  IconCertificate, IconShieldCheck, IconClock, IconTruck,
+  IconAxe, IconTree, IconLeaf, IconPhone
+} from '@tabler/icons-react';
 
-export const COMPANY_INFO = {
-  name: 'JS Tree Services',
-  phone: '+441234567890',
-  email: 'info@jstreeservices.com',
-  address: {
-    street: '123 Tree Street',
-    city: 'Aldershot',
-    region: 'Hampshire',
-    postcode: 'GU11 1AA',
-    country: 'GB',
-  },
-  hours: {
-    weekday: '8am-6pm',
-    saturday: '9am-4pm',
-    sunday: 'Closed (Emergency Only)',
-    emergency: '24/7',
-  },
-  social: {
-    facebook: 'https://facebook.com/jstreeservices',
-    twitter: 'https://twitter.com/jstreeservices',
-    instagram: 'https://instagram.com/jstreeservices',
-  },
-};
-
-export const SERVICES: ServiceItem[] = [
-  {
-    id: 1,
-    title: 'Tree Felling',
-    slug: 'tree-felling',
-    description: 'Professional and safe removal of trees of any size. We use advanced techniques and equipment to ensure controlled felling.',
-    imageUrl: '/assets/services/tree-felling.jpg',
-    features: [
-      'Complete tree removal',
-      'Sectional dismantling',
-      'Site clearance',
-      'Stump removal options',
-    ],
-    fullDescription: `Our professional tree felling service ensures safe and efficient removal of trees of any size. 
-    Using advanced techniques and specialized equipment, we carefully dismantle and remove trees while protecting 
-    surrounding structures and vegetation.`,
-    benefits: [
-      'Prevents damage to property',
-      'Creates space for new landscaping',
-      'Removes diseased trees',
-      'Improves safety',
-    ],
-    safetyMeasures: [
-      'Full site assessment',
-      'Advanced rigging techniques',
-      'Protected drop zones',
-      'Trained supervisors',
-    ],
-    galleryImages: [
-      '/assets/gallery/felling-1.jpg',
-      '/assets/gallery/felling-2.jpg',
-      '/assets/gallery/felling-3.jpg',
-    ],
-    insurance: {
-      type: 'Comprehensive',
-      coverage: 'Up to £5 million public liability',
-    },
-  },
-  // Add more services...
+export const mainBenefits: MainBenefit[] = [
+  { icon: IconCertificate, title: 'Certified Arborists', description: 'Fully qualified and experienced team' },
+  { icon: IconShieldCheck, title: 'Fully Insured', description: 'Comprehensive insurance coverage' },
+  { icon: IconClock, title: 'Prompt Service', description: 'Quick response and efficient work' },
+  { icon: IconTruck, title: 'Free Site Visit', description: 'Complimentary assessment and quote' },
 ];
 
-export const SERVICE_AREAS: ServiceArea[] = [
+export const services: Service[] = [
+  { 
+    title: 'Tree Felling', 
+    icon: IconAxe, 
+    description: 'Professional and safe removal of trees of any size. We use advanced techniques and equipment to ensure controlled felling.',
+    color: 'green.6'
+  },
+  { 
+    title: 'Crown Reduction', 
+    icon: IconTree, 
+    description: 'Expert reshaping and size management to maintain tree health and improve appearance while ensuring safety.',
+    color: 'green.7'
+  },
+  { 
+    title: 'Stump Grinding', 
+    icon: IconLeaf, 
+    description: 'Complete stump removal service using state-of-the-art grinding equipment for a clean finish.',
+    color: 'green.8'
+  },
+  { 
+    title: '24/7 Emergency Service', 
+    icon: IconPhone, 
+    description: 'Round-the-clock emergency response for storm damage, fallen trees, and urgent tree care needs.',
+    color: 'green.9'
+  },
+];
+
+export const testimonials: Testimonial[] = [
+  { 
+    content: "The team was incredibly professional and thorough. They handled our large oak removal with precision and care.", 
+    author: "John D.", 
+    location: "Aldershot",
+    rating: 5,
+    avatar: "https://i.pravatar.cc/150?img=1"
+  },
+  { 
+    content: "Outstanding emergency service when a storm damaged our trees. Responsive, professional, and reasonably priced.", 
+    author: "Sarah M.", 
+    location: "Farnborough",
+    rating: 5,
+    avatar: "https://i.pravatar.cc/150?img=2"
+  },
+  { 
+    content: "Excellent crown reduction work that preserved our tree's health while addressing our safety concerns.", 
+    author: "Michael R.", 
+    location: "Fleet",
+    rating: 5,
+    avatar: "https://i.pravatar.cc/150?img=3"
+  },
+];
+
+export const servicePoints: ServicePoint[] = [
   {
-    id: 1,
-    name: 'Aldershot',
-    coordinates: [51.2478, -0.7783],
-    radius: 5000,
-    color: '#43A047',
+    area: 'Aldershot',
     response: '20 minutes',
     coverage: 'Full service area',
     services: ['Emergency Response', 'Regular Maintenance', 'Tree Removal', 'Crown Reduction'],
-  },
-  // Add more service areas...
-];
-
-export const BENEFITS = [
-  {
-    icon: IconCertificate,
-    title: 'Certified Arborists',
-    description: 'Fully qualified and experienced team',
+    details: 'Primary service area with fastest response times. Complete range of services available.',
   },
   {
-    icon: IconShieldCheck,
-    title: 'Fully Insured',
-    description: 'Comprehensive insurance coverage',
+    area: 'Farnborough',
+    response: '25 minutes',
+    coverage: 'Full service area',
+    services: ['Emergency Response', 'Tree Removal', 'Crown Reduction', 'Stump Grinding'],
+    details: 'Full coverage area with comprehensive tree surgery services and rapid response.',
   },
   {
-    icon: IconClock,
-    title: 'Prompt Service',
-    description: 'Quick response and efficient work',
+    area: 'Fleet',
+    response: '30 minutes',
+    coverage: 'Selected services',
+    services: ['Emergency Response', 'Tree Removal', 'Crown Reduction'],
+    details: 'Regular service area with core tree care solutions available.',
   },
   {
-    icon: IconTruck,
-    title: 'Free Site Visit',
-    description: 'Complimentary assessment and quote',
-  },
-];
-
-export const TESTIMONIALS: TestimonialItem[] = [
-  {
-    text: "The team was incredibly professional and thorough. They handled our large oak removal with precision and care.",
-    author: "John D.",
-    location: "Aldershot",
-    rating: 5,
-  },
-  // Add more testimonials...
-];
-
-export const GALLERY_ITEMS: GalleryItem[] = [
-  {
-    id: 1,
-    imageUrl: '/assets/gallery/tree-felling-1.jpg',
-    description: 'Large oak tree removal in Aldershot',
-    category: 'Tree Felling',
-    location: 'Aldershot',
-    date: '2023-12-01',
-  },
-  // Add more gallery items...
-];
-
-export const BLOG_POSTS: BlogPost[] = [
-  {
-    id: 1,
-    title: 'Essential Tree Care Tips for Winter',
-    content: `Winter can be harsh on trees, especially in the UK climate. Learn how to protect your trees 
-    during the cold months with our expert tips on winter tree care...`,
-    author: 'James Smith',
-    createdAt: '2023-12-15',
-    category: 'Seasonal Advice',
-    imageUrl: '/assets/blog/winter-tree-care.jpg',
-    readTime: '5 min read',
-    tags: ['winter care', 'maintenance', 'seasonal'],
-  },
-  // Add more blog posts...
-];
-
-export const FAQ_CATEGORIES = [
-  {
-    title: 'Services',
-    items: [
-      {
-        question: 'What tree services do you provide?',
-        answer: 'We offer comprehensive tree services including tree felling, crown reduction, stump grinding, and emergency work.',
-        tags: ['services', 'general'],
-      },
-      // Add more FAQ items...
-    ],
-  },
-  // Add more FAQ categories...
+    area: 'Farnham',
+    response: '35 minutes',
+    coverage: 'Selected services',
+    services: ['Emergency Response', 'Tree Removal'],
+    details: 'Extended coverage area for essential tree services and emergency response.',
+  }
 ];
