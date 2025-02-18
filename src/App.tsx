@@ -19,8 +19,8 @@ const Gallery = React.lazy(() => import('./pages/Gallery'));
 const Contact = React.lazy(() => import('./pages/Contact'));
 const FAQ = React.lazy(() => import('./pages/FAQ'));
 
-// Get the base URL from the homepage in package.json or use '/' for development
-const baseUrl = process.env.NODE_ENV === 'development' ? '/' : '/js-tree-services';
+// Base URL should always be '/' since we're deploying to root
+const baseUrl = '/';
 
 const App = () => {
   return (
@@ -37,24 +37,118 @@ const App = () => {
           <Header />
           <main style={{ flex: 1, width: '100%' }}>
             <ErrorBoundary>
-              <Suspense fallback={
-                <Center h="100vh">
-                  <Loader size="xl" />
-                </Center>
-              }>
-                <Routes>
-                  <Route path="/" element={<Home />} />
-                  <Route path="/about" element={<About />} />
-                  <Route path="/services" element={<Services />} />
-                  <Route path="/services/:slug" element={<ServiceDetail />} />
-                  <Route path="/blog" element={<Blog />} />
-                  <Route path="/blog/:slug" element={<BlogDetail />} />
-                  <Route path="/gallery" element={<Gallery />} />
-                  <Route path="/contact" element={<Contact />} />
-                  <Route path="/faq" element={<FAQ />} />
-                  <Route path="*" element={<Home />} />
-                </Routes>
-              </Suspense>
+              <Routes>
+                <Route path="/" element={
+                  <ErrorBoundary>
+                    <Suspense fallback={
+                      <Center h="100vh">
+                        <Loader size="xl" variant="dots" color="green" />
+                      </Center>
+                    }>
+                      <Home />
+                    </Suspense>
+                  </ErrorBoundary>
+                } />
+                <Route path="/about" element={
+                  <ErrorBoundary>
+                    <Suspense fallback={
+                      <Center h="100vh">
+                        <Loader size="xl" variant="dots" color="green" />
+                      </Center>
+                    }>
+                      <About />
+                    </Suspense>
+                  </ErrorBoundary>
+                } />
+                <Route path="/services" element={
+                  <ErrorBoundary>
+                    <Suspense fallback={
+                      <Center h="100vh">
+                        <Loader size="xl" variant="dots" color="green" />
+                      </Center>
+                    }>
+                      <Services />
+                    </Suspense>
+                  </ErrorBoundary>
+                } />
+                <Route path="/services/:slug" element={
+                  <ErrorBoundary>
+                    <Suspense fallback={
+                      <Center h="100vh">
+                        <Loader size="xl" variant="dots" color="green" />
+                      </Center>
+                    }>
+                      <ServiceDetail />
+                    </Suspense>
+                  </ErrorBoundary>
+                } />
+                <Route path="/blog" element={
+                  <ErrorBoundary>
+                    <Suspense fallback={
+                      <Center h="100vh">
+                        <Loader size="xl" variant="dots" color="green" />
+                      </Center>
+                    }>
+                      <Blog />
+                    </Suspense>
+                  </ErrorBoundary>
+                } />
+                <Route path="/blog/:slug" element={
+                  <ErrorBoundary>
+                    <Suspense fallback={
+                      <Center h="100vh">
+                        <Loader size="xl" variant="dots" color="green" />
+                      </Center>
+                    }>
+                      <BlogDetail />
+                    </Suspense>
+                  </ErrorBoundary>
+                } />
+                <Route path="/gallery" element={
+                  <ErrorBoundary>
+                    <Suspense fallback={
+                      <Center h="100vh">
+                        <Loader size="xl" variant="dots" color="green" />
+                      </Center>
+                    }>
+                      <Gallery />
+                    </Suspense>
+                  </ErrorBoundary>
+                } />
+                <Route path="/contact" element={
+                  <ErrorBoundary>
+                    <Suspense fallback={
+                      <Center h="100vh">
+                        <Loader size="xl" variant="dots" color="green" />
+                      </Center>
+                    }>
+                      <Contact />
+                    </Suspense>
+                  </ErrorBoundary>
+                } />
+                <Route path="/faq" element={
+                  <ErrorBoundary>
+                    <Suspense fallback={
+                      <Center h="100vh">
+                        <Loader size="xl" variant="dots" color="green" />
+                      </Center>
+                    }>
+                      <FAQ />
+                    </Suspense>
+                  </ErrorBoundary>
+                } />
+                <Route path="*" element={
+                  <ErrorBoundary>
+                    <Suspense fallback={
+                      <Center h="100vh">
+                        <Loader size="xl" variant="dots" color="green" />
+                      </Center>
+                    }>
+                      <Home />
+                    </Suspense>
+                  </ErrorBoundary>
+                } />
+              </Routes>
             </ErrorBoundary>
           </main>
           <Footer />

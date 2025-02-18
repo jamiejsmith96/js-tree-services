@@ -6,9 +6,20 @@ import { Notifications } from '@mantine/notifications';
 import { HelmetProvider } from 'react-helmet-async';
 import App from './App';
 
+// Import Mantine styles first
 import '@mantine/core/styles.css';
 import '@mantine/notifications/styles.css';
+import '@mantine/dates/styles.css';
+
+// Then import our global styles
 import './styles/global.css';
+
+// Preload critical fonts
+const fontPreload = document.createElement('link');
+fontPreload.rel = 'preload';
+fontPreload.as = 'style';
+fontPreload.href = 'https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap';
+document.head.appendChild(fontPreload);
 
 const root = ReactDOM.createRoot(document.getElementById('root')!);
 
