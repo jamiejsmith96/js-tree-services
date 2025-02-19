@@ -1,6 +1,6 @@
 import React, { useRef } from 'react';
 import { MapContainer, TileLayer, Circle, Popup, Marker } from 'react-leaflet';
-import { Card, Text, Badge, Group, Stack, Title } from '@mantine/core';
+import { Card, Text, Badge, Group, Stack, Title, Box } from '@mantine/core';
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 
@@ -52,11 +52,11 @@ export default function InteractiveMap({ highlightedArea }: InteractiveMapProps)
   ];
 
   return (
-    <Card withBorder radius="md" padding={0} style={{ height: '100%' }}>
+    <Box style={{ position: 'relative', height: '100%' }}>
       <MapContainer
         center={mainLocation}
         zoom={12}
-        style={{ height: '100%', width: '100%', zIndex: 1 }}
+        style={{ height: '100%', width: '100%', zIndex: 1, borderRadius: 'var(--mantine-radius-md)', overflow: 'hidden' }}
         scrollWheelZoom={false}
         ref={mapRef}
       >
@@ -139,6 +139,6 @@ export default function InteractiveMap({ highlightedArea }: InteractiveMapProps)
           ))}
         </Stack>
       </Card>
-    </Card>
+    </Box>
   );
 }

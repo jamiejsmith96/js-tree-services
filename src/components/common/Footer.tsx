@@ -1,5 +1,5 @@
 import React from 'react';
-import { Container, Grid, Group, Stack, Text, ActionIcon, Button, Divider, Title } from '@mantine/core';
+import { Container, Grid, Group, Stack, Text, ActionIcon, Button, Divider } from '@mantine/core';
 import { IconBrandFacebook, IconBrandTwitter, IconBrandInstagram, IconPhone, IconMail, IconMapPin } from '@tabler/icons-react';
 import { Link } from 'react-router-dom';
 
@@ -42,10 +42,11 @@ const Footer: React.FC = () => {
         <Grid gutter="xl">
           <Grid.Col span={{ base: 12, md: 3 }}>
             <Stack gap="md" className="fade-in-up">
-              <Group className="interactive-element">
-                <img src="/assets/logo.png" alt="JS Tree Services" height={40} />
-                <Title order={3}>JS Tree Services</Title>
-              </Group>
+              <Link to="/" style={{ textDecoration: 'none' }}>
+                <Group className="interactive-element">
+                  <img src="/logo.png" alt="JS Tree Services" height={36} style={{ filter: 'brightness(1.1)' }} />
+                </Group>
+              </Link>
               <Text c="dimmed">
                 Fully qualified and insured arborists at your service.
               </Text>

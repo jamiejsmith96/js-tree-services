@@ -187,6 +187,18 @@ p {
   }
 }
 
+@keyframes gradientMove {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
 .mantine-Button-light {
   background-color: rgba(67, 160, 71, 0.1) !important;
   color: var(--mantine-color-green-filled) !important;

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Group, Button, Burger, Drawer, Stack, Text, Box, ActionIcon, Container } from '@mantine/core';
+import { Group, Button, Burger, Drawer, Stack, Box, ActionIcon, Container } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
 import { Link, useLocation } from 'react-router-dom';
 import { IconPhone } from '@tabler/icons-react';
@@ -75,31 +75,22 @@ const Header: React.FC = () => {
   return (
     <>
       <header>
-        <Container size="xl" h="100%">
+        <Container size="xl" h="100%" px="xl">
           <Group justify="space-between" h="100%">
-            <Link to="/" className="interactive-element" style={{ textDecoration: 'none' }}>
-              <Group>
-                <img
-                  src="/assets/logo.png"
-                  alt="JS Tree Services"
-                  height={40}
-                  style={{ filter: 'brightness(1.1)' }}
-                />
-                <Text
-                  size="xl"
-                  fw={700}
-                  style={{
-                    color: 'white',
-                    textShadow: '0 1px 2px rgba(0, 0, 0, 0.2)',
-                    letterSpacing: '-0.02em'
-                  }}
-                >
-                  JS Tree Services
-                </Text>
-              </Group>
+            <Link to="/" style={{ textDecoration: 'none', display: 'flex', alignItems: 'center' }}>
+              <img
+                src="/logo.png"
+                alt="JS Tree Services"
+                height={40}
+                style={{
+                  filter: 'brightness(1.1)',
+                  transition: 'transform 0.2s ease',
+                }}
+                className="interactive-element"
+              />
             </Link>
 
-            <Box hiddenFrom="md" style={{ display: 'flex', alignItems: 'center' }}>
+            <Box hiddenFrom="md" style={{ marginLeft: 'auto' }}>
               <Burger
                 opened={opened}
                 onClick={toggle}
@@ -109,7 +100,7 @@ const Header: React.FC = () => {
               />
             </Box>
 
-            <Box visibleFrom="md" style={{ flex: 1, display: 'flex', justifyContent: 'center', gap: 'var(--space-md)' }}>
+            <Box visibleFrom="md" style={{ marginLeft: 'auto', display: 'flex', alignItems: 'center' }}>
               <DesktopNavigation />
             </Box>
           </Group>

@@ -49,17 +49,17 @@ export const ServiceAreasSection: React.FC<ServiceAreasSectionProps> = ({
             viewport={{ once: true }}
             transition={{ duration: 0.5, delay: 0.2 }}
           >
-            <Card 
-              withBorder 
-              radius="md" 
+            <Box
+              style={{
+                height: 600,
+                border: '1px solid var(--mantine-color-gray-3)',
+                borderRadius: 'var(--mantine-radius-md)',
+                overflow: 'hidden'
+              }}
               className="hover-card"
-              style={{ overflow: 'hidden' }}
-              padding={0}
             >
-              <Box style={{ height: 600 }}>
-                <InteractiveMap highlightedArea={highlightedArea} />
-              </Box>
-            </Card>
+              <InteractiveMap highlightedArea={highlightedArea} />
+            </Box>
           </motion.div>
 
           <Grid gutter="var(--space-lg)">

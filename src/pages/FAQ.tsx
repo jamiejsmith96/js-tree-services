@@ -1,5 +1,5 @@
 import React from 'react';
-import { Container, Title, Text, Paper, Grid, Button, Stack, Box, Group, Accordion } from '@mantine/core';
+import { Container, Title, Text, Paper, Grid, Button, Stack, Box, Accordion } from '@mantine/core';
 import { IconPhone, IconMail } from '@tabler/icons-react';
 import { useLocation } from 'react-router-dom';
 
