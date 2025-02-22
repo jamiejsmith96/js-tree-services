@@ -25,7 +25,7 @@ export const MainBenefits: React.FC<MainBenefitsProps> = ({ benefits }) => {
           </motion.div>
         </Box>
 
-        <Grid gutter="var(--space-lg)">
+        <Grid gutter="var(--space-xl)">
           {benefits.map((benefit, index) => (
             <Grid.Col key={benefit.title} span={{ base: 12, sm: 6, md: 3 }}>
               <motion.div
@@ -52,7 +52,7 @@ export const MainBenefits: React.FC<MainBenefitsProps> = ({ benefits }) => {
                       }}
                     >
                       <benefit.icon 
-                        size={48} 
+                        size={40}
                         style={{ 
                           color: 'var(--mantine-color-green-filled)',
                           strokeWidth: 1.5
@@ -88,7 +88,7 @@ export const MainBenefits: React.FC<MainBenefitsProps> = ({ benefits }) => {
                       top: 0,
                       left: 0,
                       right: 0,
-                      height: 3,
+                      height: 'var(--space-xxs)',
                       background: 'var(--mantine-color-green-filled)',
                       transformOrigin: 'left',
                       transform: 'scaleX(0)',

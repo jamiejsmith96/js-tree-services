@@ -3,17 +3,23 @@ import { Box, Container, Title, Grid, Card, Text, Button, Group } from '@mantine
 import { Link } from 'react-router-dom';
 import { IconLeaf, IconArrowRight } from '@tabler/icons-react';
 import { motion } from 'framer-motion';
-import { Service } from '../../types/home';
+import type { ServiceSummary } from '../../types/service';
 
 interface ServicesSectionProps {
-  services: Service[];
+  services: ServiceSummary[];
+  maxDisplay?: number;
 }
 
-export const ServicesSection: React.FC<ServicesSectionProps> = ({ services }) => {
+export const ServicesSection: React.FC<ServicesSectionProps> = ({ 
+  services,
+  maxDisplay = 4 // Show first 4 services by default
+}) => {
+  const displayServices = services.slice(0, maxDisplay);
+
   return (
-    <Box bg="var(--background-light)" py="var(--space-xl)">
+    <Box bg="var(--background-light)" py="var(--space-xxxl)">
       <Container size="xl">
-        <Box className="section-decorator" mb="var(--space-xl)">
+        <Box className="section-decorator" mb="var(--space-xxl)">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -21,14 +27,21 @@ export const ServicesSection: React.FC<ServicesSectionProps> = ({ services }) =>
             transition={{ duration: 0.5 }}
           >
             <Title order={2} ta="center">Our Services</Title>
-            <Text c="dimmed" size="xl" ta="center" mt="md">
+            <Text 
+              c="dimmed" 
+              size="xl" 
+              ta="center" 
+              mt="var(--space-lg)"
+              maw="var(--content-width-md)"
+              mx="auto"
+            >
               Professional tree surgery services tailored to your needs
             </Text>
           </motion.div>
         </Box>
 
-        <Grid gutter="var(--space-lg)">
-          {services.map((service, index) => (
+        <Grid gutter={{ base: 'xl', sm: 'var(--space-xl)' }}>
+          {displayServices.map((service, index) => (
             <Grid.Col span={{ base: 12, sm: 6 }} key={service.title}>
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
@@ -47,13 +60,21 @@ export const ServicesSection: React.FC<ServicesSectionProps> = ({ services }) =>
                     transition={{ type: 'spring', stiffness: 300 }}
                     style={{ 
                       display: 'inline-block',
-                      color: `var(--mantine-color-${service.color})`
+                      background: `var(--mantine-color-${service.color}-0)`,
+                      padding: 'var(--space-md)',
+                      borderRadius: '50%'
                     }}
                   >
-                    <service.icon size={48} />
+                    <service.icon 
+                      size={40}
+                      style={{ 
+                        color: `var(--mantine-color-${service.color}-filled)`,
+                        strokeWidth: 1.5
+                      }}
+                    />
                   </motion.div>
 
-                  <Title order={3} mt="var(--space-lg)">{service.title}</Title>
+                  <Title order={3} mt="var(--space-xl)">{service.title}</Title>
                   <Text mt="var(--space-md)" size="lg" c="dimmed">
                     {service.description}
                   </Text>
@@ -64,7 +85,7 @@ export const ServicesSection: React.FC<ServicesSectionProps> = ({ services }) =>
                       color="green" 
                       rightSection={<IconArrowRight size={16} />}
                       component={Link}
-                      to={`/services#${service.title.toLowerCase().replace(/\s+/g, '-')}`}
+                      to={`/services/${service.slug}`}
                       className="interactive-element"
                       styles={{
                         root: {
@@ -96,7 +117,7 @@ export const ServicesSection: React.FC<ServicesSectionProps> = ({ services }) =>
                   </Group>
 
                   <Box 
-                    mt="var(--space-lg)" 
+                    mt="var(--space-xl)" 
                     pt="var(--space-md)" 
                     style={{ 
                       borderTop: '1px solid var(--mantine-color-gray-2)',
@@ -118,7 +139,7 @@ export const ServicesSection: React.FC<ServicesSectionProps> = ({ services }) =>
           transition={{ duration: 0.5, delay: 0.4 }}
           style={{ 
             textAlign: 'center',
-            marginTop: 'var(--space-xl)'
+            marginTop: 'var(--space-xxl)'
           }}
         >
           <Button

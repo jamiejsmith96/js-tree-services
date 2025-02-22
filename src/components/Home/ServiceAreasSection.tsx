@@ -56,7 +56,7 @@ export const ServiceAreasSection: React.FC<ServiceAreasSectionProps> = ({
                 borderRadius: 'var(--mantine-radius-md)',
                 overflow: 'hidden'
               }}
-              className="hover-card"
+              className="hover-card map-container"
             >
               <InteractiveMap highlightedArea={highlightedArea} />
             </Box>

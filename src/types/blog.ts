@@ -4,17 +4,16 @@ export interface BlogAuthor {
 }
 
 export interface BlogPost {
-  id?: number;
+  id: number;
   title: string;
-  slug?: string;
-  excerpt?: string;
+  slug: string;
   content: string;
-  coverImage: string | null;
-  publishedAt: string;
   author: string;
+  publishedAt: string;
   category: string;
-  tags: string[];
+  coverImage: string;
   readTime: string;
+  tags: string[];
 }
 
 export interface Comment {

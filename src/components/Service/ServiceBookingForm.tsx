@@ -1,25 +1,21 @@
 import React, { useState } from 'react';
-import { 
-  Card, Title, TextInput, Textarea, Button, Stack, 
-  Grid, FileInput, Group
-} from '@mantine/core';
+import { LoadingOverlay, TextInput, Textarea, Button, Stack, Group, Select } from '@mantine/core';
 import { DatePickerInput } from '@mantine/dates';
 import { useForm } from '@mantine/form';
-import { IconUpload, IconCalendar } from '@tabler/icons-react';
-import type { ServiceRequest } from '../../types/service';
+import { IconCalendar, IconSend } from '@tabler/icons-react';
+import { motion } from 'framer-motion';
+import type { ServiceRequest, ServiceBookingFormValues } from '../../types/service';
 
 interface ServiceBookingFormProps {
   serviceId: string;
   onSubmit: (data: ServiceRequest) => Promise<void>;
 }
 
-type FormValues = Omit<ServiceRequest, 'attachments'>;
-
 export const ServiceBookingForm: React.FC<ServiceBookingFormProps> = ({ serviceId, onSubmit }) => {
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [files, setFiles] = useState<File[]>([]);
+  const [attachments, setAttachments] = useState<File[]>([]);
 
-  const form = useForm<FormValues>({
+  const form = useForm<ServiceBookingFormValues>({
     initialValues: {
       serviceId,
       customerName: '',
@@ -30,162 +26,201 @@ export const ServiceBookingForm: React.FC<ServiceBookingFormProps> = ({ serviceI
         city: '',
         postcode: ''
       },
-      preferredDate: new Date(),
-      alternativeDate: undefined,
+      date: null,
       description: '',
+      preferredContact: 'email',
+      urgency: 'normal'
     },
     validate: {
-      customerName: (value) => (value.length < 2 ? 'Name is required' : null),
-      customerEmail: (value) => (!/^\S+@\S+$/.test(value) ? 'Invalid email' : null),
-      customerPhone: (value) => (!value ? 'Phone number is required' : null),
+      customerName: (value: string) => (value.length < 2 ? 'Name is required' : null),
+      customerEmail: (value: string) => (!/^\S+@\S+$/.test(value) ? 'Invalid email' : null),
+      customerPhone: (value: string) => (!value ? 'Phone number is required' : null),
       address: {
-        street: (value) => (!value ? 'Street address is required' : null),
-        city: (value) => (!value ? 'City is required' : null),
-        postcode: (value) => (!value ? 'Postcode is required' : null),
+        street: (value: string) => (!value ? 'Street address is required' : null),
+        city: (value: string) => (!value ? 'City is required' : null),
+        postcode: (value: string) => (!value ? 'Postcode is required' : null),
       },
-      preferredDate: (value) => (!value ? 'Please select a preferred date' : null),
+      date: (value: Date | null) => (!value ? 'Please select a preferred date' : null),
     }
   });
 
-  const handleSubmit = async (values: FormValues) => {
+  const handleSubmit = async (values: ServiceBookingFormValues) => {
+    setIsSubmitting(true);
     try {
-      setIsSubmitting(true);
-      const attachments = await Promise.all(
-        files.map(async (file) => {
-          // Here you would normally upload the file to your storage service
-          // and return the URL/path
-          return URL.createObjectURL(file); // This is just for demo purposes
-        })
-      );
-
-      await onSubmit({
+      const serviceRequest: ServiceRequest = {
         ...values,
-        attachments,
-      });
-
+        attachments
+      };
+      await onSubmit(serviceRequest);
       form.reset();
-      setFiles([]);
-    } catch (error) {
-      console.error('Error submitting booking:', error);
+      setAttachments([]);
     } finally {
       setIsSubmitting(false);
     }
   };
 
   return (
-    <Card withBorder shadow="md" radius="md" p="xl">
+    <div style={{ position: 'relative' }}>
+      <LoadingOverlay 
+        visible={isSubmitting}
+        loaderProps={{ size: 'xl', color: 'green' }}
+        overlayProps={{ blur: 2 }}
+      />
       <form onSubmit={form.onSubmit(handleSubmit)}>
-        <Stack gap="md">
-          <Title order={3}>Book This Service</Title>
-
-          <Grid gutter="md">
-            <Grid.Col span={{ base: 12, md: 6 }}>
+        <Stack gap="var(--space-xl)">
+          <Stack gap="var(--space-md)">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.1 }}
+            >
               <TextInput
                 required
-                label="Full Name"
+                label="Name"
                 placeholder="Your full name"
                 {...form.getInputProps('customerName')}
+                disabled={isSubmitting}
+                className="interactive-element"
               />
-            </Grid.Col>
-            <Grid.Col span={{ base: 12, md: 6 }}>
+            </motion.div>
+
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.2 }}
+            >
               <TextInput
                 required
                 label="Email"
-                placeholder="your.email@example.com"
+                placeholder="your@email.com"
                 {...form.getInputProps('customerEmail')}
+                disabled={isSubmitting}
+                className="interactive-element"
               />
-            </Grid.Col>
-            <Grid.Col span={{ base: 12, md: 6 }}>
+            </motion.div>
+
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.3 }}
+            >
               <TextInput
                 required
-                label="Phone Number"
-                placeholder="Your phone number"
+                label="Phone"
+                placeholder="+44 1234 567890"
                 {...form.getInputProps('customerPhone')}
+                disabled={isSubmitting}
+                className="interactive-element"
               />
-            </Grid.Col>
-          </Grid>
+            </motion.div>
+          </Stack>
 
-          <Title order={4} mt="md">Address Details</Title>
-          <Grid gutter="md">
-            <Grid.Col span={12}>
+          <div>
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.4 }}
+            >
               <TextInput
                 required
                 label="Street Address"
                 placeholder="Enter your street address"
                 {...form.getInputProps('address.street')}
+                disabled={isSubmitting}
+                className="interactive-element"
               />
-            </Grid.Col>
-            <Grid.Col span={{ base: 12, md: 6 }}>
-              <TextInput
-                required
-                label="City"
-                placeholder="Enter your city"
-                {...form.getInputProps('address.city')}
-              />
-            </Grid.Col>
-            <Grid.Col span={{ base: 12, md: 6 }}>
-              <TextInput
-                required
-                label="Postcode"
-                placeholder="Enter your postcode"
-                {...form.getInputProps('address.postcode')}
-              />
-            </Grid.Col>
-          </Grid>
+            </motion.div>
 
-          <Title order={4} mt="md">Service Details</Title>
-          <Grid gutter="md">
-            <Grid.Col span={{ base: 12, md: 6 }}>
+            <Group grow mt="var(--space-md)">
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.5 }}
+              >
+                <TextInput
+                  required
+                  label="City"
+                  placeholder="Enter your city"
+                  {...form.getInputProps('address.city')}
+                  disabled={isSubmitting}
+                  className="interactive-element"
+                />
+              </motion.div>
+
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.5 }}
+              >
+                <TextInput
+                  required
+                  label="Postcode"
+                  placeholder="Enter your postcode"
+                  {...form.getInputProps('address.postcode')}
+                  disabled={isSubmitting}
+                  className="interactive-element"
+                />
+              </motion.div>
+            </Group>
+          </div>
+
+          <Group grow>
+            <div>
               <DatePickerInput
                 required
                 label="Preferred Date"
                 placeholder="Select preferred date"
                 leftSection={<IconCalendar size={16} />}
                 minDate={new Date()}
-                {...form.getInputProps('preferredDate')}
+                {...form.getInputProps('date')}
+                disabled={isSubmitting}
+                className="interactive-element"
               />
-            </Grid.Col>
-            <Grid.Col span={{ base: 12, md: 6 }}>
-              <DatePickerInput
-                label="Alternative Date (Optional)"
-                placeholder="Select alternative date"
-                leftSection={<IconCalendar size={16} />}
-                minDate={new Date()}
-                {...form.getInputProps('alternativeDate')}
-              />
-            </Grid.Col>
-          </Grid>
+            </div>
+
+            <Select
+              label="Urgency"
+              placeholder="Select urgency level"
+              data={[
+                { value: 'normal', label: 'Normal' },
+                { value: 'urgent', label: 'Urgent' }
+              ]}
+              {...form.getInputProps('urgency')}
+              disabled={isSubmitting}
+              className="interactive-element"
+            />
+          </Group>
 
           <Textarea
             label="Additional Details"
             placeholder="Please provide any additional details about your service request"
             minRows={4}
             {...form.getInputProps('description')}
+            disabled={isSubmitting}
+            className="interactive-element"
           />
 
-          <FileInput
-            label="Attachments (Optional)"
-            description="Upload images or documents related to your service request"
-            placeholder="Upload images or documents"
-            accept="image/*,.pdf"
-            multiple
-            leftSection={<IconUpload size={16} />}
-            value={files}
-            onChange={setFiles}
-          />
-
-          <Group justify="flex-end" mt="xl">
-            <Button 
-              type="submit" 
-              size="lg"
-              loading={isSubmitting}
-              className="interactive-element"
+          <Group justify="flex-end">
+            <motion.div
+              whileHover={{ scale: 1.02 }}
+              whileTap={{ scale: 0.98 }}
             >
-              {isSubmitting ? 'Submitting...' : 'Submit Booking Request'}
-            </Button>
+              <Button
+                type="submit"
+                size="lg"
+                color="green"
+                leftSection={<IconSend size={20} />}
+                loading={isSubmitting}
+                className="interactive-element"
+                variant="gradient"
+                gradient={{ from: 'var(--gradient-start)', to: 'var(--gradient-end)' }}
+              >
+                {isSubmitting ? 'Submitting...' : 'Book Service'}
+              </Button>
+            </motion.div>
           </Group>
         </Stack>
       </form>
-    </Card>
+    </div>
   );
 };

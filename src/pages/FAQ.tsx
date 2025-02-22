@@ -1,7 +1,9 @@
 import React from 'react';
-import { Container, Title, Text, Paper, Grid, Button, Stack, Box, Accordion } from '@mantine/core';
+import { Container, Title, Text, Card, Grid, Button, Stack, Box } from '@mantine/core';
 import { IconPhone, IconMail } from '@tabler/icons-react';
 import { useLocation } from 'react-router-dom';
+import { motion } from 'framer-motion';
+import { Accordion } from '@mantine/core';
 
 const FAQ: React.FC = () => {
   const location = useLocation();
@@ -33,149 +35,152 @@ const FAQ: React.FC = () => {
   ];
 
   return (
-    <Container size="xl" py="var(--space-xl)">
-      <Box className="section-decorator">
-        <Title
-          order={1}
-          ta="center"
-          style={{
-            animation: 'fadeInUp 0.6s ease-out forwards',
-            opacity: 0
-          }}
-        >
-          Frequently Asked Questions
-        </Title>
-        <Text
-          c="dimmed"
-          size="xl"
-          ta="center"
-          mt="var(--space-md)"
-          mb="var(--space-xl)"
-          maw={800}
-          mx="auto"
-          style={{
-            animation: 'fadeInUp 0.6s ease-out forwards',
-            animationDelay: '0.1s',
-            opacity: 0
-          }}
-        >
-          Find answers to common questions about our tree surgery services, pricing, and coverage areas.
-          If you can't find what you're looking for, we're here to help.
-        </Text>
-      </Box>
+    <>
+      {/* Extra padding for mobile header */}
+      <Box h="var(--space-xl)" hiddenFrom="sm" />
       
-      <Grid gutter="var(--space-lg)">
-        <Grid.Col span={{ base: 12, md: 8 }}>
-          <Paper 
-            shadow="xs" 
-            p="var(--space-lg)" 
-            radius="md"
-            className="hover-card"
-            style={{
-              animation: 'fadeInUp 0.6s ease-out forwards',
-              animationDelay: '0.2s',
-              opacity: 0
-            }}
-          >
-            <Stack gap="var(--space-md)">
-              <Accordion
-                key={location.key}
-                styles={{
-                  item: {
-                    borderRadius: 'var(--mantine-radius-md)',
-                    border: '1px solid var(--mantine-color-gray-3)',
-                    marginBottom: 'var(--space-xs)',
-                    backgroundColor: 'white',
-                    overflow: 'hidden',
-                    transition: 'all var(--transition-normal)',
-                    '&:hover': {
-                      borderColor: 'var(--mantine-color-green-filled)',
-                    }
-                  },
-                  control: {
-                    padding: 'var(--space-md)',
-                    transition: 'all var(--transition-normal)',
-                    '&:hover': {
-                      backgroundColor: 'var(--background-light)',
-                      color: 'var(--mantine-color-green-filled)'
-                    }
-                  },
-                  content: {
-                    padding: 'var(--space-md)',
-                    paddingTop: 0,
-                  }
-                }}
+      <Container size="xl" py="var(--space-xxxl)">
+        <Stack gap="var(--space-xxxl)">
+          <Box className="section-decorator">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5 }}
+            >
+              <Title order={1} ta="center">Frequently Asked Questions</Title>
+              <Text
+                c="dimmed"
+                size="xl"
+                ta="center"
+                mt="var(--space-lg)"
+                maw="var(--content-width-md)"
+                mx="auto"
               >
-                {faqs.map((faq, index) => (
-                  <Accordion.Item 
-                    key={index} 
-                    value={`faq-${index}`}
-                    style={{
-                      animation: `fadeInUp 0.6s ease-out forwards`,
-                      animationDelay: `${(index + 1) * 0.1}s`,
-                      opacity: 0
+                Find answers to common questions about our tree surgery services, pricing, and coverage areas.
+                If you can't find what you're looking for, we're here to help.
+              </Text>
+            </motion.div>
+          </Box>
+          
+          <Grid gutter={{ base: 'xl', sm: 'var(--space-xl)' }}>
+            <Grid.Col span={{ base: 12, md: 8 }}>
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: 0.2 }}
+              >
+                <Card 
+                  withBorder
+                  padding="var(--space-xl)" 
+                  radius="md"
+                  className="hover-card"
+                >
+                  <Accordion
+                    key={location.key}
+                    variant="separated"
+                    radius="md"
+                    defaultValue="faq-0"
+                    styles={{
+                      item: {
+                        border: '1px solid var(--mantine-color-green-2)',
+                        backgroundColor: 'white',
+                        borderRadius: 'var(--mantine-radius-md)',
+                        overflow: 'hidden',
+                        '&[data-active]': {
+                          backgroundColor: 'var(--mantine-color-green-0)'
+                        }
+                      },
+                      control: {
+                        padding: 'var(--space-lg)',
+                        '&:hover': {
+                          backgroundColor: 'var(--mantine-color-green-0)'
+                        }
+                      },
+                      chevron: {
+                        color: 'var(--mantine-color-green-filled)'
+                      },
+                      panel: {
+                        padding: 'var(--space-lg)',
+                        paddingTop: 0
+                      }
                     }}
                   >
-                    <Accordion.Control>{faq.question}</Accordion.Control>
-                    <Accordion.Panel>
-                      <Text>{faq.answer}</Text>
-                    </Accordion.Panel>
-                  </Accordion.Item>
-                ))}
-              </Accordion>
-            </Stack>
-          </Paper>
-        </Grid.Col>
-        
-        <Grid.Col span={{ base: 12, md: 4 }}>
-          <Paper 
-            p="var(--space-lg)" 
-            radius="md" 
-            className="hover-card"
-            style={{
-              backgroundColor: 'var(--background-light)',
-              animation: 'fadeInUp 0.6s ease-out forwards',
-              animationDelay: '0.3s',
-              opacity: 0
-            }}
-          >
-            <Stack gap="var(--space-md)">
-              <Title order={3}>Still Have Questions?</Title>
-              <Text>
-                Can't find the answer you're looking for? Feel free to contact us directly. 
-                Our team is always happy to help with any queries about our tree surgery services.
-              </Text>
-              
-              <Stack gap="var(--space-xs)">
-                <Button
-                  component="a"
-                  href="tel:+441234567890"
-                  variant="light"
-                  color="green"
-                  leftSection={<IconPhone size={20} />}
-                  fullWidth
-                  className="interactive-element"
+                    {faqs.map((faq, index) => (
+                      <motion.div
+                        key={index}
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.5, delay: index * 0.1 }}
+                      >
+                        <Accordion.Item value={`faq-${index}`}>
+                          <Accordion.Control>
+                            <Text fw={500}>{faq.question}</Text>
+                          </Accordion.Control>
+                          <Accordion.Panel>
+                            <Text c="dimmed" size="lg">{faq.answer}</Text>
+                          </Accordion.Panel>
+                        </Accordion.Item>
+                      </motion.div>
+                    ))}
+                  </Accordion>
+                </Card>
+              </motion.div>
+            </Grid.Col>
+            
+            <Grid.Col span={{ base: 12, md: 4 }}>
+              <motion.div
+                initial={{ opacity: 0, x: 20 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.5, delay: 0.4 }}
+              >
+                <Card 
+                  withBorder
+                  padding="var(--space-xl)" 
+                  radius="md" 
+                  className="hover-card"
+                  bg="var(--mantine-color-green-0)"
                 >
-                  01234 567890
-                </Button>
-                
-                <Button
-                  component="a"
-                  href="mailto:info@jstreeservices.com"
-                  variant="subtle"
-                  color="green"
-                  leftSection={<IconMail size={20} />}
-                  fullWidth
-                  className="interactive-element"
-                >
-                  info@jstreeservices.com
-                </Button>
-              </Stack>
-            </Stack>
-          </Paper>
-        </Grid.Col>
-      </Grid>
-    </Container>
+                  <Stack gap="var(--space-xl)">
+                    <Stack gap="var(--space-md)">
+                      <Title order={3} ta="center">Still Have Questions?</Title>
+                      <Text ta="center" size="lg">
+                        Can't find the answer you're looking for? Feel free to contact us directly. 
+                        Our team is always happy to help with any queries about our tree surgery services.
+                      </Text>
+                    </Stack>
+                    
+                    <Stack gap="var(--space-md)">
+                      <Button
+                        component="a"
+                        href="tel:+441234567890"
+                        size="lg"
+                        color="green"
+                        leftSection={<IconPhone size={20} />}
+                        className="interactive-element"
+                      >
+                        Call Us
+                      </Button>
+                      
+                      <Button
+                        component="a"
+                        href="mailto:info@jstreeservices.com"
+                        variant="light"
+                        color="green"
+                        size="lg"
+                        leftSection={<IconMail size={20} />}
+                        className="interactive-element"
+                      >
+                        Email Us
+                      </Button>
+                    </Stack>
+                  </Stack>
+                </Card>
+              </motion.div>
+            </Grid.Col>
+          </Grid>
+        </Stack>
+      </Container>
+    </>
   );
 };
 

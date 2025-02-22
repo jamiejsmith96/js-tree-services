@@ -1,0 +1,26 @@
+{
+  "collectionName": "components_image_before_afters",
+  "info": {
+    "displayName": "Before After",
+    "icon": "images",
+    "description": "Before and after image pair component"
+  },
+  "options": {
+    "draftAndPublish": false,
+    "timestamps": true
+  },
+  "attributes": {
+    "beforeImage": {
+      "type": "media",
+      "multiple": false,
+      "required": true,
+      "allowedTypes": ["images"]
+    },
+    "afterImage": {
+      "type": "media",
+      "multiple": false,
+      "required": true,
+      "allowedTypes": ["images"]
+    }
+  }
+}

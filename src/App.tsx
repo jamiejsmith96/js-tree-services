@@ -18,6 +18,7 @@ const BlogDetail = React.lazy(() => import('./pages/BlogDetail'));
 const Gallery = React.lazy(() => import('./pages/Gallery'));
 const Contact = React.lazy(() => import('./pages/Contact'));
 const FAQ = React.lazy(() => import('./pages/FAQ'));
+const Quote = React.lazy(() => import('./pages/Quote'));
 
 // Base URL should always be '/' since we're deploying to root
 const baseUrl = '/';
@@ -134,6 +135,17 @@ const App = () => {
                       </Center>
                     }>
                       <FAQ />
+                    </Suspense>
+                  </ErrorBoundary>
+                } />
+                <Route path="/quote" element={
+                  <ErrorBoundary>
+                    <Suspense fallback={
+                      <Center h="100vh">
+                        <Loader size="xl" variant="dots" color="green" />
+                      </Center>
+                    }>
+                      <Quote />
                     </Suspense>
                   </ErrorBoundary>
                 } />

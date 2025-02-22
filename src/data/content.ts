@@ -1,7 +1,6 @@
-import { MainBenefit, Service, Testimonial, ServicePoint } from '../types/home';
+import { MainBenefit, Testimonial, ServicePoint } from '../types/home';
 import {
-  IconCertificate, IconShieldCheck, IconClock, IconTruck,
-  IconAxe, IconTree, IconLeaf, IconPhone
+  IconCertificate, IconShieldCheck, IconClock, IconTruck
 } from '@tabler/icons-react';
 
 export const mainBenefits: MainBenefit[] = [
@@ -9,33 +8,6 @@ export const mainBenefits: MainBenefit[] = [
   { icon: IconShieldCheck, title: 'Fully Insured', description: 'Comprehensive insurance coverage' },
   { icon: IconClock, title: 'Prompt Service', description: 'Quick response and efficient work' },
   { icon: IconTruck, title: 'Free Site Visit', description: 'Complimentary assessment and quote' },
-];
-
-export const services: Service[] = [
-  { 
-    title: 'Tree Felling', 
-    icon: IconAxe, 
-    description: 'Professional and safe removal of trees of any size. We use advanced techniques and equipment to ensure controlled felling.',
-    color: 'green.6'
-  },
-  { 
-    title: 'Crown Reduction', 
-    icon: IconTree, 
-    description: 'Expert reshaping and size management to maintain tree health and improve appearance while ensuring safety.',
-    color: 'green.7'
-  },
-  { 
-    title: 'Stump Grinding', 
-    icon: IconLeaf, 
-    description: 'Complete stump removal service using state-of-the-art grinding equipment for a clean finish.',
-    color: 'green.8'
-  },
-  { 
-    title: '24/7 Emergency Service', 
-    icon: IconPhone, 
-    description: 'Round-the-clock emergency response for storm damage, fallen trees, and urgent tree care needs.',
-    color: 'green.9'
-  },
 ];
 
 export const testimonials: Testimonial[] = [

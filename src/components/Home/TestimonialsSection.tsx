@@ -48,8 +48,8 @@ const TestimonialCard: React.FC<{ testimonial: Testimonial; index: number }> = (
                 size={30} 
                 style={{ 
                   position: 'absolute',
-                  top: -10,
-                  left: -40,
+                  top: 'calc(var(--space-xs) * -1)',
+                  left: 'calc(var(--space-xl) * -1)',
                   opacity: 0.1,
                   transform: 'rotate(180deg)'
                 }} 
@@ -106,8 +106,8 @@ export const TestimonialsSection: React.FC<TestimonialsSectionProps> = ({ testim
           <Box
             style={{
               display: 'grid',
-              gridTemplateColumns: 'repeat(auto-fill, minmax(300px, 1fr))',
-              gap: 'var(--space-lg)',
+              gridTemplateColumns: 'repeat(auto-fill, minmax(min(100%, 300px), 1fr))',
+              gap: 'var(--space-xl)',
             }}
           >
             {testimonials.map((testimonial, index) => (

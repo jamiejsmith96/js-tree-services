@@ -21,7 +21,14 @@
   --space-md: 1rem;
   --space-lg: 1.5rem;
   --space-xl: 2rem;
-  --space-xxl: 3rem;
+  /* Section Spacing */
+  --space-xxl: 4rem;
+  --space-xxxl: 6rem;
+  
+  /* Content Max Widths */
+  --content-width-sm: 600px;
+  --content-width-md: 800px;
+  --content-width-lg: 1000px;
   
   /* Shadows */
   --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.1);
@@ -277,7 +284,7 @@ header {
   top: 0;
   left: 0;
   right: 0;
-  z-index: 1000;
+  z-index: 1100;
   background: linear-gradient(90deg, var(--gradient-start), var(--gradient-end));
   box-shadow: var(--shadow-md);
   height: 70px;
@@ -335,20 +342,97 @@ main {
   padding: 0 var(--space-lg);
 }
 
+/* Map Container */
+.map-container {
+  height: 600px;
+  width: 100%;
+  position: relative;
+}
+
 /* Mobile Styles */
 @media (max-width: 48em) {
+  /* Typography */
   h1 { font-size: var(--font-size-3xl); }
   h2 { font-size: var(--font-size-2xl); }
   h3 { font-size: var(--font-size-xl); }
   h4 { font-size: var(--font-size-lg); }
   
+  /* Spacing adjustments for mobile */
+  :root {
+    --space-xxl: 3rem;
+    --space-xxxl: 4rem;
+  }
+
+  /* Section Spacing */
+  .section {
+    padding: var(--space-xl) 0;
+  }
+
   .section-decorator::before {
     width: 150px;
     height: 150px;
   }
   
+  /* Container & Spacing */
   .mantine-Container-root {
     padding: 0 var(--space-md) !important;
+  }
+
+  /* Card Adjustments */
+  .mantine-Card-root {
+    padding: var(--space-lg) !important;
+  }
+
+  .hover-card {
+    padding: var(--space-lg) !important;
+  }
+
+  /* Content width on mobile */
+  .content-width-limit {
+    max-width: 100% !important;
+  }
+
+  /* Map Height Adjustment */
+  .map-container {
+    height: 400px !important;
+  }
+
+  /* Stack & Grid Spacing */
+  .mantine-Stack-root {
+    gap: var(--space-lg) !important;
+  }
+
+  .mantine-Grid-root {
+    gap: var(--space-lg) !important;
+  }
+
+  /* Button Sizing */
+  .mantine-Button-root {
+    height: 44px !important;
+    padding: var(--space-xs) var(--space-md) !important;
+  }
+
+  /* Section gaps */
+  .section-gap {
+    margin-top: var(--space-xl);
+    margin-bottom: var(--space-xl);
+  }
+}
+
+/* Tablet Styles */
+@media (min-width: 48em) and (max-width: 64em) {
+  :root {
+    --space-xxl: 3.5rem;
+    --space-xxxl: 5rem;
+  }
+
+  .hover-card {
+    padding: var(--space-xl) !important;
+  }
+
+  .section-gap {
+    margin-top: var(--space-xxl);
+    margin-bottom: var(--space-xxl);
   }
 }
 
@@ -369,6 +453,15 @@ a {
 
 html {
   scroll-behavior: smooth;
+}
+
+/* Image Effects */
+.hover-image {
+  transition: transform 0.3s ease !important;
+}
+
+.hover-image:hover {
+  transform: scale(1.05) !important;
 }
 
 /* Animation Classes */

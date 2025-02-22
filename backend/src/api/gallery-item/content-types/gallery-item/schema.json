@@ -1,0 +1,53 @@
+{
+  "kind": "collectionType",
+  "collectionName": "gallery_items",
+  "info": {
+    "singularName": "gallery-item",
+    "pluralName": "gallery-items",
+    "displayName": "Gallery Item",
+    "description": "Gallery items including before/after images"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "imageUrl": {
+      "type": "media",
+      "multiple": false,
+      "required": true,
+      "allowedTypes": ["images"]
+    },
+    "description": {
+      "type": "text",
+      "required": true
+    },
+    "category": {
+      "type": "enumeration",
+      "enum": [
+        "Tree Felling",
+        "Crown Reduction",
+        "Stump Removal",
+        "Emergency Work",
+        "Before & After"
+      ],
+      "required": true
+    },
+    "location": {
+      "type": "string",
+      "required": true
+    },
+    "date": {
+      "type": "date",
+      "required": true
+    },
+    "beforeAfter": {
+      "displayName": "Before After Images",
+      "type": "component",
+      "component": "image.before-after",
+      "required": false
+    },
+    "tags": {
+      "type": "json"
+    }
+  }
+}

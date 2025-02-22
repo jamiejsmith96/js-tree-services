@@ -10,22 +10,6 @@ export interface BlogPost {
   tags: string[];
 }
 
-export interface ServiceItem {
-  id: number;
-  title: string;
-  description: string;
-  features: string[];
-  imageUrl: string;
-  slug: string;
-  fullDescription?: string;
-  benefits?: string[];
-  safetyMeasures?: string[];
-  galleryImages?: string[];
-  insurance?: {
-    coverage: string;
-  };
-}
-
 export interface GalleryItem {
   id: number;
   imageUrl: string;
@@ -61,21 +45,4 @@ export interface ContactFormData {
   message: string;
 }
 
-export interface Service {
-  id: number;
-  title: string;
-  slug: string;
-  description: string;
-  features: string[];
-  image: string;
-}
-
-export interface ServiceDetail extends Service {
-  benefits: string[];
-  safetyMeasures: string[];
-  insurance: {
-    coverage: string;
-    amount: string;
-  };
-  galleryImages: string[];
-}
+export type { ServiceSummary, ServiceDetail } from './service';

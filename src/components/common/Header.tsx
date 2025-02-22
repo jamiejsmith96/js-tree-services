@@ -50,7 +50,7 @@ const Header: React.FC = () => {
       ))}
       <Button
         component={Link}
-        to="/contact"
+        to="/quote"
         variant="gradient"
         gradient={{ from: 'var(--gradient-start)', to: 'var(--gradient-end)' }}
         size="sm"
@@ -157,7 +157,7 @@ const Header: React.FC = () => {
           <Stack gap="var(--space-md)" mt="var(--space-xl)">
             <Button
               component={Link}
-              to="/contact"
+              to="/quote"
               variant="gradient"
               gradient={{ from: 'white', to: '#f8f9fa' }}
               size="lg"

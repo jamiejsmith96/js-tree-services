@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { LoadingOverlay, TextInput, Textarea, Button, Stack, Card, Group } from '@mantine/core';
+import { LoadingOverlay, TextInput, Textarea, Button, Stack, Group } from '@mantine/core';
 import { useForm } from '@mantine/form';
 import { IconSend } from '@tabler/icons-react';
 import { motion } from 'framer-motion';
@@ -46,13 +46,7 @@ export const ContactForm: React.FC<ContactFormProps> = ({ onSubmit }) => {
   };
 
   return (
-    <Card 
-      withBorder 
-      padding="var(--space-xl)" 
-      radius="md" 
-      className="hover-card"
-      style={{ position: 'relative' }}
-    >
+    <div style={{ position: 'relative' }}>
       <LoadingOverlay 
         visible={isSubmitting}
         loaderProps={{ size: 'xl', color: 'green' }}
@@ -147,6 +141,8 @@ export const ContactForm: React.FC<ContactFormProps> = ({ onSubmit }) => {
                 leftSection={<IconSend size={20} />}
                 loading={isSubmitting}
                 className="interactive-element"
+                variant="gradient"
+                gradient={{ from: 'var(--gradient-start)', to: 'var(--gradient-end)' }}
               >
                 {isSubmitting ? 'Sending...' : 'Send Message'}
               </Button>
@@ -154,6 +150,6 @@ export const ContactForm: React.FC<ContactFormProps> = ({ onSubmit }) => {
           </Group>
         </Stack>
       </form>
-    </Card>
+    </div>
   );
 };

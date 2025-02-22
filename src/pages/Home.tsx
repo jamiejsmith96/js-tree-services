@@ -3,7 +3,8 @@ import {
   HeroSection, MainBenefits, ServicesSection, TestimonialsSection,
   ServiceAreasSection, CtaSection 
 } from '../components/Home';
-import { mainBenefits, services, testimonials, servicePoints } from '../data/content';
+import { mainBenefits, testimonials, servicePoints } from '../data/content';
+import { services } from '../data/services';
 
 const Home: React.FC = () => {
   const [highlightedArea, setHighlightedArea] = useState<string | null>(null);

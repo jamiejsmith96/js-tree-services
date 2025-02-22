@@ -14,9 +14,10 @@ interface ServiceArea {
 
 interface InteractiveMapProps {
   highlightedArea?: string | null;
+  height?: number | string;
 }
 
-export default function InteractiveMap({ highlightedArea }: InteractiveMapProps) {
+export default function InteractiveMap({ highlightedArea, height = 400 }: InteractiveMapProps) {
   const mapRef = useRef<L.Map | null>(null);
   const mainLocation: [number, number] = [51.2478, -0.7783]; // Aldershot coordinates
 
@@ -52,11 +53,28 @@ export default function InteractiveMap({ highlightedArea }: InteractiveMapProps)
   ];
 
   return (
-    <Box style={{ position: 'relative', height: '100%' }}>
+    <Box 
+      style={{ 
+        position: 'relative',
+        height: '100%',
+        width: '100%',
+        borderRadius: 'var(--mantine-radius-md)',
+        overflow: 'hidden'
+      }}
+    >
       <MapContainer
         center={mainLocation}
         zoom={12}
-        style={{ height: '100%', width: '100%', zIndex: 1, borderRadius: 'var(--mantine-radius-md)', overflow: 'hidden' }}
+        style={{
+          height: '100%',
+          width: '100%',
+          zIndex: 1,
+          position: 'absolute',
+          top: 0,
+          left: 0,
+          right: 0,
+          bottom: 0
+        }}
         scrollWheelZoom={false}
         ref={mapRef}
       >
@@ -116,8 +134,10 @@ export default function InteractiveMap({ highlightedArea }: InteractiveMapProps)
           position: 'absolute',
           bottom: '20px',
           right: '20px',
-          zIndex: 1000,
-          backgroundColor: 'rgba(255, 255, 255, 0.9)',
+          zIndex: 500,
+          backgroundColor: 'rgba(255, 255, 255, 0.95)',
+          boxShadow: '0 2px 4px rgba(0,0,0,0.1)',
+          backdropFilter: 'blur(4px)',
         }}
       >
         <Stack gap="xs">

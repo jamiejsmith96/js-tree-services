@@ -1,71 +1,84 @@
-import React, { useEffect, useState } from 'react';
-import { Box } from '@mantine/core';
+import React, { useEffect, useState, useCallback } from 'react';
+import { Box, useMantineTheme, MantineTheme } from '@mantine/core';
+import { useMediaQuery } from '@mantine/hooks';
+import { motion } from 'framer-motion';
 
 interface MasonryGridProps {
   children: React.ReactNode[];
-  columns?: number;
-  spacing?: number;
   itemHeight?: number;
 }
 
 export const MasonryGrid: React.FC<MasonryGridProps> = ({ 
-  children, 
-  columns = 3,
-  spacing = 16,
+  children,
   itemHeight = 280
 }) => {
-  const [items, setItems] = useState<React.ReactNode[][]>(() =>
-    Array(columns).fill(null).map(() => [])
-  );
+  const theme = useMantineTheme();
+  const isMobile = useMediaQuery(`(max-width: ${theme.breakpoints.sm})`);
+  const isTablet = useMediaQuery(`(max-width: ${theme.breakpoints.md})`);
+  const isLargeScreen = useMediaQuery(`(min-width: ${theme.breakpoints.xl})`);
+
+  const getColumns = useCallback(() => {
+    if (isMobile) return 1;
+    if (isTablet) return 2;
+    if (isLargeScreen) return 4;
+    return 3;
+  }, [isMobile, isTablet, isLargeScreen]);
+
+  const [items, setItems] = useState<React.ReactNode[][]>(() => {
+    const cols = getColumns();
+    return Array(cols).fill(null).map(() => []);
+  });
 
   useEffect(() => {
-    // Create empty columns array
-    const newItems: React.ReactNode[][] = Array(columns).fill(null).map(() => []);
-    const heights = Array(columns).fill(0);
+    const currentColumns = getColumns();
+    const newItems: React.ReactNode[][] = Array(currentColumns).fill(null).map(() => []);
+    const heights = Array(currentColumns).fill(0);
 
-    // Distribute items among columns
     React.Children.forEach(children, (child) => {
       if (!child) return;
-      
-      // Find column with smallest height
       const smallestColumn = heights.indexOf(Math.min(...heights));
-      
-      // Add item to column
       newItems[smallestColumn] = [...newItems[smallestColumn], child];
-      heights[smallestColumn] += itemHeight + spacing;
+      heights[smallestColumn] += itemHeight;
     });
 
     setItems(newItems);
-  }, [children, columns, spacing, itemHeight]);
+  }, [children, itemHeight, getColumns]);
 
   return (
     <Box 
-      style={{ 
+      style={{
         display: 'grid',
-        gridTemplateColumns: `repeat(${columns}, 1fr)`,
-        gap: spacing,
+        gridTemplateColumns: `repeat(${getColumns()}, 1fr)`,
+        gap: isMobile ? 'var(--space-lg)' : 'var(--space-xl)',
         width: '100%'
       }}
     >
-      {items.map((column, i) => (
+      {items.map((column, columnIndex) => (
         <Box 
-          key={i} 
-          style={{ 
+          key={columnIndex} 
+          style={{
             display: 'flex', 
-            flexDirection: 'column', 
-            gap: spacing 
+            flexDirection: 'column',
+            gap: isMobile ? 'var(--space-lg)' : 'var(--space-xl)'
           }}
         >
-          {column.map((item, index) => (
-            <Box
-              key={index}
-              className="fade-in-up"
-              style={{
-                animationDelay: `${(i * column.length + index) * 0.1}s`
+          {column.map((item, itemIndex) => (
+            <motion.div
+              key={itemIndex}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ 
+                duration: 0.5,
+                delay: Math.min(
+                  isMobile 
+                    ? itemIndex * 0.1 
+                    : (columnIndex * column.length + itemIndex) * 0.1,
+                  1.5 // Cap maximum delay at 1.5s
+                )
               }}
             >
               {item}
-            </Box>
+            </motion.div>
           ))}
         </Box>
       ))}

@@ -1,11 +1,11 @@
-import { TablerIconsProps } from '@tabler/icons-react';
+import { Icon } from '@tabler/icons-react';
 
 export interface ServiceSummary {
   title: string;
-  icon: React.FC<TablerIconsProps>;
+  slug: string;
+  icon: Icon;
   description: string;
   color: string;
-  slug?: string;
 }
 
 export interface ServiceDetail {
@@ -34,8 +34,25 @@ export interface ServiceRequest {
     city: string;
     postcode: string;
   };
-  preferredDate: Date;
-  alternativeDate?: Date;
+  date: Date | null;
   description: string;
-  attachments?: string[];
+  attachments?: File[];
+  preferredContact: 'email' | 'phone';
+  urgency: 'normal' | 'urgent';
+}
+
+export interface ServiceBookingFormValues {
+  serviceId: string;
+  customerName: string;
+  customerEmail: string;
+  customerPhone: string;
+  address: {
+    street: string;
+    city: string;
+    postcode: string;
+  };
+  date: Date | null;
+  description: string;
+  preferredContact: 'email' | 'phone';
+  urgency: 'normal' | 'urgent';
 }

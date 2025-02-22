@@ -3,10 +3,14 @@ import { Link } from 'react-router-dom';
 import { Container, Title, Text, Box, Card, Stack } from '@mantine/core';
 import { IconArrowUpRight } from '@tabler/icons-react';
 import { motion } from 'framer-motion';
-import type { ServiceSummary } from '../types/service';
-import { services } from '../data/content';
+import { services } from '../data/services';
 
-const ServiceCard: React.FC<{ service: ServiceSummary; index: number }> = ({ service, index }) => {
+interface ServiceCardProps {
+  service: typeof services[0];
+  index: number;
+}
+
+const ServiceCard: React.FC<ServiceCardProps> = ({ service, index }) => {
   const Icon = service.icon;
 
   return (
@@ -20,25 +24,32 @@ const ServiceCard: React.FC<{ service: ServiceSummary; index: number }> = ({ ser
         radius="md"
         padding="var(--space-xl)"
         component={Link}
-        to={`/services/${service.slug || service.title.toLowerCase().replace(/\s+/g, '-')}`}
+        to={`/services/${service.slug}`}
         className="hover-card"
         style={{ height: '100%' }}
       >
-        <Stack gap="var(--space-lg)">
+        <Stack gap="var(--space-xl)">
           <motion.div
             whileHover={{ scale: 1.1, rotate: 5 }}
             transition={{ type: 'spring', stiffness: 300 }}
-            style={{ display: 'inline-block' }}
+            style={{ 
+              display: 'inline-block',
+              background: `var(--mantine-color-${service.color}-0)`,
+              padding: 'var(--space-md)',
+              borderRadius: '50%'
+            }}
           >
             <Icon 
-              size={48} 
-              color={`var(--mantine-color-${service.color})`}
-              style={{ strokeWidth: 1.5 }}
+              size={40} 
+              style={{ 
+                color: `var(--mantine-color-${service.color}-filled)`,
+                strokeWidth: 1.5
+              }}
             />
           </motion.div>
 
           <div>
-            <Title order={3} mb="var(--space-sm)">{service.title}</Title>
+            <Title order={3} mb="var(--space-md)">{service.title}</Title>
             <Text c="dimmed" size="lg">
               {service.description}
             </Text>
@@ -50,7 +61,7 @@ const ServiceCard: React.FC<{ service: ServiceSummary; index: number }> = ({ ser
               display: 'flex',
               alignItems: 'center',
               gap: 'var(--space-xs)',
-              color: `var(--mantine-color-${service.color})`,
+              color: `var(--mantine-color-${service.color}-filled)`,
               fontWeight: 500
             }}
           >
@@ -71,22 +82,26 @@ const ServiceCard: React.FC<{ service: ServiceSummary; index: number }> = ({ ser
 
 const Services: React.FC = () => {
   return (
-    <Box py="var(--space-xl)">
-      <Container size="xl">
-        <Stack gap="var(--space-xl)">
-          <Box className="section-decorator" ta="center">
+    <>
+      {/* Extra padding for mobile header */}
+      <Box h="var(--space-xl)" hiddenFrom="sm" />
+      
+      <Container size="xl" py="var(--space-xxxl)">
+        <Stack gap="var(--space-xxxl)">
+          <Box className="section-decorator">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5 }}
             >
-              <Title order={1}>Our Services</Title>
+              <Title order={1} ta="center">Our Services</Title>
               <Text 
                 c="dimmed" 
                 size="xl" 
-                maw={800} 
-                mx="auto" 
-                mt="var(--space-md)"
+                ta="center" 
+                mt="var(--space-lg)"
+                maw="var(--content-width-md)"
+                mx="auto"
               >
                 We provide comprehensive tree care services with a focus on safety, 
                 quality, and customer satisfaction. Browse our services below.
@@ -94,27 +109,30 @@ const Services: React.FC = () => {
             </motion.div>
           </Box>
 
-          <motion.div layout>
-            <Box
-              style={{
-                display: 'grid',
-                gridTemplateColumns: 'repeat(auto-fill, minmax(300px, 1fr))',
-                gap: 'var(--space-lg)',
-              }}
-            >
-              {services.map((service, index) => (
-                <ServiceCard key={service.title} service={service} index={index} />
-              ))}
-            </Box>
-          </motion.div>
+          <Box
+            style={{
+              display: 'grid',
+              gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))',
+              gap: 'var(--space-xl)',
+            }}
+          >
+            {services.map((service, index) => (
+              <ServiceCard key={service.title} service={service} index={index} />
+            ))}
+          </Box>
 
-          <Box ta="center" mt="var(--space-xl)">
+          <Box ta="center">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.6 }}
             >
-              <Text c="dimmed" size="lg" maw={600} mx="auto">
+              <Text 
+                c="dimmed" 
+                size="lg" 
+                maw="var(--content-width-md)" 
+                mx="auto"
+              >
                 Not sure which service you need? Contact us for a free consultation 
                 and we'll help you determine the best solution for your needs.
               </Text>
@@ -122,7 +140,7 @@ const Services: React.FC = () => {
           </Box>
         </Stack>
       </Container>
-    </Box>
+    </>
   );
 };
 

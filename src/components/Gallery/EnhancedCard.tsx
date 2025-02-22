@@ -1,9 +1,9 @@
 import React, { useState, useRef } from 'react';
 import { Card, Text, Group, Stack } from '@mantine/core';
 import { motion, useMotionValue, useSpring, useTransform } from 'framer-motion';
-import { LazyLoadImage } from 'react-lazy-load-image-component';
 import { GalleryItem } from '../../types/gallery';
 import { BeforeAfterSlider } from './BeforeAfterSlider';
+import { ResponsiveImage } from '../common/ResponsiveImage';
 
 interface Props {
   item: GalleryItem;
@@ -64,13 +64,14 @@ export const EnhancedCard: React.FC<Props> = ({ item, onClick }) => {
       transition={{ duration: 0.2 }}
     >
       <Card
-        padding="md"
+        withBorder
+        padding="var(--space-lg)"
         radius="md"
         className="hover-card"
         onClick={onClick}
         style={{ cursor: 'pointer' }}
       >
-        <Card.Section>
+        <Card.Section mb="var(--space-lg)">
           {isBeforeAfter ? (
             <BeforeAfterSlider
               beforeImage={item.beforeAfter!.beforeImage}
@@ -81,23 +82,17 @@ export const EnhancedCard: React.FC<Props> = ({ item, onClick }) => {
             <motion.div
               style={{
                 position: 'relative',
-                overflow: 'hidden'
+                overflow: 'hidden',
+                borderRadius: 'var(--mantine-radius-md)'
               }}
             >
-              <LazyLoadImage
+              <ResponsiveImage
                 src={item.imageUrl}
-                height={280}
-                width="100%"
-                effect="blur"
                 alt={item.description}
-                style={{
-                  objectFit: 'cover',
-                  transform: isHovered ? 'scale(1.1)' : 'scale(1)',
-                  transition: 'transform 0.3s ease-out'
-                }}
+                height={280}
+                className="hover-image"
               />
               <motion.div
-                className="image-overlay"
                 initial={{ opacity: 0 }}
                 animate={{ opacity: isHovered ? 0.3 : 0 }}
                 transition={{ duration: 0.3 }}
@@ -107,15 +102,16 @@ export const EnhancedCard: React.FC<Props> = ({ item, onClick }) => {
                   left: 0,
                   right: 0,
                   bottom: 0,
-                  background: 'linear-gradient(to bottom, rgba(0,0,0,0.3), rgba(0,0,0,0.5))'
+                  background: 'linear-gradient(to bottom, rgba(0,0,0,0.3), rgba(0,0,0,0.5))',
+                  borderRadius: 'var(--mantine-radius-md)'
                 }}
               />
             </motion.div>
           )}
         </Card.Section>
 
-        <Stack mt="md" gap={8} style={{ transform: 'translateZ(20px)' }}>
-          <Text fw={500} className="fade-in-up">
+        <Stack gap="var(--space-md)" style={{ transform: 'translateZ(20px)' }}>
+          <Text size="lg" fw={500} className="fade-in-up">
             {item.description}
           </Text>
           <Group justify="space-between" align="center">
@@ -123,7 +119,10 @@ export const EnhancedCard: React.FC<Props> = ({ item, onClick }) => {
               {item.category}
             </Text>
             <Text size="sm" c="dimmed" className="fade-in-up">
-              {item.date}
+              {new Date(item.date).toLocaleDateString('en-GB', {
+                month: 'short',
+                year: 'numeric'
+              })}
             </Text>
           </Group>
         </Stack>

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Container, Title, Text, Group, Button, Stack, Box } from '@mantine/core';
 import { IconTag } from '@tabler/icons-react';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -127,101 +127,111 @@ const galleryItems: GalleryItem[] = [
 const Gallery: React.FC = () => {
   const [selectedCategory, setSelectedCategory] = useState<GalleryCategory>('All');
   const [selectedImage, setSelectedImage] = useState<GalleryItem | null>(null);
-  const [columns, setColumns] = useState(3);
-
-  useEffect(() => {
-    const updateColumns = () => {
-      const width = window.innerWidth;
-      if (width < 768) setColumns(1);
-      else if (width < 1200) setColumns(2);
-      else setColumns(3);
-    };
-
-    updateColumns();
-    window.addEventListener('resize', updateColumns);
-    return () => {
-      window.removeEventListener('resize', updateColumns);
-    };
-  }, []);
 
   const filteredItems = selectedCategory === 'All' 
     ? galleryItems 
     : galleryItems.filter(item => item.category === selectedCategory);
 
   return (
-    <Container size="xl" py="var(--space-xl)">
-      <Stack gap="var(--space-xl)">
-        <Box className="section-decorator">
-          <Title order={1} ta="center" className="fade-in-up">Our Work Gallery</Title>
-          <Text c="dimmed" size="xl" ta="center" mt="md" className="fade-in-up delay-1">
-            Browse through our portfolio of professional tree surgery projects
-          </Text>
-        </Box>
-
-        <Group justify="center" gap="xs" className="fade-in-up delay-2">
-          {galleryCategories.map((category) => (
-            <Button
-              key={category}
-              variant={selectedCategory === category ? 'filled' : 'light'}
-              color="green"
-              onClick={() => setSelectedCategory(category)}
-              leftSection={<IconTag size={16} />}
-              radius="xl"
-              size="md"
-              className={`interactive-element ${selectedCategory === category ? 'active' : ''}`}
-              styles={{
-                root: {
-                  backgroundColor: selectedCategory === category 
-                    ? 'var(--mantine-color-green-filled)' 
-                    : 'rgba(67, 160, 71, 0.1)',
-                  color: selectedCategory === category 
-                    ? 'white' 
-                    : 'var(--mantine-color-green-filled)',
-                  '&:not(:disabled):hover': {
-                    backgroundColor: selectedCategory === category 
-                      ? 'var(--mantine-color-green-filled-hover)' 
-                      : 'rgba(67, 160, 71, 0.2)',
-                  }
-                }
-              }}
+    <>
+      {/* Extra padding for mobile header */}
+      <Box h="var(--space-xl)" hiddenFrom="sm" />
+      
+      <Container size="xl" py="var(--space-xxxl)">
+        <Stack gap="var(--space-xxxl)">
+          <Box className="section-decorator">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5 }}
             >
-              {category}
-            </Button>
-          ))}
-        </Group>
+              <Title order={1} ta="center">Our Work Gallery</Title>
+              <Text 
+                c="dimmed" 
+                size="xl" 
+                ta="center" 
+                mt="var(--space-lg)"
+                maw="var(--content-width-md)"
+                mx="auto"
+              >
+                Browse through our portfolio of professional tree surgery projects
+              </Text>
+            </motion.div>
+          </Box>
 
-        <AnimatePresence mode="wait">
-          <motion.div
-            key={selectedCategory}
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -20 }}
-            transition={{ duration: 0.3 }}
-          >
-            <MasonryGrid columns={columns}>
-              {filteredItems.map((item, index) => (
+          <Stack gap="var(--space-xxl)">
+            <Group justify="center" gap="md">
+              {galleryCategories.map((category, index) => (
                 <motion.div
-                  key={item.id}
+                  key={category}
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: index * 0.1 }}
+                  transition={{ duration: 0.5, delay: index * 0.1 }}
                 >
-                  <EnhancedCard
-                    item={item}
-                    onClick={() => setSelectedImage(item)}
-                  />
+                  <Button
+                    variant={selectedCategory === category ? 'filled' : 'light'}
+                    color="green"
+                    onClick={() => setSelectedCategory(category)}
+                    leftSection={<IconTag size={16} />}
+                    radius="xl"
+                    size="lg"
+                    className="interactive-element"
+                    styles={{
+                      root: {
+                        backgroundColor: selectedCategory === category 
+                          ? 'var(--mantine-color-green-filled)' 
+                          : 'rgba(67, 160, 71, 0.1)',
+                        color: selectedCategory === category 
+                          ? 'white' 
+                          : 'var(--mantine-color-green-filled)',
+                        '&:not(:disabled):hover': {
+                          backgroundColor: selectedCategory === category 
+                            ? 'var(--mantine-color-green-filled-hover)' 
+                            : 'rgba(67, 160, 71, 0.2)',
+                        }
+                      }
+                    }}
+                  >
+                    {category}
+                  </Button>
                 </motion.div>
               ))}
-            </MasonryGrid>
-          </motion.div>
-        </AnimatePresence>
-      </Stack>
+            </Group>
+
+            <AnimatePresence mode="wait">
+              <motion.div
+                key={selectedCategory}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -20 }}
+                transition={{ duration: 0.3 }}
+              >
+                <MasonryGrid>
+                  {filteredItems.map((item, index) => (
+                    <motion.div
+                      key={item.id}
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ delay: index * 0.1 }}
+                    >
+                      <EnhancedCard
+                        item={item}
+                        onClick={() => setSelectedImage(item)}
+                      />
+                    </motion.div>
+                  ))}
+                </MasonryGrid>
+              </motion.div>
+            </AnimatePresence>
+          </Stack>
+        </Stack>
+      </Container>
 
       <EnhancedModal
         item={selectedImage}
         onClose={() => setSelectedImage(null)}
       />
-    </Container>
+    </>
   );
 };
 
