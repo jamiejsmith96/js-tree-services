@@ -8,7 +8,8 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "dev": "react-scripts start",
-    "serve": "node server.js"
+    "serve": "node server.js",
+    "optimize-images": "node scripts/optimize-images.js"
   },
   "homepage": "/",
   "dependencies": {
@@ -43,7 +44,8 @@
     "react-lazy-load-image-component": "^1.6.3",
     "react-leaflet": "^4.2.1",
     "react-router-dom": "^6.12.1",
-    "react-scripts": "5.0.1"
+    "react-scripts": "5.0.1",
+    "sharp": "^0.33.5"
   },
   "devDependencies": {
     "@babel/plugin-proposal-private-property-in-object": "^7.21.11",

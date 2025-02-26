@@ -2,6 +2,7 @@ import React from 'react';
 import { Container, Grid, Group, Stack, Text, ActionIcon, Button, Divider } from '@mantine/core';
 import { IconBrandFacebook, IconBrandTwitter, IconBrandInstagram, IconPhone, IconMail, IconMapPin } from '@tabler/icons-react';
 import { Link } from 'react-router-dom';
+import { ResponsiveImage } from './ResponsiveImage';
 
 interface FooterLink {
   label: string;
@@ -44,7 +45,12 @@ const Footer: React.FC = () => {
             <Stack gap="md" className="fade-in-up">
               <Link to="/" style={{ textDecoration: 'none' }}>
                 <Group className="interactive-element">
-                  <img src="/logo.png" alt="JS Tree Services" height={36} style={{ filter: 'brightness(1.1)' }} />
+                  <img
+                    src="/logo.png"
+                    alt="JS Tree Services"
+                    height={36}
+                    style={{ filter: 'brightness(1.1)' }}
+                  />
                 </Group>
               </Link>
               <Text c="dimmed">

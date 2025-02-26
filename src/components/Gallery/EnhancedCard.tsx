@@ -1,5 +1,5 @@
 import React, { useState, useRef } from 'react';
-import { Card, Text, Group, Stack } from '@mantine/core';
+import { Card, Text, Group, Stack, Box } from '@mantine/core';
 import { motion, useMotionValue, useSpring, useTransform } from 'framer-motion';
 import { GalleryItem } from '../../types/gallery';
 import { BeforeAfterSlider } from './BeforeAfterSlider';
@@ -59,6 +59,8 @@ export const EnhancedCard: React.FC<Props> = ({ item, onClick }) => {
         transformStyle: 'preserve-3d',
         rotateX,
         rotateY,
+        height: '100%',
+        display: 'flex'
       }}
       whileHover={{ scale: 1.02 }}
       transition={{ duration: 0.2 }}
@@ -69,62 +71,70 @@ export const EnhancedCard: React.FC<Props> = ({ item, onClick }) => {
         radius="md"
         className="hover-card"
         onClick={onClick}
-        style={{ cursor: 'pointer' }}
+        style={{ 
+          cursor: 'pointer',
+          height: '100%',
+          display: 'flex',
+          flexDirection: 'column',
+          flex: 1
+        }}
       >
-        <Card.Section mb="var(--space-lg)">
-          {isBeforeAfter ? (
-            <BeforeAfterSlider
-              beforeImage={item.beforeAfter!.beforeImage}
-              afterImage={item.beforeAfter!.afterImage}
-              height={280}
-            />
-          ) : (
-            <motion.div
-              style={{
-                position: 'relative',
-                overflow: 'hidden',
-                borderRadius: 'var(--mantine-radius-md)'
-              }}
-            >
-              <ResponsiveImage
-                src={item.imageUrl}
-                alt={item.description}
+        <Stack gap="var(--space-lg)" style={{ height: '100%' }}>
+          <Box style={{ position: 'relative', flex: '0 0 auto' }}>
+            {isBeforeAfter ? (
+              <BeforeAfterSlider
+                beforeImage={item.beforeAfter!.beforeImage}
+                afterImage={item.beforeAfter!.afterImage}
                 height={280}
-                className="hover-image"
               />
+            ) : (
               <motion.div
-                initial={{ opacity: 0 }}
-                animate={{ opacity: isHovered ? 0.3 : 0 }}
-                transition={{ duration: 0.3 }}
                 style={{
-                  position: 'absolute',
-                  top: 0,
-                  left: 0,
-                  right: 0,
-                  bottom: 0,
-                  background: 'linear-gradient(to bottom, rgba(0,0,0,0.3), rgba(0,0,0,0.5))',
+                  position: 'relative',
+                  overflow: 'hidden',
                   borderRadius: 'var(--mantine-radius-md)'
                 }}
-              />
-            </motion.div>
-          )}
-        </Card.Section>
+              >
+                <ResponsiveImage
+                  src={item.imageUrl}
+                  alt={item.description}
+                  height={280}
+                  className="hover-image"
+                />
+                <motion.div
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: isHovered ? 0.3 : 0 }}
+                  transition={{ duration: 0.3 }}
+                  style={{
+                    position: 'absolute',
+                    top: 0,
+                    left: 0,
+                    right: 0,
+                    bottom: 0,
+                    background: 'linear-gradient(to bottom, rgba(0,0,0,0.3), rgba(0,0,0,0.5))',
+                    borderRadius: 'var(--mantine-radius-md)'
+                  }}
+                />
+              </motion.div>
+            )}
+          </Box>
 
-        <Stack gap="var(--space-md)" style={{ transform: 'translateZ(20px)' }}>
-          <Text size="lg" fw={500} className="fade-in-up">
-            {item.description}
-          </Text>
-          <Group justify="space-between" align="center">
-            <Text size="sm" c="dimmed" className="fade-in-up">
-              {item.category}
+          <Stack gap="var(--space-md)" style={{ flex: 1, justifyContent: 'space-between' }}>
+            <Text size="lg" fw={500} className="fade-in-up">
+              {item.description}
             </Text>
-            <Text size="sm" c="dimmed" className="fade-in-up">
-              {new Date(item.date).toLocaleDateString('en-GB', {
-                month: 'short',
-                year: 'numeric'
-              })}
-            </Text>
-          </Group>
+            <Group justify="space-between" align="center">
+              <Text size="sm" c="dimmed" className="fade-in-up">
+                {item.category}
+              </Text>
+              <Text size="sm" c="dimmed" className="fade-in-up">
+                {new Date(item.date).toLocaleDateString('en-GB', {
+                  month: 'short',
+                  year: 'numeric'
+                })}
+              </Text>
+            </Group>
+          </Stack>
         </Stack>
       </Card>
     </motion.div>

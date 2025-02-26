@@ -27,56 +27,64 @@ export const MainBenefits: React.FC<MainBenefitsProps> = ({ benefits }) => {
 
         <Grid gutter="var(--space-xl)">
           {benefits.map((benefit, index) => (
-            <Grid.Col key={benefit.title} span={{ base: 12, sm: 6, md: 3 }}>
+            <Grid.Col key={benefit.title} span={{ base: 12, sm: 6, md: 3 }} style={{ display: 'flex' }}>
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.5, delay: index * 0.1 }}
+                style={{ width: '100%' }}
               >
                 <Card 
                   padding="var(--space-xl)"
                   radius="md" 
                   withBorder
                   className="hover-card"
+                  style={{
+                    height: '100%',
+                    display: 'flex',
+                    flexDirection: 'column'
+                  }}
                 >
-                  <Stack align="center" gap="var(--space-md)">
-                    <motion.div
-                      whileHover={{ scale: 1.1, rotate: 5 }}
-                      transition={{ type: 'spring', stiffness: 300 }}
-                      style={{ 
-                        display: 'inline-block',
-                        background: 'var(--mantine-color-green-0)',
-                        padding: 'var(--space-md)',
-                        borderRadius: '50%'
-                      }}
-                    >
-                      <benefit.icon 
-                        size={40}
+                  <Stack gap="var(--space-md)" style={{ height: '100%', justifyContent: 'space-between' }}>
+                    <Stack align="center" gap="var(--space-md)">
+                      <motion.div
+                        whileHover={{ scale: 1.1, rotate: 5 }}
+                        transition={{ type: 'spring', stiffness: 300 }}
                         style={{ 
-                          color: 'var(--mantine-color-green-filled)',
-                          strokeWidth: 1.5
-                        }} 
-                      />
-                    </motion.div>
+                          display: 'inline-block',
+                          background: 'var(--mantine-color-green-0)',
+                          padding: 'var(--space-md)',
+                          borderRadius: '50%'
+                        }}
+                      >
+                        <benefit.icon 
+                          size={40}
+                          style={{ 
+                            color: 'var(--mantine-color-green-filled)',
+                            strokeWidth: 1.5
+                          }} 
+                        />
+                      </motion.div>
 
-                    <Stack gap="xs" align="center">
-                      <Text 
-                        size="xl" 
-                        fw={600}
-                        ta="center"
-                        style={{ color: 'var(--mantine-color-dark-7)' }}
-                      >
-                        {benefit.title}
-                      </Text>
-                      <Text 
-                        size="md" 
-                        c="dimmed" 
-                        ta="center"
-                        style={{ lineHeight: 1.6 }}
-                      >
-                        {benefit.description}
-                      </Text>
+                      <Stack gap="xs" align="center" style={{ flex: 1 }}>
+                        <Text 
+                          size="xl" 
+                          fw={600}
+                          ta="center"
+                          style={{ color: 'var(--mantine-color-dark-7)' }}
+                        >
+                          {benefit.title}
+                        </Text>
+                        <Text 
+                          size="md" 
+                          c="dimmed" 
+                          ta="center"
+                          style={{ lineHeight: 1.6 }}
+                        >
+                          {benefit.description}
+                        </Text>
+                      </Stack>
                     </Stack>
                   </Stack>
 

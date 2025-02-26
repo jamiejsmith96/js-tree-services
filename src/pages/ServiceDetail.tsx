@@ -181,12 +181,12 @@ const ServiceDetail: React.FC = () => {
                   className="hover-card"
                 >
                   <Stack gap="var(--space-xl)">
-                    <div>
-                      <Title order={3} mb="var(--space-md)">Insurance Coverage</Title>
-                      <Text c="dimmed" size="lg">{service.insurance.coverage}</Text>
-                    </div>
-
                     <Stack gap="var(--space-md)">
+                      <Title order={3} mb="var(--space-md)">Ready to Get Started?</Title>
+                      <Text c="dimmed" size="lg">
+                        Contact us today for a free consultation and quote for your {service.title.toLowerCase()} needs.
+                      </Text>
+
                       <Button
                         size="lg"
                         leftSection={<IconCalendar size={20} />}

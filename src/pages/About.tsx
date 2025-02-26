@@ -17,7 +17,7 @@ const About: React.FC = () => {
     'NPTC Certified Arborists',
     'City & Guilds Qualified',
     'ISO 9001:2015 Certified',
-    'Full Public Liability Insurance',
+    'Arboricultural Association Approved',
     'Environmental Management System ISO 14001',
     'Safe Contractor Approved'
   ];
@@ -124,21 +124,34 @@ const About: React.FC = () => {
                   image: '/assets/gallery/image_fx_ (13).jpg'
                 }
               ].map((item, index) => (
-                <Grid.Col key={index} span={{ base: 12, md: 4 }}>
+                <Grid.Col key={index} span={{ base: 12, md: 4 }} style={{ display: 'flex' }}>
                   <motion.div
                     initial={{ opacity: 0, y: 20 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
                     transition={{ duration: 0.5, delay: index * 0.1 }}
+                    style={{ width: '100%' }}
                   >
-                    <Card withBorder padding="var(--space-xl)" radius="md" className="hover-card">
-                      <Stack align="center" gap="var(--space-xl)">
-                        <ThemeIcon size={40} radius="md" color="green">
-                          <item.icon size={20} />
-                        </ThemeIcon>
-                        <Stack gap="var(--space-md)">
-                          <Title order={3} ta="center">{item.title}</Title>
-                          <Text ta="center">{item.text}</Text>
+                    <Card 
+                      withBorder 
+                      padding="var(--space-xl)" 
+                      radius="md" 
+                      className="hover-card"
+                      style={{
+                        height: '100%',
+                        display: 'flex',
+                        flexDirection: 'column'
+                      }}
+                    >
+                      <Stack gap="var(--space-xl)" style={{ flex: 1, justifyContent: 'space-between' }}>
+                        <Stack align="center" gap="var(--space-xl)">
+                          <ThemeIcon size={40} radius="md" color="green">
+                            <item.icon size={20} />
+                          </ThemeIcon>
+                          <Stack gap="var(--space-md)">
+                            <Title order={3} ta="center">{item.title}</Title>
+                            <Text ta="center">{item.text}</Text>
+                          </Stack>
                         </Stack>
                         <ResponsiveImage
                           src={item.image}
@@ -213,19 +226,34 @@ const About: React.FC = () => {
 
             <Grid gutter={{ base: 'xl', sm: 'var(--space-xxl)' }}>
               {certifications.map((cert, index) => (
-                <Grid.Col key={index} span={{ base: 12, sm: 6, md: 4 }}>
+                <Grid.Col key={index} span={{ base: 12, sm: 6, md: 4 }} style={{ display: 'flex' }}>
                   <motion.div
                     initial={{ opacity: 0, y: 20 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
                     transition={{ duration: 0.5, delay: index * 0.1 }}
+                    style={{ width: '100%' }}
                   >
-                    <Card withBorder padding="var(--space-xl)" radius="md" className="hover-card">
-                      <Stack align="center" gap="var(--space-xl)">
-                        <ThemeIcon size={40} radius="md" color="green">
-                          <IconTrophy size={20} />
-                        </ThemeIcon>
-                        <Text size="lg" ta="center">{cert}</Text>
+                    <Card 
+                      withBorder 
+                      padding="var(--space-xl)" 
+                      radius="md" 
+                      className="hover-card"
+                      style={{
+                        height: '100%',
+                        display: 'flex',
+                        flexDirection: 'column'
+                      }}
+                    >
+                      <Stack gap="var(--space-xl)" style={{ height: '100%' }}>
+                        <Stack align="center" gap="var(--space-xl)" style={{ flex: 1, justifyContent: 'center', minHeight: '150px' }}>
+                          <ThemeIcon size={40} radius="md" color="green">
+                            <IconTrophy size={20} />
+                          </ThemeIcon>
+                          <Box style={{ flex: 1, display: 'flex', alignItems: 'center' }}>
+                            <Text size="lg" ta="center" style={{ width: '100%', wordWrap: 'break-word' }}>{cert}</Text>
+                          </Box>
+                        </Stack>
                       </Stack>
                     </Card>
                   </motion.div>
@@ -254,32 +282,45 @@ const About: React.FC = () => {
 
             <Grid gutter={{ base: 'xl', sm: 'var(--space-xxl)' }}>
               {teamMembers.map((member, index) => (
-                <Grid.Col key={index} span={{ base: 12, sm: 6 }}>
+                <Grid.Col key={index} span={{ base: 12, sm: 6 }} style={{ display: 'flex' }}>
                   <motion.div
                     initial={{ opacity: 0, y: 20 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
                     transition={{ duration: 0.5, delay: index * 0.1 }}
+                    style={{ width: '100%' }}
                   >
-                    <Card withBorder padding="var(--space-xl)" radius="md" className="hover-card">
-                      <Stack align="center" gap="var(--space-xl)">
+                    <Card 
+                      withBorder 
+                      padding="var(--space-xl)" 
+                      radius="md" 
+                      className="hover-card"
+                      style={{
+                        height: '100%',
+                        display: 'flex',
+                        flexDirection: 'column'
+                      }}
+                    >
+                      <Stack gap="var(--space-xl)" style={{ flex: 1, justifyContent: 'space-between' }}>
                         <ResponsiveImage
                           src={member.image}
                           alt={member.name}
                           height={320}
                           radius="md"
                         />
-                        <Stack gap="var(--space-xs)" align="center">
-                          <Text size="xl" fw={500} ta="center">{member.name}</Text>
-                          <Text size="sm" c="dimmed" ta="center">{member.role}</Text>
+                        <Stack gap="var(--space-md)" align="center">
+                          <Stack gap="var(--space-xs)" align="center">
+                            <Text size="xl" fw={500} ta="center">{member.name}</Text>
+                            <Text size="sm" c="dimmed" ta="center">{member.role}</Text>
+                          </Stack>
+                          <Group gap="xs" justify="center">
+                            {member.certifications.map((cert, i) => (
+                              <Badge key={i} color="green" variant="light">
+                                {cert}
+                              </Badge>
+                            ))}
+                          </Group>
                         </Stack>
-                        <Group gap="xs" justify="center">
-                          {member.certifications.map((cert, i) => (
-                            <Badge key={i} color="green" variant="light">
-                              {cert}
-                            </Badge>
-                          ))}
-                        </Group>
                       </Stack>
                     </Card>
                   </motion.div>

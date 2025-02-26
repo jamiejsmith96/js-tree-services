@@ -144,6 +144,24 @@
   animation: fadeIn 0.6s cubic-bezier(0.4, 0, 0.2, 1) forwards;
 }
 
+.masonry-grid-column {
+  height: auto;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xl);
+}
+
+.masonry-grid-item {
+  break-inside: avoid;
+  height: 100%;
+  display: flex;
+}
+
+.masonry-grid-item > * {
+  flex: 1;
+  height: 100%;
+}
+
 @keyframes fadeIn {
   to {
     opacity: 1;

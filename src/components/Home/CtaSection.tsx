@@ -14,7 +14,7 @@ export const CtaSection: React.FC = () => {
           viewport={{ once: true }}
           transition={{ duration: 0.5 }}
         >
-          <Grid gutter="var(--space-lg)">
+          <Grid gutter="var(--space-lg)" style={{ alignItems: 'stretch' }}>
             <Grid.Col span={{ base: 12, md: 6 }}>
               <Card 
                 withBorder 
@@ -22,9 +22,10 @@ export const CtaSection: React.FC = () => {
                 radius="md"
                 className="hover-card"
                 bg="var(--mantine-color-red-0)"
+                style={{ height: '100%', display: 'flex', flexDirection: 'column' }}
               >
-                <Stack gap="var(--space-lg)">
-                  <Box>
+                <Stack style={{ height: '100%' }}>
+                  <Box style={{ flex: 1 }}>
                     <Badge 
                       color="red" 
                       size="lg" 
@@ -41,16 +42,22 @@ export const CtaSection: React.FC = () => {
                       Our emergency team is available 24/7 for urgent tree care situations 
                       across all our service areas.
                     </Text>
-                  </Box>
 
-                  <Box style={{ borderTop: '1px solid var(--mantine-color-red-2)', paddingTop: 'var(--space-md)' }}>
-                    <Group gap="xs" mb="xs">
-                      <IconClock24 size={18} style={{ color: 'var(--mantine-color-red-7)' }} />
-                      <Text fw={500}>Average Response Time: 20-30 minutes</Text>
-                    </Group>
-                    <Text size="sm" c="dimmed">
-                      We prioritize emergency calls and aim to reach you as quickly as possible
-                    </Text>
+                    <Box 
+                      style={{ 
+                        borderTop: '1px solid var(--mantine-color-red-2)',
+                        paddingTop: 'var(--space-md)',
+                        marginTop: 'var(--space-xl)'
+                      }}
+                    >
+                      <Group gap="xs" mb="xs">
+                        <IconClock24 size={18} style={{ color: 'var(--mantine-color-red-7)' }} />
+                        <Text fw={500}>Average Response Time: 20-30 minutes</Text>
+                      </Group>
+                      <Text size="sm" c="dimmed">
+                        We prioritize emergency calls and aim to reach you as quickly as possible
+                      </Text>
+                    </Box>
                   </Box>
 
                   <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
@@ -83,9 +90,10 @@ export const CtaSection: React.FC = () => {
                 radius="md"
                 className="hover-card"
                 bg="var(--mantine-color-green-0)"
+                style={{ height: '100%', display: 'flex', flexDirection: 'column' }}
               >
-                <Stack gap="var(--space-lg)">
-                  <Box>
+                <Stack style={{ height: '100%' }}>
+                  <Box style={{ flex: 1 }}>
                     <Badge 
                       color="green" 
                       size="lg" 
@@ -102,50 +110,51 @@ export const CtaSection: React.FC = () => {
                       Not sure what you need? Contact us for a free consultation 
                       and detailed quote for your tree care requirements.
                     </Text>
-                  </Box>
 
-                  <Box 
-                    style={{ 
-                      borderTop: '1px solid var(--mantine-color-green-2)', 
-                      paddingTop: 'var(--space-md)' 
-                    }}
-                  >
-                    <Stack gap="xs">
-                      <Text fw={500}>What's included:</Text>
-                      <Group gap="xs">
-                        <Box 
-                          style={{ 
-                            width: 6, 
-                            height: 6, 
-                            borderRadius: '50%', 
-                            backgroundColor: 'var(--mantine-color-green-6)' 
-                          }} 
-                        />
-                        <Text size="sm">Site assessment and consultation</Text>
-                      </Group>
-                      <Group gap="xs">
-                        <Box 
-                          style={{ 
-                            width: 6, 
-                            height: 6, 
-                            borderRadius: '50%', 
-                            backgroundColor: 'var(--mantine-color-green-6)' 
-                          }} 
-                        />
-                        <Text size="sm">Detailed cost breakdown</Text>
-                      </Group>
-                      <Group gap="xs">
-                        <Box 
-                          style={{ 
-                            width: 6, 
-                            height: 6, 
-                            borderRadius: '50%', 
-                            backgroundColor: 'var(--mantine-color-green-6)' 
-                          }} 
-                        />
-                        <Text size="sm">Professional recommendations</Text>
-                      </Group>
-                    </Stack>
+                    <Box 
+                      style={{ 
+                        borderTop: '1px solid var(--mantine-color-green-2)', 
+                        paddingTop: 'var(--space-md)',
+                        marginTop: 'var(--space-xl)'
+                      }}
+                    >
+                      <Stack gap="xs">
+                        <Text fw={500}>What's included:</Text>
+                        <Group gap="xs">
+                          <Box 
+                            style={{ 
+                              width: 6, 
+                              height: 6, 
+                              borderRadius: '50%', 
+                              backgroundColor: 'var(--mantine-color-green-6)' 
+                            }} 
+                          />
+                          <Text size="sm">Site assessment and consultation</Text>
+                        </Group>
+                        <Group gap="xs">
+                          <Box 
+                            style={{ 
+                              width: 6, 
+                              height: 6, 
+                              borderRadius: '50%', 
+                              backgroundColor: 'var(--mantine-color-green-6)' 
+                            }} 
+                          />
+                          <Text size="sm">Detailed cost breakdown</Text>
+                        </Group>
+                        <Group gap="xs">
+                          <Box 
+                            style={{ 
+                              width: 6, 
+                              height: 6, 
+                              borderRadius: '50%', 
+                              backgroundColor: 'var(--mantine-color-green-6)' 
+                            }} 
+                          />
+                          <Text size="sm">Professional recommendations</Text>
+                        </Group>
+                      </Stack>
+                    </Box>
                   </Box>
 
                   <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>

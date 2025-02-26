@@ -1,5 +1,5 @@
 import React from 'react';
-import { Box, Container, Title, Grid, Card, Text, Button, Group } from '@mantine/core';
+import { Box, Container, Title, Grid, Card, Text, Button, Group, Stack } from '@mantine/core';
 import { Link } from 'react-router-dom';
 import { IconLeaf, IconArrowRight } from '@tabler/icons-react';
 import { motion } from 'framer-motion';
@@ -42,90 +42,103 @@ export const ServicesSection: React.FC<ServicesSectionProps> = ({
 
         <Grid gutter={{ base: 'xl', sm: 'var(--space-xl)' }}>
           {displayServices.map((service, index) => (
-            <Grid.Col span={{ base: 12, sm: 6 }} key={service.title}>
+            <Grid.Col span={{ base: 12, sm: 6 }} key={service.title} style={{ display: 'flex' }}>
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.5, delay: index * 0.1 }}
+                style={{ width: '100%' }}
               >
                 <Card 
                   padding="var(--space-xl)"
                   radius="md" 
                   withBorder
                   className="hover-card"
+                  style={{
+                    height: '100%',
+                    display: 'flex',
+                    flexDirection: 'column'
+                  }}
                 >
-                  <motion.div
-                    whileHover={{ scale: 1.1, rotate: 5 }}
-                    transition={{ type: 'spring', stiffness: 300 }}
-                    style={{ 
-                      display: 'inline-block',
-                      background: `var(--mantine-color-${service.color}-0)`,
-                      padding: 'var(--space-md)',
-                      borderRadius: '50%'
-                    }}
-                  >
-                    <service.icon 
-                      size={40}
-                      style={{ 
-                        color: `var(--mantine-color-${service.color}-filled)`,
-                        strokeWidth: 1.5
-                      }}
-                    />
-                  </motion.div>
-
-                  <Title order={3} mt="var(--space-xl)">{service.title}</Title>
-                  <Text mt="var(--space-md)" size="lg" c="dimmed">
-                    {service.description}
-                  </Text>
-
-                  <Group mt="var(--space-xl)" justify="space-between">
-                    <Button 
-                      variant="light" 
-                      color="green" 
-                      rightSection={<IconArrowRight size={16} />}
-                      component={Link}
-                      to={`/services/${service.slug}`}
-                      className="interactive-element"
-                      styles={{
-                        root: {
-                          transition: 'transform 0.2s ease',
-                          '&:hover': {
-                            transform: 'translateX(4px)'
-                          }
-                        }
-                      }}
-                    >
-                      Learn More
-                    </Button>
-
-                    <motion.div
-                      whileHover={{ scale: 1.1 }}
-                      whileTap={{ scale: 0.95 }}
-                    >
-                      <Button
-                        variant="subtle"
-                        color="green"
-                        rightSection={<IconLeaf size={16} />}
-                        component={Link}
-                        to="/contact"
-                        className="interactive-element"
+                  <Stack gap="var(--space-xl)" style={{ height: '100%' }}>
+                    <Box>
+                      <motion.div
+                        whileHover={{ scale: 1.1, rotate: 5 }}
+                        transition={{ type: 'spring', stiffness: 300 }}
+                        style={{ 
+                          display: 'inline-block',
+                          background: `var(--mantine-color-${service.color}-0)`,
+                          padding: 'var(--space-md)',
+                          borderRadius: '50%'
+                        }}
                       >
-                        Book Now
-                      </Button>
-                    </motion.div>
-                  </Group>
+                        <service.icon 
+                          size={40}
+                          style={{ 
+                            color: `var(--mantine-color-${service.color}-filled)`,
+                            strokeWidth: 1.5
+                          }}
+                        />
+                      </motion.div>
+                    </Box>
 
-                  <Box 
-                    mt="var(--space-xl)" 
-                    pt="var(--space-md)" 
-                    style={{ 
-                      borderTop: '1px solid var(--mantine-color-gray-2)',
-                      color: 'var(--mantine-color-dimmed)'
-                    }}
-                  >
-                    <Text size="sm">Available 24/7 for emergency calls</Text>
-                  </Box>
+                    <Box style={{ flex: 1 }}>
+                      <Title order={3}>{service.title}</Title>
+                      <Text mt="var(--space-md)" size="lg" c="dimmed">
+                        {service.description}
+                      </Text>
+                    </Box>
+
+                    <Stack gap="var(--space-md)">
+                      <Group justify="space-between">
+                        <Button 
+                          variant="light" 
+                          color="green" 
+                          rightSection={<IconArrowRight size={16} />}
+                          component={Link}
+                          to={`/services/${service.slug}`}
+                          className="interactive-element"
+                          styles={{
+                            root: {
+                              transition: 'transform 0.2s ease',
+                              '&:hover': {
+                                transform: 'translateX(4px)'
+                              }
+                            }
+                          }}
+                        >
+                          Learn More
+                        </Button>
+
+                        <motion.div
+                          whileHover={{ scale: 1.1 }}
+                          whileTap={{ scale: 0.95 }}
+                        >
+                          <Button
+                            variant="subtle"
+                            color="green"
+                            rightSection={<IconLeaf size={16} />}
+                            component={Link}
+                            to="/contact"
+                            className="interactive-element"
+                          >
+                            Book Now
+                          </Button>
+                        </motion.div>
+                      </Group>
+
+                      <Box 
+                        style={{ 
+                          borderTop: '1px solid var(--mantine-color-gray-2)',
+                          paddingTop: 'var(--space-md)',
+                          color: 'var(--mantine-color-dimmed)'
+                        }}
+                      >
+                        <Text size="sm">Available 24/7 for emergency calls</Text>
+                      </Box>
+                    </Stack>
+                  </Stack>
                 </Card>
               </motion.div>
             </Grid.Col>

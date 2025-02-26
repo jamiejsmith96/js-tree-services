@@ -18,7 +18,7 @@ export const ServiceAreasSection: React.FC<ServiceAreasSectionProps> = ({
   onAreaHover 
 }) => {
   return (
-    <Box py="var(--space-xl)">
+    <Box py="var(--space-xl)" className="service-areas-section">
       <Container size="xl">
         <Stack gap="var(--space-xl)">
           <Box className="section-decorator">
@@ -49,17 +49,17 @@ export const ServiceAreasSection: React.FC<ServiceAreasSectionProps> = ({
             viewport={{ once: true }}
             transition={{ duration: 0.5, delay: 0.2 }}
           >
-            <Box
-              style={{
-                height: 600,
-                border: '1px solid var(--mantine-color-gray-3)',
-                borderRadius: 'var(--mantine-radius-md)',
-                overflow: 'hidden'
-              }}
-              className="hover-card map-container"
+            <Card
+              withBorder
+              padding={0}
+              radius="md"
+              className="hover-card"
+              style={{ height: '100%' }}
             >
-              <InteractiveMap highlightedArea={highlightedArea} />
-            </Box>
+              <div className="map-wrapper">
+                <InteractiveMap highlightedArea={highlightedArea} />
+              </div>
+            </Card>
           </motion.div>
 
           <Grid gutter="var(--space-lg)">
@@ -86,7 +86,7 @@ export const ServiceAreasSection: React.FC<ServiceAreasSectionProps> = ({
                     onMouseLeave={() => onAreaHover(null)}
                   >
                     <Stack gap="var(--space-md)">
-                      <Group justify="space-between" align="flex-start">
+                      <Stack gap="md">
                         <Box>
                           <motion.div
                             animate={highlightedArea === point.area ? {
@@ -95,25 +95,23 @@ export const ServiceAreasSection: React.FC<ServiceAreasSectionProps> = ({
                             } : {}}
                             transition={{ duration: 0.5 }}
                           >
-                            <IconMapPin 
-                              size={32} 
-                              color="var(--mantine-color-green-filled)" 
+                            <IconMapPin
+                              size={32}
+                              color="var(--mantine-color-green-filled)"
                             />
                           </motion.div>
                           <Title order={3} mt="xs">{point.area}</Title>
                         </Box>
-                        <Badge 
-                          color="green" 
-                          size="lg"
-                          variant="light"
-                        >
-                          {point.coverage}
-                        </Badge>
-                      </Group>
-                      
-                      <Text size="sm" c="dimmed" style={{ lineHeight: 1.6 }}>
-                        {point.details}
-                      </Text>
+                        <Box>
+                          <Badge
+                            color="green"
+                            size="lg"
+                            variant="light"
+                          >
+                            {point.coverage}
+                          </Badge>
+                        </Box>
+                      </Stack>
 
                       <Stack gap="xs">
                         <Group gap="xs">

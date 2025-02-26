@@ -27,5 +27,5 @@ export interface ServicePoint {
   response: string;
   coverage: string;
   services: string[];
-  details: string;
+  details?: string;
 }

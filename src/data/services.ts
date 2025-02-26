@@ -58,10 +58,6 @@ export const serviceDetails: Record<string, ServiceDetail> = {
       'Traffic management when needed',
       'Emergency response procedures'
     ],
-    insurance: {
-      coverage: 'Full public liability insurance up to £5 million',
-      amount: '£5,000,000'
-    },
     image: '/assets/gallery/image_fx_ (5).jpg',
     galleryImages: [
       '/assets/gallery/image_fx_ (5).jpg',
@@ -94,10 +90,6 @@ export const serviceDetails: Record<string, ServiceDetail> = {
       'Disease prevention methods',
       'Expert climber safety'
     ],
-    insurance: {
-      coverage: 'Full public liability insurance up to £5 million',
-      amount: '£5,000,000'
-    },
     image: '/assets/gallery/image_fx_ (12).jpg',
     galleryImages: [
       '/assets/gallery/image_fx_ (12).jpg',
@@ -130,10 +122,6 @@ export const serviceDetails: Record<string, ServiceDetail> = {
       'Debris containment',
       'Site protection measures'
     ],
-    insurance: {
-      coverage: 'Full public liability insurance up to £5 million',
-      amount: '£5,000,000'
-    },
     image: '/assets/gallery/image_fx_ (15).jpg',
     galleryImages: [
       '/assets/gallery/image_fx_ (15).jpg',
@@ -166,10 +154,6 @@ export const serviceDetails: Record<string, ServiceDetail> = {
       'Traffic management',
       'Public safety measures'
     ],
-    insurance: {
-      coverage: 'Full public liability insurance up to £5 million',
-      amount: '£5,000,000'
-    },
     image: '/assets/gallery/image_fx_ (18).jpg',
     galleryImages: [
       '/assets/gallery/image_fx_ (18).jpg',

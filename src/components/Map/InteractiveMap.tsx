@@ -4,6 +4,19 @@ import { Card, Text, Badge, Group, Stack, Title, Box } from '@mantine/core';
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 
+// Fix for default marker icons
+const DefaultIcon = L.icon({
+  iconUrl: '/marker-icon.png',
+  iconRetinaUrl: '/marker-icon-2x.png',
+  shadowUrl: '/marker-shadow.png',
+  iconSize: [25, 41],
+  iconAnchor: [12, 41],
+  popupAnchor: [1, -34],
+  shadowSize: [41, 41]
+});
+
+L.Marker.prototype.options.icon = DefaultIcon;
+
 interface ServiceArea {
   id: number;
   name: string;
@@ -14,10 +27,9 @@ interface ServiceArea {
 
 interface InteractiveMapProps {
   highlightedArea?: string | null;
-  height?: number | string;
 }
 
-export default function InteractiveMap({ highlightedArea, height = 400 }: InteractiveMapProps) {
+export default function InteractiveMap({ highlightedArea }: InteractiveMapProps) {
   const mapRef = useRef<L.Map | null>(null);
   const mainLocation: [number, number] = [51.2478, -0.7783]; // Aldershot coordinates
 
@@ -53,28 +65,10 @@ export default function InteractiveMap({ highlightedArea, height = 400 }: Intera
   ];
 
   return (
-    <Box 
-      style={{ 
-        position: 'relative',
-        height: '100%',
-        width: '100%',
-        borderRadius: 'var(--mantine-radius-md)',
-        overflow: 'hidden'
-      }}
-    >
+    <div className="map-container">
       <MapContainer
         center={mainLocation}
         zoom={12}
-        style={{
-          height: '100%',
-          width: '100%',
-          zIndex: 1,
-          position: 'absolute',
-          top: 0,
-          left: 0,
-          right: 0,
-          bottom: 0
-        }}
         scrollWheelZoom={false}
         ref={mapRef}
       >
@@ -159,6 +153,6 @@ export default function InteractiveMap({ highlightedArea, height = 400 }: Intera
           ))}
         </Stack>
       </Card>
-    </Box>
+    </div>
   );
 }

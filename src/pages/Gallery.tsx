@@ -208,17 +208,19 @@ const Gallery: React.FC = () => {
               >
                 <MasonryGrid>
                   {filteredItems.map((item, index) => (
-                    <motion.div
-                      key={item.id}
-                      initial={{ opacity: 0, y: 20 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{ delay: index * 0.1 }}
-                    >
-                      <EnhancedCard
-                        item={item}
-                        onClick={() => setSelectedImage(item)}
-                      />
-                    </motion.div>
+                    <div key={item.id} className="masonry-grid-item">
+                      <motion.div
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ delay: index * 0.1 }}
+                        style={{ height: '100%', display: 'flex', flex: 1 }}
+                      >
+                        <EnhancedCard
+                          item={item}
+                          onClick={() => setSelectedImage(item)}
+                        />
+                      </motion.div>
+                    </div>
                   ))}
                 </MasonryGrid>
               </motion.div>

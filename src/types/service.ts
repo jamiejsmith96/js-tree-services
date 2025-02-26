@@ -16,10 +16,6 @@ export interface ServiceDetail {
   features: string[];
   benefits: string[];
   safetyMeasures: string[];
-  insurance: {
-    coverage: string;
-    amount: string;
-  };
   image: string;
   galleryImages: string[];
 }

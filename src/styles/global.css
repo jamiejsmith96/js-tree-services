@@ -95,7 +95,6 @@ body {
   padding: 0;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  font-smoothing: antialiased;
   background-color: #fff;
   font-family: 'Poppins', sans-serif;
   color: var(--text-primary);
@@ -119,7 +118,6 @@ h1 {
   background-clip: text;
   -webkit-background-clip: text;
   color: transparent;
-  text-fill-color: transparent;
   -webkit-text-fill-color: transparent;
   margin-bottom: var(--space-xl);
 }
@@ -260,6 +258,7 @@ p {
 }
 
 /* Section Styles */
+section,
 .section {
   padding: var(--space-xxl) 0;
   position: relative;
@@ -276,6 +275,22 @@ p {
   max-width: 600px;
   margin: -var(--space-lg) auto var(--space-xl);
   font-size: var(--font-size-lg);
+}
+
+/* Footer spacing */
+footer {
+  margin-top: var(--space-xxl);
+}
+
+@media (max-width: 48em) {
+  section,
+  .section {
+    padding: var(--space-xl) 0;
+  }
+  
+  footer {
+    margin-top: var(--space-xl);
+  }
 }
 
 /* Header & Navigation */
@@ -324,7 +339,6 @@ header .mantine-Button-root:not(.cta-button) {
 .hero-section h1 {
   color: white;
   background: none;
-  text-fill-color: white;
   -webkit-text-fill-color: white;
 }
 
@@ -342,15 +356,68 @@ main {
   padding: 0 var(--space-lg);
 }
 
-/* Map Container */
+/* Map styling */
 .map-container {
-  height: 600px;
-  width: 100%;
   position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.map-wrapper {
+  position: relative;
+  width: 100%;
+  height: 400px !important;
+  overflow: hidden;
+  border-radius: var(--mantine-radius-md);
+}
+
+/* Homepage map specific */
+.service-areas-section .map-wrapper {
+  height: 600px !important;
+}
+
+.leaflet-container {
+  position: absolute !important;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 100% !important;
+  height: 100% !important;
+  border-radius: var(--mantine-radius-md);
+}
+
+@media (max-width: 48em) {
+  .map-wrapper,
+  .section .map-wrapper {
+    height: 400px !important;
+  }
+}
+
+.sticky-call-button {
+  position: fixed;
+  bottom: var(--space-lg);
+  right: var(--space-lg);
+  z-index: 1000;
+  box-shadow: var(--shadow-md);
+  width: 64px !important;
+  height: 64px !important;
 }
 
 /* Mobile Styles */
 @media (max-width: 48em) {
+
+  .sticky-call-button {
+    width: 64px !important;
+    height: 64px !important;
+  }
+
+  .sticky-call-button svg {
+    width: 42px !important;
+    height: 42px !important;
+    transform-origin: center;
+    transform: scale(1.5);
+  }
   /* Typography */
   h1 { font-size: var(--font-size-3xl); }
   h2 { font-size: var(--font-size-2xl); }
@@ -392,10 +459,6 @@ main {
     max-width: 100% !important;
   }
 
-  /* Map Height Adjustment */
-  .map-container {
-    height: 400px !important;
-  }
 
   /* Stack & Grid Spacing */
   .mantine-Stack-root {

@@ -224,7 +224,9 @@ const Contact = () => {
                   >
                     <Stack gap="var(--space-xl)">
                       <Title order={2} ta="center">Service Area</Title>
-                      <InteractiveMap height={400} />
+                      <div className="map-wrapper">
+                        <InteractiveMap />
+                      </div>
                     </Stack>
                   </Card>
                 </motion.div>

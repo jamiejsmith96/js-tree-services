@@ -3,6 +3,7 @@ import { Group, Button, Burger, Drawer, Stack, Box, ActionIcon, Container } from
 import { useDisclosure } from '@mantine/hooks';
 import { Link, useLocation } from 'react-router-dom';
 import { IconPhone } from '@tabler/icons-react';
+import { ResponsiveImage } from './ResponsiveImage';
 
 const Header: React.FC = () => {
   const [opened, { toggle, close }] = useDisclosure(false);
@@ -213,17 +214,10 @@ const Header: React.FC = () => {
           color="green"
           variant="filled"
           radius="xl"
-          size={64}
-          className="hover-card"
-          style={{
-            position: 'fixed',
-            bottom: 'var(--space-xl)',
-            right: 'var(--space-xl)',
-            zIndex: 1000,
-            boxShadow: 'var(--shadow-md)'
-          }}
+          size={56}
+          className="hover-card sticky-call-button"
         >
-          <IconPhone size={32} />
+          <IconPhone className="sticky-call-button-icon" />
         </ActionIcon>
       )}
     </>

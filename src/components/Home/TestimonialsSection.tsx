@@ -15,15 +15,21 @@ const TestimonialCard: React.FC<{ testimonial: Testimonial; index: number }> = (
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
       transition={{ duration: 0.5, delay: index * 0.1 }}
+      style={{ height: '100%' }}
     >
       <Card 
         withBorder 
         padding="var(--space-xl)" 
         radius="md" 
         className="hover-card"
+        style={{
+          height: '100%',
+          display: 'flex',
+          flexDirection: 'column'
+        }}
       >
-        <Stack gap="xl">
-          <Box>
+        <Stack gap="var(--space-xl)" style={{ height: '100%' }}>
+          <Box style={{ flex: 1 }}>
             <Group gap="xs" mb="xs">
               {Array.from({ length: 5 }).map((_, i) => (
                 <motion.div
@@ -45,13 +51,14 @@ const TestimonialCard: React.FC<{ testimonial: Testimonial; index: number }> = (
 
             <Box pos="relative">
               <IconQuote 
-                size={30} 
+                size={40} 
                 style={{ 
                   position: 'absolute',
-                  top: 'calc(var(--space-xs) * -1)',
-                  left: 'calc(var(--space-xl) * -1)',
-                  opacity: 0.1,
-                  transform: 'rotate(180deg)'
+                  top: '-1rem',
+                  left: '-1rem',
+                  opacity: 0.2,
+                  transform: 'rotate(170deg)',
+                  color: 'var(--accent-color)'
                 }} 
               />
               <Text size="lg" style={{ fontStyle: 'italic' }}>
@@ -106,7 +113,7 @@ export const TestimonialsSection: React.FC<TestimonialsSectionProps> = ({ testim
           <Box
             style={{
               display: 'grid',
-              gridTemplateColumns: 'repeat(auto-fill, minmax(min(100%, 300px), 1fr))',
+              gridTemplateColumns: 'repeat(auto-fill, minmax(300px, 1fr))',
               gap: 'var(--space-xl)',
             }}
           >
