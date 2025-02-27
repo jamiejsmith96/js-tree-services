@@ -137,7 +137,15 @@ const Gallery: React.FC = () => {
       {/* Extra padding for mobile header */}
       <Box h="var(--space-xl)" hiddenFrom="sm" />
       
-      <Container size="xl" py="var(--space-xxxl)">
+      <Container
+        size="xl"
+        py="var(--space-xxxl)"
+        style={{
+          touchAction: 'pan-y',
+          WebkitOverflowScrolling: 'touch',
+          overscrollBehavior: 'contain'
+        }}
+      >
         <Stack gap="var(--space-xxxl)">
           <Box className="section-decorator">
             <motion.div

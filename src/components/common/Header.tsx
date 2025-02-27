@@ -115,12 +115,33 @@ const Header: React.FC = () => {
         padding="md"
         hiddenFrom="md"
         withCloseButton
+        position="top"
+        overlayProps={{ opacity: 0.7 }}
         styles={{
-          header: { padding: 'var(--space-md)' },
-          body: { padding: 'var(--space-md)' },
-          content: { 
+          header: {
+            padding: 'var(--space-md)',
+            backgroundColor: 'transparent',
+            position: 'absolute',
+            right: 0,
+            zIndex: 2000
+          },
+          body: {
+            padding: 'var(--space-md)',
+            paddingTop: 'var(--space-xxl)'
+          },
+          content: {
             background: 'linear-gradient(135deg, var(--gradient-start), var(--gradient-end))',
-            color: 'white'
+            color: 'white',
+            marginTop: '0'
+          },
+          inner: {
+            padding: 0
+          },
+          close: {
+            color: 'white',
+            '&:hover': {
+              backgroundColor: 'rgba(255, 255, 255, 0.1)'
+            }
           }
         }}
       >

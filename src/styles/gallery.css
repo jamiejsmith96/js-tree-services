@@ -2,13 +2,30 @@
   transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1),
               box-shadow 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   will-change: transform;
-  transform-style: preserve-3d;
-  perspective: 1000px;
 }
 
-.hover-card:hover {
-  transform: translateY(-4px) rotateX(2deg);
-  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
+@media (hover: hover) {
+  .hover-card {
+    transform-style: preserve-3d;
+    perspective: 1000px;
+  }
+
+  .hover-card:hover {
+    transform: translateY(-4px) rotateX(2deg);
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
+  }
+}
+
+/* Touch device specific styles */
+@media (hover: none) {
+  .hover-card {
+    transform: none !important;
+    transition: box-shadow 0.3s ease;
+  }
+
+  .hover-card:active {
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  }
 }
 
 .image-overlay {
@@ -142,6 +159,9 @@
 .masonry-grid {
   opacity: 0;
   animation: fadeIn 0.6s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+  -webkit-overflow-scrolling: touch; /* Enable smooth scrolling on iOS */
+  overscroll-behavior: contain; /* Prevent scroll chain */
+  touch-action: pan-y pinch-zoom; /* Enable vertical scroll and pinch zoom */
 }
 
 .masonry-grid-column {
@@ -155,11 +175,22 @@
   break-inside: avoid;
   height: 100%;
   display: flex;
+  will-change: transform; /* Optimize for animations */
+  transform: translateZ(0); /* Force GPU acceleration */
 }
 
 .masonry-grid-item > * {
   flex: 1;
   height: 100%;
+  touch-action: pan-y; /* Enable vertical scrolling */
+}
+
+/* Touch-specific optimizations */
+@media (hover: none) {
+  .masonry-grid-item {
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+  }
 }
 
 @keyframes fadeIn {

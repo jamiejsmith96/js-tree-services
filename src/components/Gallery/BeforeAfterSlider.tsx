@@ -1,5 +1,6 @@
 import React, { useRef, useState, useEffect } from 'react';
-import { Box } from '@mantine/core';
+import { Box, Group } from '@mantine/core';
+import { IconArrowLeft, IconArrowRight } from '@tabler/icons-react';
 import { ResponsiveImage } from '../common/ResponsiveImage';
 
 interface Props {
@@ -16,30 +17,44 @@ export const BeforeAfterSlider: React.FC<Props> = ({
   const [sliderPosition, setSliderPosition] = useState(50);
   const containerRef = useRef<HTMLDivElement>(null);
   const isDragging = useRef(false);
+  const frameRef = useRef<number>();
 
   const handleStart = (clientX: number) => {
     if (!containerRef.current) return;
     isDragging.current = true;
     
-    const rect = containerRef.current.getBoundingClientRect();
-    const x = clientX - rect.left;
-    const newPosition = (x / rect.width) * 100;
-    
-    setSliderPosition(Math.min(100, Math.max(0, newPosition)));
+    requestAnimationFrame(() => {
+      if (!containerRef.current) return;
+      const rect = containerRef.current.getBoundingClientRect();
+      const x = clientX - rect.left;
+      const newPosition = Math.min(100, Math.max(0, (x / rect.width) * 100));
+      setSliderPosition(newPosition);
+    });
   };
 
   const handleMove = (clientX: number) => {
     if (!isDragging.current || !containerRef.current) return;
 
-    const rect = containerRef.current.getBoundingClientRect();
-    const x = clientX - rect.left;
-    const newPosition = (x / rect.width) * 100;
+    // Cancel any pending frame
+    if (frameRef.current) {
+      cancelAnimationFrame(frameRef.current);
+    }
     
-    setSliderPosition(Math.min(100, Math.max(0, newPosition)));
+    // Schedule new frame
+    frameRef.current = requestAnimationFrame(() => {
+      if (!containerRef.current) return;
+      const rect = containerRef.current.getBoundingClientRect();
+      const x = clientX - rect.left;
+      const newPosition = Math.min(100, Math.max(0, (x / rect.width) * 100));
+      setSliderPosition(newPosition);
+    });
   };
 
   const handleEnd = () => {
     isDragging.current = false;
+    if (frameRef.current) {
+      cancelAnimationFrame(frameRef.current);
+    }
   };
 
   // Mouse events
@@ -73,6 +88,15 @@ export const BeforeAfterSlider: React.FC<Props> = ({
     };
   }, []);
 
+  // Cleanup on unmount
+  useEffect(() => {
+    return () => {
+      if (frameRef.current) {
+        cancelAnimationFrame(frameRef.current);
+      }
+    };
+  }, []);
+
   return (
     <Box
       ref={containerRef}
@@ -102,6 +126,25 @@ export const BeforeAfterSlider: React.FC<Props> = ({
         }}
       />
 
+      {/* Labels */}
+      <Box
+        style={{
+          position: 'absolute',
+          top: '20px',
+          right: '20px',
+          background: 'rgba(0,0,0,0.6)',
+          color: 'white',
+          padding: '4px 12px',
+          borderRadius: '4px',
+          fontSize: '14px',
+          fontWeight: 500,
+          opacity: sliderPosition < 80 ? 1 : 0,
+          transition: 'opacity 0.15s ease'
+        }}
+      >
+        After
+      </Box>
+
       {/* Before image (clipped) */}
       <Box
         style={{
@@ -113,16 +156,35 @@ export const BeforeAfterSlider: React.FC<Props> = ({
           overflow: 'hidden'
         }}
       >
-        <ResponsiveImage
-          src={beforeImage}
-          alt="Before"
-          height={height}
-          style={{
-            width: `${100 * (100 / sliderPosition)}%`,
-            height: '100%',
-            objectFit: 'cover'
-          }}
-        />
+        <Box style={{ position: 'relative', height: '100%' }}>
+          <ResponsiveImage
+            src={beforeImage}
+            alt="Before"
+            height={height}
+            style={{
+              width: `${100 * (100 / sliderPosition)}%`,
+              height: '100%',
+              objectFit: 'cover'
+            }}
+          />
+          <Box
+            style={{
+              position: 'absolute',
+              top: '20px',
+              left: '20px',
+              background: 'rgba(0,0,0,0.6)',
+              color: 'white',
+              padding: '4px 12px',
+              borderRadius: '4px',
+              fontSize: '14px',
+              fontWeight: 500,
+              opacity: sliderPosition > 20 ? 1 : 0,
+              transition: 'opacity 0.15s ease'
+            }}
+          >
+            Before
+          </Box>
+        </Box>
       </Box>
 
       {/* Slider handle */}
@@ -131,12 +193,11 @@ export const BeforeAfterSlider: React.FC<Props> = ({
           position: 'absolute',
           top: 0,
           left: `${sliderPosition}%`,
-          width: '2px',
+          width: '3px',
           height: '100%',
-          backgroundColor: 'white',
+          background: 'white',
           transform: 'translateX(-50%)',
-          cursor: 'col-resize',
-          boxShadow: 'var(--shadow-md)'
+          cursor: 'col-resize'
         }}
       >
         <Box
@@ -145,66 +206,21 @@ export const BeforeAfterSlider: React.FC<Props> = ({
             top: '50%',
             left: '50%',
             transform: 'translate(-50%, -50%)',
-            width: '40px',
-            height: '40px',
+            width: '44px',
+            height: '44px',
             backgroundColor: 'white',
             borderRadius: '50%',
             boxShadow: 'var(--shadow-lg)',
             display: 'flex',
             alignItems: 'center',
-            justifyContent: 'center',
-            transition: 'transform 0.2s ease'
+            justifyContent: 'center'
           }}
         >
-          {/* Handle arrows */}
-          <Box
-            style={{
-              width: '12px',
-              height: '2px',
-              backgroundColor: 'var(--mantine-color-gray-7)',
-              borderRadius: '1px',
-              position: 'absolute',
-              left: '8px',
-              transform: 'rotate(-45deg)',
-              top: '19px'
-            }}
-          />
-          <Box
-            style={{
-              width: '12px',
-              height: '2px',
-              backgroundColor: 'var(--mantine-color-gray-7)',
-              borderRadius: '1px',
-              position: 'absolute',
-              left: '8px',
-              transform: 'rotate(45deg)',
-              bottom: '19px'
-            }}
-          />
-          <Box
-            style={{
-              width: '12px',
-              height: '2px',
-              backgroundColor: 'var(--mantine-color-gray-7)',
-              borderRadius: '1px',
-              position: 'absolute',
-              right: '8px',
-              transform: 'rotate(45deg)',
-              top: '19px'
-            }}
-          />
-          <Box
-            style={{
-              width: '12px',
-              height: '2px',
-              backgroundColor: 'var(--mantine-color-gray-7)',
-              borderRadius: '1px',
-              position: 'absolute',
-              right: '8px',
-              transform: 'rotate(-45deg)',
-              bottom: '19px'
-            }}
-          />
+          {/* Arrow icons */}
+          <Group gap={4} wrap="nowrap">
+            <IconArrowLeft size={16} stroke={2} color="var(--mantine-color-gray-7)" />
+            <IconArrowRight size={16} stroke={2} color="var(--mantine-color-gray-7)" />
+          </Group>
         </Box>
       </Box>
     </Box>
