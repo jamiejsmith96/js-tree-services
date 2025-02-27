@@ -50,39 +50,31 @@ export const MasonryGrid: React.FC<MasonryGridProps> = ({
         display: 'grid',
         gridTemplateColumns: `repeat(${getColumns()}, 1fr)`,
         gap: isMobile ? 'var(--space-lg)' : 'var(--space-xl)',
-        width: '100%'
+        width: '100%',
+        touchAction: 'pan-y',
+        WebkitOverflowScrolling: 'touch'
       }}
     >
       {items.map((column, columnIndex) => (
         <Box
           key={columnIndex}
-          className="masonry-grid-column"
+          style={{
+            display: 'flex',
+            flexDirection: 'column',
+            gap: 'var(--space-xl)',
+            touchAction: 'pan-y'
+          }}
         >
           {column.map((item, itemIndex) => (
             <Box
               key={itemIndex}
-              className="masonry-grid-item"
+              style={{
+                height: '100%',
+                touchAction: 'pan-y',
+                WebkitOverflowScrolling: 'touch'
+              }}
             >
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ 
-                  duration: 0.5,
-                  delay: Math.min(
-                    isMobile 
-                      ? itemIndex * 0.1 
-                      : (columnIndex * column.length + itemIndex) * 0.1,
-                    1.5 // Cap maximum delay at 1.5s
-                  )
-                }}
-                style={{
-                  height: '100%',
-                  flex: 1,
-                  display: 'flex'
-                }}
-              >
-                {item}
-              </motion.div>
+              {item}
             </Box>
           ))}
         </Box>
