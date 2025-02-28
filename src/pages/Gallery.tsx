@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Container, Title, Text, Group, Button, Stack, Box } from '@mantine/core';
 import { IconTag } from '@tabler/icons-react';
 import { motion } from 'framer-motion';
@@ -11,17 +11,64 @@ import '../styles/gallery.css';
 const Gallery: React.FC = () => {
   const [selectedCategory, setSelectedCategory] = useState<GalleryCategory>('All');
   const [selectedImage, setSelectedImage] = useState<GalleryItem | null>(null);
+  const [isInitialLoad, setIsInitialLoad] = useState(true);
+
+  useEffect(() => {
+    // Ensure scrolling is enabled immediately
+    const enableScroll = () => {
+      document.documentElement.style.overflow = 'auto';
+      document.body.style.overflow = 'auto';
+      document.body.style.position = 'static';
+      document.body.style.width = 'auto';
+      document.body.style.height = 'auto';
+      document.body.classList.remove('mantine-Drawer-opened');
+    };
+
+    // Enable scroll on mount
+    enableScroll();
+
+    // Mark initial load as complete after animations
+    const timer = setTimeout(() => {
+      setIsInitialLoad(false);
+    }, 500);
+
+    return () => {
+      clearTimeout(timer);
+    };
+  }, []);
+
+  // Re-enable scroll when category changes
+  useEffect(() => {
+    document.documentElement.style.overflow = 'auto';
+    document.body.style.overflow = 'auto';
+  }, [selectedCategory]);
 
   const filteredItems = selectedCategory === 'All' 
     ? galleryItems 
     : galleryItems.filter(item => item.category === selectedCategory);
 
   return (
-    <>
+    <Box
+      style={{
+        minHeight: '100vh',
+        touchAction: 'pan-y',
+        WebkitOverflowScrolling: 'touch',
+        overscrollBehavior: 'auto',
+        position: 'relative'
+      }}
+    >
       {/* Extra padding for mobile header */}
       <Box h="var(--space-xl)" hiddenFrom="sm" />
       
-      <Container size="xl" py="var(--space-xxxl)">
+      <Container 
+        size="xl" 
+        py="var(--space-xxxl)"
+        style={{
+          minHeight: '100vh',
+          overflow: 'visible',
+          position: 'relative'
+        }}
+      >
         <Stack gap="var(--space-xxxl)">
           <Box className="section-decorator">
             <motion.div
@@ -106,7 +153,7 @@ const Gallery: React.FC = () => {
         item={selectedImage}
         onClose={() => setSelectedImage(null)}
       />
-    </>
+    </Box>
   );
 };
 
