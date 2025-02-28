@@ -51,8 +51,11 @@ export const MasonryGrid: React.FC<MasonryGridProps> = ({
         gridTemplateColumns: `repeat(${getColumns()}, 1fr)`,
         gap: isMobile ? 'var(--space-lg)' : 'var(--space-xl)',
         width: '100%',
-        touchAction: 'pan-y',
-        WebkitOverflowScrolling: 'touch'
+        touchAction: 'pan-y pinch-zoom',
+        WebkitOverflowScrolling: 'touch',
+        overscrollBehavior: 'touch',
+        position: 'relative',
+        zIndex: 1
       }}
     >
       {items.map((column, columnIndex) => (
@@ -62,7 +65,10 @@ export const MasonryGrid: React.FC<MasonryGridProps> = ({
             display: 'flex',
             flexDirection: 'column',
             gap: 'var(--space-xl)',
-            touchAction: 'pan-y'
+            touchAction: 'pan-y pinch-zoom',
+            WebkitOverflowScrolling: 'touch',
+            position: 'relative',
+            zIndex: 1
           }}
         >
           {column.map((item, itemIndex) => (

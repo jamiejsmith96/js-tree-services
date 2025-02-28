@@ -17,7 +17,14 @@ const Gallery: React.FC = () => {
     : galleryItems.filter(item => item.category === selectedCategory);
 
   return (
-    <Box style={{ touchAction: 'pan-y', WebkitOverflowScrolling: 'touch' }}>
+    <Box 
+      style={{ 
+        minHeight: '100vh',
+        touchAction: 'pan-y pinch-zoom',
+        WebkitOverflowScrolling: 'touch',
+        overscrollBehavior: 'contain'
+      }}
+    >
       {/* Extra padding for mobile header */}
       <Box h="var(--space-xl)" hiddenFrom="sm" />
       
@@ -43,7 +50,7 @@ const Gallery: React.FC = () => {
             </motion.div>
           </Box>
 
-          <Stack gap="var(--space-xxl)">
+          <Stack gap="var(--space-xxl)" style={{ touchAction: 'pan-y' }}>
             <Group justify="center" gap="md">
               {galleryCategories.map((category, index) => (
                 <motion.div
@@ -82,7 +89,11 @@ const Gallery: React.FC = () => {
               ))}
             </Group>
 
-            <Box style={{ touchAction: 'pan-y' }}>
+            <Box style={{ 
+              touchAction: 'pan-y',
+              WebkitOverflowScrolling: 'touch',
+              minHeight: '50vh'
+            }}>
               <AnimatePresence mode="wait" initial={false}>
                 <motion.div
                   key={selectedCategory}
@@ -90,22 +101,35 @@ const Gallery: React.FC = () => {
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, y: -20 }}
                   transition={{ duration: 0.3 }}
+                  style={{
+                    touchAction: 'pan-y',
+                    WebkitOverflowScrolling: 'touch'
+                  }}
                 >
                   <MasonryGrid>
                     {filteredItems.map((item, index) => (
-                      <div key={item.id} className="masonry-grid-item">
+                      <Box 
+                        key={item.id} 
+                        className="masonry-grid-item"
+                        style={{ touchAction: 'pan-y' }}
+                      >
                         <motion.div
                           initial={{ opacity: 0, y: 20 }}
                           animate={{ opacity: 1, y: 0 }}
                           transition={{ delay: index * 0.1 }}
-                          style={{ height: '100%', display: 'flex', flex: 1 }}
+                          style={{ 
+                            height: '100%', 
+                            display: 'flex', 
+                            flex: 1,
+                            touchAction: 'pan-y'
+                          }}
                         >
                           <EnhancedCard
                             item={item}
                             onClick={() => setSelectedImage(item)}
                           />
                         </motion.div>
-                      </div>
+                      </Box>
                     ))}
                   </MasonryGrid>
                 </motion.div>
@@ -123,7 +147,8 @@ const Gallery: React.FC = () => {
   );
 };
 
-export const galleryItems: GalleryItem[] = [
+// Gallery items data moved to end of file for better readability
+const galleryItems: GalleryItem[] = [
   // Tree Felling
   {
     id: 1,
