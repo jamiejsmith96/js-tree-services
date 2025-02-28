@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Container, Title, Text, Group, Button, Stack, Box } from '@mantine/core';
 import { IconTag } from '@tabler/icons-react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion } from 'framer-motion';
 import { GalleryItem, GalleryCategory, galleryCategories } from '../types/gallery';
 import { MasonryGrid } from '../components/Gallery/MasonryGrid';
 import { EnhancedCard } from '../components/Gallery/EnhancedCard';
@@ -17,14 +17,7 @@ const Gallery: React.FC = () => {
     : galleryItems.filter(item => item.category === selectedCategory);
 
   return (
-    <Box 
-      style={{ 
-        minHeight: '100vh',
-        touchAction: 'pan-y pinch-zoom',
-        WebkitOverflowScrolling: 'touch',
-        overscrollBehavior: 'contain'
-      }}
-    >
+    <>
       {/* Extra padding for mobile header */}
       <Box h="var(--space-xl)" hiddenFrom="sm" />
       
@@ -50,7 +43,7 @@ const Gallery: React.FC = () => {
             </motion.div>
           </Box>
 
-          <Stack gap="var(--space-xxl)" style={{ touchAction: 'pan-y' }}>
+          <Stack gap="var(--space-xxl)">
             <Group justify="center" gap="md">
               {galleryCategories.map((category, index) => (
                 <motion.div
@@ -89,52 +82,22 @@ const Gallery: React.FC = () => {
               ))}
             </Group>
 
-            <Box style={{ 
-              touchAction: 'pan-y',
-              WebkitOverflowScrolling: 'touch',
-              minHeight: '50vh'
-            }}>
-              <AnimatePresence mode="wait" initial={false}>
+            <MasonryGrid>
+              {filteredItems.map((item, index) => (
                 <motion.div
-                  key={selectedCategory}
+                  key={item.id}
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -20 }}
-                  transition={{ duration: 0.3 }}
-                  style={{
-                    touchAction: 'pan-y',
-                    WebkitOverflowScrolling: 'touch'
-                  }}
+                  transition={{ duration: 0.5, delay: index * 0.1 }}
+                  style={{ height: '100%' }}
                 >
-                  <MasonryGrid>
-                    {filteredItems.map((item, index) => (
-                      <Box 
-                        key={item.id} 
-                        className="masonry-grid-item"
-                        style={{ touchAction: 'pan-y' }}
-                      >
-                        <motion.div
-                          initial={{ opacity: 0, y: 20 }}
-                          animate={{ opacity: 1, y: 0 }}
-                          transition={{ delay: index * 0.1 }}
-                          style={{ 
-                            height: '100%', 
-                            display: 'flex', 
-                            flex: 1,
-                            touchAction: 'pan-y'
-                          }}
-                        >
-                          <EnhancedCard
-                            item={item}
-                            onClick={() => setSelectedImage(item)}
-                          />
-                        </motion.div>
-                      </Box>
-                    ))}
-                  </MasonryGrid>
+                  <EnhancedCard
+                    item={item}
+                    onClick={() => setSelectedImage(item)}
+                  />
                 </motion.div>
-              </AnimatePresence>
-            </Box>
+              ))}
+            </MasonryGrid>
           </Stack>
         </Stack>
       </Container>
@@ -143,11 +106,10 @@ const Gallery: React.FC = () => {
         item={selectedImage}
         onClose={() => setSelectedImage(null)}
       />
-    </Box>
+    </>
   );
 };
 
-// Gallery items data moved to end of file for better readability
 const galleryItems: GalleryItem[] = [
   // Tree Felling
   {

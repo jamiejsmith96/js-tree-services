@@ -1,7 +1,6 @@
-import React, { useEffect, useState, useCallback } from 'react';
+import React, { useEffect, useState, useCallback, useLayoutEffect, useMemo } from 'react';
 import { Box, useMantineTheme } from '@mantine/core';
 import { useMediaQuery } from '@mantine/hooks';
-import { motion } from 'framer-motion';
 
 interface MasonryGridProps {
   children: React.ReactNode[];
@@ -20,55 +19,54 @@ export const MasonryGrid: React.FC<MasonryGridProps> = ({
   const getColumns = useCallback(() => {
     if (isMobile) return 1;
     if (isTablet) return 2;
-    if (isLargeScreen) return 4;
-    return 3;
+    if (isLargeScreen) return 3;
+    return 2;
   }, [isMobile, isTablet, isLargeScreen]);
 
-  const [items, setItems] = useState<React.ReactNode[][]>(() => {
-    const cols = getColumns();
-    return Array(cols).fill(null).map(() => []);
-  });
+  // Memoize column count to prevent unnecessary recalculations
+  const columnCount = useMemo(() => getColumns(), [getColumns]);
 
-  useEffect(() => {
-    const currentColumns = getColumns();
-    const newItems: React.ReactNode[][] = Array(currentColumns).fill(null).map(() => []);
-    const heights = Array(currentColumns).fill(0);
+  // Pre-calculate grid layout
+  const gridLayout = useMemo(() => {
+    const columns: React.ReactNode[][] = Array(columnCount)
+      .fill(null)
+      .map(() => []);
+    const heights = Array(columnCount).fill(0);
 
-    React.Children.forEach(children, (child) => {
+    React.Children.forEach(children, child => {
       if (!child) return;
       const smallestColumn = heights.indexOf(Math.min(...heights));
-      newItems[smallestColumn] = [...newItems[smallestColumn], child];
+      columns[smallestColumn].push(child);
       heights[smallestColumn] += itemHeight;
     });
 
-    setItems(newItems);
-  }, [children, itemHeight, getColumns]);
+    return columns;
+  }, [children, itemHeight, columnCount]);
 
   return (
     <Box 
       style={{
         display: 'grid',
-        gridTemplateColumns: `repeat(${getColumns()}, 1fr)`,
+        gridTemplateColumns: `repeat(${columnCount}, 1fr)`,
         gap: isMobile ? 'var(--space-lg)' : 'var(--space-xl)',
         width: '100%',
-        touchAction: 'pan-y pinch-zoom',
-        WebkitOverflowScrolling: 'touch',
-        overscrollBehavior: 'touch',
-        position: 'relative',
-        zIndex: 1
+        willChange: 'transform',
+        transform: 'translateZ(0)',
+        backfaceVisibility: 'hidden',
+        WebkitFontSmoothing: 'antialiased',
+        position: 'relative'
       }}
     >
-      {items.map((column, columnIndex) => (
+      {gridLayout.map((column, columnIndex) => (
         <Box
           key={columnIndex}
           style={{
             display: 'flex',
             flexDirection: 'column',
             gap: 'var(--space-xl)',
-            touchAction: 'pan-y pinch-zoom',
-            WebkitOverflowScrolling: 'touch',
-            position: 'relative',
-            zIndex: 1
+            willChange: 'transform',
+            transform: 'translateZ(0)',
+            backfaceVisibility: 'hidden'
           }}
         >
           {column.map((item, itemIndex) => (
@@ -76,8 +74,10 @@ export const MasonryGrid: React.FC<MasonryGridProps> = ({
               key={itemIndex}
               style={{
                 height: '100%',
-                touchAction: 'pan-y',
-                WebkitOverflowScrolling: 'touch'
+                position: 'relative',
+                willChange: 'transform',
+                transform: 'translateZ(0)',
+                backfaceVisibility: 'hidden'
               }}
             >
               {item}
