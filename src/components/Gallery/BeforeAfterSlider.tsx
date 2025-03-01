@@ -19,8 +19,19 @@ export const BeforeAfterSlider: React.FC<Props> = ({
   const isDragging = useRef(false);
   const frameRef = useRef<number>();
 
-  const handleStart = (clientX: number) => {
+  const touchStartX = useRef<number | null>(null);
+  const touchStartY = useRef<number | null>(null);
+  const isVerticalScroll = useRef(false);
+
+  const handleStart = (clientX: number, clientY?: number) => {
     if (!containerRef.current) return;
+    
+    if (clientY !== undefined) {
+      touchStartX.current = clientX;
+      touchStartY.current = clientY;
+      isVerticalScroll.current = false;
+    }
+
     isDragging.current = true;
     
     requestAnimationFrame(() => {
@@ -52,6 +63,9 @@ export const BeforeAfterSlider: React.FC<Props> = ({
 
   const handleEnd = () => {
     isDragging.current = false;
+    isVerticalScroll.current = false;
+    touchStartX.current = null;
+    touchStartY.current = null;
     if (frameRef.current) {
       cancelAnimationFrame(frameRef.current);
     }
@@ -74,8 +88,38 @@ export const BeforeAfterSlider: React.FC<Props> = ({
   // Touch events
   useEffect(() => {
     const handleTouchMove = (e: TouchEvent) => {
-      e.preventDefault();
-      handleMove(e.touches[0].clientX);
+      if (!isDragging.current || !touchStartX.current || !touchStartY.current) return;
+
+      const touch = e.touches[0];
+      const deltaX = Math.abs(touch.clientX - touchStartX.current);
+      const deltaY = Math.abs(touch.clientY - touchStartY.current);
+
+      // If we haven't determined scroll direction yet
+      if (!isVerticalScroll.current) {
+        // More generous threshold for determining scroll direction
+        if (deltaY > deltaX && deltaY > 5) {
+          isVerticalScroll.current = true;
+          isDragging.current = false;
+          return;
+        }
+        // Only prevent default if clearly horizontal
+        if (deltaX > deltaY && deltaX > 8) {
+          e.preventDefault();
+          isDragging.current = true;
+        } else {
+          // If direction is ambiguous, don't prevent scroll
+          return;
+        }
+      }
+
+      // If it's vertical scroll, don't handle the event
+      if (isVerticalScroll.current) return;
+
+      // Handle horizontal sliding
+      if (isDragging.current) {
+        e.preventDefault();
+        handleMove(touch.clientX);
+      }
     };
     const handleTouchEnd = () => handleEnd();
 
@@ -100,16 +144,23 @@ export const BeforeAfterSlider: React.FC<Props> = ({
   return (
     <Box
       ref={containerRef}
-      style={{ 
+      className="before-after-slider"
+      style={{
         position: 'relative',
         height,
         overflow: 'hidden',
         cursor: 'col-resize',
         userSelect: 'none',
-        borderRadius: 'var(--mantine-radius-md)'
+        borderRadius: 'var(--mantine-radius-md)',
+        touchAction: 'none',
+        WebkitTouchCallout: 'none',
+        WebkitUserSelect: 'none'
       }}
       onMouseDown={(e) => handleStart(e.clientX)}
-      onTouchStart={(e) => handleStart(e.touches[0].clientX)}
+      onTouchStart={(e) => {
+        const touch = e.touches[0];
+        handleStart(touch.clientX, touch.clientY);
+      }}
     >
       {/* After image (full) */}
       <ResponsiveImage

@@ -53,8 +53,13 @@ const Gallery: React.FC = () => {
         minHeight: '100vh',
         touchAction: 'pan-y',
         WebkitOverflowScrolling: 'touch',
-        overscrollBehavior: 'auto',
-        position: 'relative'
+        overscrollBehavior: 'contain',
+        position: 'relative',
+        willChange: 'transform',
+        transform: 'translateZ(0)',
+        WebkitFontSmoothing: 'antialiased',
+        WebkitBackfaceVisibility: 'hidden',
+        backfaceVisibility: 'hidden'
       }}
     >
       {/* Extra padding for mobile header */}
@@ -66,7 +71,13 @@ const Gallery: React.FC = () => {
         style={{
           minHeight: '100vh',
           overflow: 'visible',
-          position: 'relative'
+          position: 'relative',
+          touchAction: 'pan-y',
+          WebkitOverflowScrolling: 'touch',
+          '@supports (-webkit-touch-callout: none)': {
+            WebkitTransform: 'translateZ(0)',
+            transform: 'translateZ(0)'
+          }
         }}
       >
         <Stack gap="var(--space-xxxl)">

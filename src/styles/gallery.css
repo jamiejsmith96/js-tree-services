@@ -45,6 +45,13 @@
   .hover-card:active {
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
   }
+  
+  /* Enable proper touch scrolling when slider is present */
+  .masonry-grid-item:has(.before-after-slider) {
+    touch-action: pan-x pan-y pinch-zoom;
+    position: relative;
+    z-index: 1;
+  }
 }
 
 .image-overlay {
